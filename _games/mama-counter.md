@@ -4,8 +4,9 @@ description: 亲子互动计数器
 category: Utility
 color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)
 emoji: 👶
-status: Live
+type: Utility
 platform: Mobile
+year: 2024
 ---
 
 <div class="game-header">

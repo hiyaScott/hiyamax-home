@@ -4,8 +4,9 @@ description: 文字合成与创意游戏
 category: Puzzle
 color: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 emoji: 🧪
-status: Live
-platform: Web
+type: Puzzle
+platform: web
+year: 2024
 ---
 
 <div class="game-header">
