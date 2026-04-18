@@ -1,4 +1,51 @@
-// Components - Cards, buttons, etc.
+// Components - Cards, buttons, code blocks, etc.
+
+// Code blocks and syntax highlighting
+pre, code {
+  font-family: 'SF Mono', Monaco, Inconsolata, 'Fira Code', monospace;
+  font-size: 14px;
+}
+
+code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #333;
+}
+
+pre {
+  background: #f8f8f8;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid #e8e8e8;
+  margin: 16px 0;
+
+  code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: inherit;
+  }
+}
+
+// Syntax highlighting colors (Rouge compatible)
+.highlight {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px solid #e8e8e8;
+  margin: 16px 0;
+
+  .c, .cm, .c1, .cp { color: #6a9955; } // Comments
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #0000ff; } // Keywords
+  .s, .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .s1 { color: #a31515; } // Strings
+  .m, .mf, .mh, .mi, .mo { color: #098658; } // Numbers
+  .n, .na, .nb, .nc, .nd, .ne, .nf, .nl, .nn, .nx { color: #267f99; } // Names
+  .o, .ow { color: #000000; } // Operators
+  .p { color: #000000; } // Punctuation
+}
 
 .work-card {
   background: #fff;
