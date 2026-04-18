@@ -50,10 +50,15 @@ layout: default
 </footer>
 
 <style>
-  /* Breadcrumb */
+  /* Game Detail Page - Dark Theme */
+  body {
+    background: #0f172a; /* 深蓝灰背景，匹配原始游戏设计 */
+  }
+  
+  /* Breadcrumb - Dark */
   .breadcrumb {
-    background: #fff;
-    border-bottom: 1px solid #eee;
+    background: #1e293b;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
     padding-top: var(--header-height);
   }
   
@@ -65,33 +70,35 @@ layout: default
   }
   
   .breadcrumb a {
-    color: #666;
+    color: #94a3b8;
     text-decoration: none;
   }
   
-  .breadcrumb a:hover { color: #000; }
+  .breadcrumb a:hover { color: #fff; }
   
   .breadcrumb-separator {
     margin: 0 8px;
-    color: #999;
+    color: #64748b;
   }
   
   .breadcrumb-current {
-    color: #000;
+    color: #fff;
     font-weight: 500;
   }
   
-  /* Game Page */
+  /* Game Page - Transparent */
   .game-page {
     max-width: var(--max-content-width);
     margin: 0 auto;
     padding: 40px;
     min-height: calc(100vh - var(--header-height) - 200px);
+    background: transparent;
   }
   
   .game-wrapper {
     max-width: 600px;
     margin: 0 auto;
+    background: transparent;
   }
   
   .game-container {
@@ -100,26 +107,44 @@ layout: default
     padding: 40px;
   }
   
-  /* Code blocks - ensure visibility on transparent background */
+  /* Code blocks - Dark theme */
   .game-container pre {
-    background: #f8f8f8;
-    border: 1px solid #eee;
+    background: #1e293b;
+    border: 1px solid rgba(148, 163, 184, 0.2);
     border-radius: 8px;
     padding: 16px;
     overflow-x: auto;
+    color: #e2e8f0;
   }
   
   .game-container code {
-    background: rgba(0,0,0,0.05);
+    background: rgba(148, 163, 184, 0.15);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'Monaco', 'Consolas', monospace;
     font-size: 14px;
+    color: #38bdf8;
   }
   
   .game-container pre code {
     background: transparent;
     padding: 0;
+    color: #e2e8f0;
+  }
+  
+  /* Regular text in game content */
+  .game-container {
+    color: #f8fafc;
+  }
+  
+  .game-container h1,
+  .game-container h2,
+  .game-container h3 {
+    color: #f8fafc;
+  }
+  
+  .game-container p {
+    color: #94a3b8;
   }
   
   /* Game Footer - Match Homepage */
