@@ -5,15 +5,15 @@ layout: default
 <!-- Interactive Grid Background -->
 <canvas id="gridCanvas"></canvas>
 
+<!-- Fixed GAMES Background Text -->
+<div class="games-bg-text">
+  <h1 class="games-text">GAMES</h1>
+</div>
+
 <!-- Main Content -->
 <div class="page-container">
   <!-- Hero Section -->
   <section class="hero games-hero">
-    <!-- GAMES Text Mask -->
-    <div class="games-mask-container">
-      <h1 class="games-text">GAMES</h1>
-    </div>
-    
     <!-- Game Cards -->
     <div class="cards-wrapper">
       <div class="games-grid" id="gamesGrid">
@@ -26,7 +26,6 @@ layout: default
         {% assign emojis = "⚔️,🚀,🏰,🎯,🌊,🧩,🔥,🎨,⚡" | split: "," %}
         {% assign categories = "Action RPG,Racing,Adventure,Shooter,Simulation,Puzzle,Survival,Creative,Arcade" | split: "," %}
         {% assign platforms = "PC / Console,Mobile / PC,PC,Mobile,PC / Console,Mobile / PC,PC,Mobile,PC / Console" | split: "," %}
-        {% assign statuses = "Beta,Live,Beta,Live,Beta,Live,Beta,Live,Beta" | split: "," %}
         {% assign years = "2025,2024,TBA,2024,2025,2024,TBA,2024,2025" | split: "," %}
         
         {% for i in (0..8) %}
@@ -98,18 +97,8 @@ body {
   z-index: 0;
 }
 
-/* Main Content Container */
-.page-container {
-  position: relative;
-  z-index: 2;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-/* GAMES Text - Fixed Background */
-.games-mask-container {
+/* Fixed GAMES Background Text */
+.games-bg-text {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -122,18 +111,29 @@ body {
 .games-text {
   font-size: clamp(120px, 20vw, 280px);
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.06);
   letter-spacing: -12px;
   line-height: 1;
   margin: 0;
   pointer-events: none;
+  user-select: none;
 }
 
-/* Cards Wrapper */
+/* Main Content Container */
+.page-container {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Cards Wrapper - Push below GAMES text */
 .cards-wrapper {
   position: relative;
   z-index: 2;
-  padding: 0 40px 80px;
+  padding: 200px 40px 80px;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -182,7 +182,7 @@ body {
   flex: 1;
 }
 
-/* Type badge - Top Left (App/Party/Puzzle/blog) */
+/* Type badge - Top Left (App/Party/Puzzle/Utility) */
 .type-badge {
   position: absolute;
   top: 12px;
@@ -197,7 +197,7 @@ body {
   color: #333;
 }
 
-/* Platform badge - Top Right (web/Scratch) */
+/* Platform badge - Top Right (web/Mobile/PC) */
 .platform-badge {
   position: absolute;
   top: 12px;
@@ -309,29 +309,7 @@ body {
   border-color: #333;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .games-grid { grid-template-columns: repeat(2, 1fr); }
-  .games-text { letter-spacing: -4px; }
-}
-
-@media (max-width: 768px) {
-  .games-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 640px) {
-  .games-mask-container { padding: 40px 20px 30px; }
-  .cards-wrapper { padding: 0 20px 60px; }
-  .games-grid { grid-template-columns: 1fr; gap: 16px; }
-
-  .pagination-btn, .pagination-number {
-    width: 36px;
-    height: 36px;
-    font-size: 13px;
-  }
-}
-
-/* Footer - Light background for Games page */
+/* Footer - White background */
 .footer {
   background: #fff !important;
   border-top: 1px solid rgba(0,0,0,0.1);
@@ -351,6 +329,33 @@ body {
 
 .footer .footer-social-link:hover {
   color: #000;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+  .games-text { letter-spacing: -8px; }
+  .cards-wrapper { padding: 160px 30px 60px; }
+}
+
+@media (max-width: 768px) {
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+  .games-text { font-size: clamp(80px, 18vw, 150px); }
+}
+
+@media (max-width: 640px) {
+  .cards-wrapper { padding: 120px 20px 60px; }
+  .games-grid { grid-template-columns: 1fr; gap: 16px; }
+  .games-text { 
+    font-size: clamp(60px, 15vw, 100px); 
+    letter-spacing: -4px;
+  }
+
+  .pagination-btn, .pagination-number {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
 }
 </style>
 
