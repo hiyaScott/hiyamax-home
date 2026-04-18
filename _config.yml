@@ -3,7 +3,7 @@
 
 title: "HiyaMax"
 description: "Player & Creator - A curious explorer of games, stories and virtual worlds."
-baseurl: "" # 如果是项目页面，改为 "/hiyamax-home"
+baseurl: "/hiyamax-home"
 url: "https://hiyascott.github.io"
 
 # Build settings
