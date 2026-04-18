@@ -1,9 +1,11 @@
 ---
 title: Mama Counter
 description: 亲子互动计数器
-category: utility
+category: Utility
 color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)
 emoji: 👶
+status: Live
+platform: Mobile
 ---
 
 <div class="game-header">

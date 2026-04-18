@@ -1,9 +1,11 @@
 ---
 title: Who is Spy
 description: 多人推理派对游戏
-category: party
+category: Party
 color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)
 emoji: 🕵️
+status: Beta
+platform: Web
 ---
 
 <div class="game-header">

@@ -6,11 +6,17 @@ Usage: {% include game-card.html game=game %}
 <article class="work-card">
   <a href="{{ include.game.url | relative_url }}" class="game-card-link">
     <div class="work-image" style="background: {{ include.game.color | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">
+      {% if include.game.status %}
+        <span class="status-badge {{ include.game.status | downcase }}">{{ include.game.status }}</span>
+      {% endif %}
+      {% if include.game.platform %}
+        <span class="platform-tag">{{ include.game.platform }}</span>
+      {% endif %}
       {{ include.game.emoji | default: '🎮' }}
     </div>
     <div class="work-content">
       <h4>{{ include.game.title }}</h4>
-      <p>{{ include.game.category }}</p>
+      <p>{{ include.game.category | default: include.game.description }}</p>
     </div>
   </a>
 </article>

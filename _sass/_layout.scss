@@ -276,6 +276,115 @@
   gap: 24px;
 }
 
+/* Games List Page */
+.page-header {
+  padding-top: calc(var(--header-height) + 40px);
+  padding-bottom: 40px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.page-header-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(48px, 10vw, 90px);
+  font-weight: 700;
+  letter-spacing: -4px;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.page-description {
+  font-size: 16px;
+  color: var(--color-text-light);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.games-list {
+  padding: 40px;
+  background: var(--color-bg);
+  min-height: calc(100vh - var(--header-height) - 300px);
+}
+
+.games-grid {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Game card specific styles */
+.game-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Status badges for games */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.status-badge.beta {
+  background: #fff;
+  color: #000;
+}
+
+.platform-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+/* Make work-image position relative for badges */
+.work-image {
+  position: relative;
+}
+
+/* Responsive for games grid */
+@media (max-width: 1024px) {
+  .games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .games-list,
+  .page-header-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
 /* Footer */
 .footer {
   background: #fff;
