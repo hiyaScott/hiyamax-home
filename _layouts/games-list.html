@@ -67,9 +67,17 @@ layout: default
 </div>
 
 <style>
-/* Games Page - Override white body background with !important */
-html, body {
+/* Games Page - Override ALL white backgrounds */
+html, body,
+body .page-container,
+body .page-container .hero,
+body .page-container .hero.games-hero,
+body .page-container section.hero,
+body .page-container section.hero.games-hero {
   background: transparent !important;
+}
+
+body {
   min-height: 100vh;
 }
 
@@ -82,7 +90,6 @@ html, body {
   flex-direction: column;
   padding-top: var(--header-height);
   position: relative;
-  background: transparent !important;
 }
 
 /* Grid Background Layer */
@@ -103,7 +110,6 @@ html, body {
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  background: transparent !important;
 }
 
 /* GAMES Text */
