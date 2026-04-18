@@ -20,35 +20,6 @@ layout: default
   </div>
 </div>
 
-<!-- Footer - Match Homepage EXACTLY -->
-<footer class="footer game-footer">
-  <div class="footer-inner">
-    <nav class="footer-nav">
-      <a href="{{ '/' | relative_url }}">about</a>
-      <a href="{{ '/games/' | relative_url }}">games</a>
-      <a href="#">books</a>
-      <a href="#">artworks</a>
-      <a href="#">hiyaMax™️</a>
-    </nav>
-    <div class="footer-copyright">© 2025 HiyaMax. All rights reserved.</div>
-    <div class="footer-social">
-      <a href="#" class="footer-social-link" aria-label="WeChat">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5.23 0 .45-.02.67-.04-.14-.47-.22-.96-.22-1.46 0-3.04 2.68-5.5 6-5.5.46 0 .91.04 1.33.12C16.4 5.7 13.28 4 9.5 4zm-2 4a1 1 0 110 2 1 1 0 010-2zm4 0a1 1 0 110 2 1 1 0 010-2z"/><path d="M22 14.5c0-2.76-2.46-5-5.5-5S11 11.74 11 14.5s2.46 5 5.5 5c.87 0 1.69-.18 2.43-.5L21 20l-.57-1.94C20.73 16.78 22 15.73 22 14.5zm-7-.5a1 1 0 110-2 1 1 0 010 2zm4 0a1 1 0 110-2 1 1 0 010 2z"/></svg>
-      </a>
-      <a href="#" class="footer-social-link" aria-label="RedBook">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v16h12V4H6zm2 2h8v2H8V6zm0 4h8v2H8v-2z"/></svg>
-      </a>
-      <a href="#" class="footer-social-link" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      </a>
-      <a href="#" class="footer-social-link" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-      </a>
-    </div>
-  </div>
-  <div class="footer-version">v1.5.1 | 2025-04-14</div>
-</footer>
-
 <style>
   /* Game Detail Page - Dark Theme */
   html, body {
@@ -149,7 +120,7 @@ layout: default
   }
   
   /* Game Footer - Dark theme to match game */
-  .game-footer {
+  .footer {
     background: transparent;
     padding: 30px 40px;
     padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
@@ -157,7 +128,7 @@ layout: default
     margin-top: 0;
   }
   
-  .game-footer .footer-inner {
+  .footer .footer-inner {
     max-width: var(--max-content-width);
     margin: 0 auto;
     display: flex;
@@ -165,31 +136,31 @@ layout: default
     align-items: center;
   }
   
-  .game-footer .footer-nav {
+  .footer .footer-nav {
     display: flex;
     gap: 24px;
   }
   
-  .game-footer .footer-nav a {
+  .footer .footer-nav a {
     color: #94a3b8;
     text-decoration: none;
     font-size: 13px;
     transition: color 0.2s;
   }
   
-  .game-footer .footer-nav a:hover { color: #fff; }
+  .footer .footer-nav a:hover { color: #fff; }
   
-  .game-footer .footer-copyright {
+  .footer .footer-copyright {
     font-size: 13px;
     color: #64748b;
   }
   
-  .game-footer .footer-social {
+  .footer .footer-social {
     display: flex;
     gap: 16px;
   }
   
-  .game-footer .footer-social-link {
+  .footer .footer-social-link {
     color: #94a3b8;
     display: flex;
     align-items: center;
@@ -198,9 +169,9 @@ layout: default
     transition: color 0.2s;
   }
   
-  .game-footer .footer-social-link:hover { color: #fff; }
+  .footer .footer-social-link:hover { color: #fff; }
   
-  .game-footer .footer-version {
+  .footer .footer-version {
     text-align: center;
     margin-top: 10px;
     font-size: 12px;
@@ -208,12 +179,12 @@ layout: default
   }
   
   @media (max-width: 768px) {
-    .game-footer {
+    .footer {
       padding: 20px;
       padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
     }
     
-    .game-footer .footer-inner {
+    .footer .footer-inner {
       flex-direction: column;
       gap: 16px;
       text-align: center;
