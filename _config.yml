@@ -1,0 +1,46 @@
+# HiyaMax - Player & Creator
+# Jekyll Configuration
+
+title: "HiyaMax"
+description: "Player & Creator - A curious explorer of games, stories and virtual worlds."
+baseurl: "" # 如果是项目页面，改为 "/hiyamax-home"
+url: "https://hiyascott.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Sass settings
+sass:
+  style: compressed
+  sass_dir: _sass
+
+# Collections
+collections:
+  games:
+    output: true
+    permalink: /games/:name/
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "games"
+    values:
+      layout: "game"

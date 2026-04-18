@@ -1,0 +1,19 @@
+---
+layout: default
+title: Games
+---
+
+<section class="page-header">
+  <div class="page-header-inner">
+    <h1>Games</h1>
+    <p class="page-description">Explore my game development journey</p>
+  </div>
+</section>
+
+<section class="games-list">
+  <div class="games-grid">
+    {% for game in site.games %}
+      {% include game-card.html game=game %}
+    {% endfor %}
+  </div>
+</section>

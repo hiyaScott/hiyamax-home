@@ -1,0 +1,67 @@
+---
+layout: default
+title: HiyaMax
+body_class: home-page
+---n
+<section class="hero">
+  <div class="avatar-section">
+    <div class="bg-text bg-text-left">
+      <span class="bg-text-title">Player</span>
+      <div class="bg-text-desc">A curious explorer of games, stories and virtual worlds.</div>
+    </div>
+    <div class="bg-text bg-text-right">
+      <span class="bg-text-title"><small><</small>Creator<small>></small></span>
+      <div class="bg-text-desc">A maker of games, art, inventions, stories and my own IP</div>
+    </div>
+    
+    <div class="avatar-wrapper" id="avatarWrapper">
+      <img src="{{ '/assets/images/max-player.webp' | relative_url }}" alt="Player" class="avatar-image avatar-player" id="avatarPlayer">
+      <img src="{{ '/assets/images/max-creator.webp' | relative_url }}" alt="Creator" class="avatar-image avatar-creator" id="avatarCreator">
+    </div>
+  </div>
+</section>
+
+<section class="works">
+  <div class="works-header">
+    <h3>Some of my latest work</h3>
+  </div>
+  
+  <div class="works-grid">
+    {% for work in page.works %}
+    <div class="work-card">
+      <div class="work-image" style="background: {{ work.gradient | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">{{ work.emoji }}</div>
+      <div class="work-content">
+        <h4>{{ work.title }}</h4>
+        <p>{{ work.category }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Default works if none specified -->
+    {% unless page.works %}
+    <div class="work-card">
+      <div class="work-image">🎮</div>
+      <div class="work-content">
+        <h4>Pixel World Explorer</h4>
+        <p>Game Development</p>
+      </div>
+    </div>
+    
+    <div class="work-card">
+      <div class="work-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📚</div>
+      <div class="work-content">
+        <h4>Reading Tracker</h4>
+        <p>Web Application</p>
+      </div>
+    </div>
+    
+    <div class="work-card">
+      <div class="work-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🤖</div>
+      <div class="work-content">
+        <h4>Arduino Projects</h4>
+        <p>Hardware & Code</p>
+      </div>
+    </div>
+    {% endunless %}
+  </div>
+</section>

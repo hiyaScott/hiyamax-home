@@ -1,0 +1,18 @@
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footer-nav">
+      {% for item in site.data.navigation.main %}
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+    <div class="footer-social">
+      {% for social in site.data.navigation.social %}
+        <a href="{{ social.url }}" class="footer-social-link" aria-label="{{ social.name }}" {% if social.external %}target="_blank" rel="noopener"{% endif %}>
+          {{ site.data.navigation.icons[social.icon] }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="footer-version">v1.5.1 | 2025-04-14</div>
+</footer>

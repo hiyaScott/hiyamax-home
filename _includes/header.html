@@ -1,0 +1,38 @@
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="{{ '/' | relative_url }}">
+      <img src="{{ '/assets/images/logo-hiya-max.webp' | relative_url }}" alt="HIYA MAX" class="logo">
+    </a>
+    <nav class="nav-desktop">
+      {% for item in site.data.navigation.main %}
+        <a href="{{ item.url | relative_url }}" class="nav-link{% if page.url == item.url %} active{% endif %}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+    <div class="nav-social">
+      {% for social in site.data.navigation.social %}
+        <a href="{{ social.url }}" class="social-link" aria-label="{{ social.name }}" {% if social.external %}target="_blank" rel="noopener"{% endif %}>
+          {{ site.data.navigation.icons[social.icon] }}
+        </a>
+      {% endfor %}
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="toggleMenu()"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-main">
+    {% for item in site.data.navigation.main %}
+      <a href="{{ item.url | relative_url }}" class="mobile-nav-link{% if page.url == item.url %} active{% endif %}">{{ item.title }}</a>
+    {% endfor %}
+  </div>
+  <div class="mobile-nav-social">
+    {% for social in site.data.navigation.social %}
+      <a href="{{ social.url }}" class="mobile-nav-social-link" aria-label="{{ social.name }}" {% if social.external %}target="_blank" rel="noopener"{% endif %}>
+        {{ site.data.navigation.icons[social.icon] }}
+      </a>
+    {% endfor %}
+  </div>
+</nav>

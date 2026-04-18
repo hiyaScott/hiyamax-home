@@ -1,0 +1,24 @@
+// Base styles - CSS reset and variables
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+:root {
+  --color-header: #1a1a1a;
+  --color-text: #333;
+  --color-text-light: #666;
+  --color-bg: #f8f8f8;
+  --header-height: 70px;
+  --max-content-width: 1200px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fff;
+  color: var(--color-text);
+  line-height: 1.6;
+}

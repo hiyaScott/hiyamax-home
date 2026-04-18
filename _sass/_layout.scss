@@ -1,0 +1,329 @@
+// Layout styles - Header, Footer, Hero, Works sections
+
+/* Header */
+.header {
+  background: var(--color-header);
+  height: var(--header-height);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.logo {
+  height: 44px;
+  width: 150px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.nav-desktop {
+  flex: 1;
+  display: flex;
+  gap: clamp(8px, 3vw, 40px);
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: clamp(10px, 1.4vw, 13px);
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+
+  &:hover, &.active { color: #fff; }
+}
+
+.nav-social {
+  width: 120px;
+  min-width: 120px;
+  flex-shrink: 0;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: visible;
+}
+
+.social-link {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: color 0.2s;
+
+  &:hover { color: #fff; }
+}
+
+.menu-btn {
+  display: none;
+  width: 44px; 
+  height: 44px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Mobile Navigation */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 997;
+
+  &.active { display: block; }
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  left: 0; right: 0;
+  background: var(--color-header);
+  z-index: 998;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  &.active { display: flex; }
+}
+
+.mobile-nav-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.mobile-nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 200;
+  padding: 16px 0;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.2s;
+
+  &:last-of-type { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  &:hover, &.active { color: #fff; }
+}
+
+.mobile-nav-social {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-social-link {
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover { color: #fff; transform: scale(1.1); }
+
+  svg { width: 24px; height: 24px; }
+}
+
+/* Hero Section */
+.hero {
+  padding-top: var(--header-height);
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-section {
+  position: relative;
+  width: 1200px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+.avatar-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 813px;
+  height: 813px;
+  z-index: 5;
+}
+
+.avatar-image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease-out, clip-path 0.3s ease-out;
+}
+
+.avatar-player {
+  z-index: 2;
+  clip-path: inset(0 50% 0 0);
+}
+
+.avatar-creator {
+  z-index: 1;
+  clip-path: inset(0 0 0 50%);
+}
+
+.bg-text {
+  position: absolute;
+  top: 150px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -2px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.bg-text-title {
+  font-size: 90px;
+  white-space: nowrap;
+  display: block;
+  line-height: 1;
+
+  small { font-size: inherit; font-weight: 400; }
+}
+
+.bg-text-left { left: 40px; }
+.bg-text-right { right: 40px; }
+
+.bg-text-desc {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-top: 12px;
+  max-width: 220px;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.bg-text-left .bg-text-desc { text-align: left; margin-left: 0; }
+.bg-text-right .bg-text-desc { text-align: right; margin-left: auto; margin-right: 0; }
+
+/* Works Section */
+.works {
+  padding: 40px;
+  background: var(--color-bg);
+}
+
+.works-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}
+
+.works-grid {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Footer */
+.footer {
+  background: #fff;
+  padding: 30px 40px;
+  border-top: 1px solid #eee;
+}
+
+.footer-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+
+    &:hover { color: #000; }
+  }
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-social-link {
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: #000; }
+}
+
+.footer-version {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999;
+}

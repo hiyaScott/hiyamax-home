@@ -1,0 +1,79 @@
+---
+layout: default
+---
+
+<!-- Game Breadcrumb -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{{ '/games/' | relative_url }}">Games</a>
+    <span class="breadcrumb-separator">></span>
+    <span class="breadcrumb-current">{{ page.title }}</span>
+  </div>
+</nav>
+
+<!-- Game Container -->
+<div class="game-page">
+  <div class="game-wrapper">
+    <div class="game-container">
+      {{ content }}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Breadcrumb */
+  .breadcrumb {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding-top: var(--header-height);
+  }
+  
+  .breadcrumb-inner {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 12px 40px;
+    font-size: 14px;
+  }
+  
+  .breadcrumb a {
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .breadcrumb a:hover { color: #000; }
+  
+  .breadcrumb-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+  
+  .breadcrumb-current {
+    color: #000;
+    font-weight: 500;
+  }
+  
+  /* Game Page */
+  .game-page {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 40px;
+  }
+  
+  .game-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .game-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  
+  @media (max-width: 640px) {
+    .game-page { padding: 20px; }
+    .game-container { padding: 25px; }
+    .breadcrumb-inner { padding: 12px 20px; }
+  }
+</style>
