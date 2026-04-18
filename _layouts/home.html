@@ -16,8 +16,14 @@ body_class: home-page
     </div>
     
     <div class="avatar-wrapper" id="avatarWrapper">
-      <img src="{{ '/assets/images/max-player.webp' | relative_url }}" alt="Player" class="avatar-image avatar-player" id="avatarPlayer">
-      <img src="{{ '/assets/images/max-creator.webp' | relative_url }}" alt="Creator" class="avatar-image avatar-creator" id="avatarCreator">
+      <picture>
+        <source srcset="{{ '/assets/images/max-player.webp' | relative_url }}" type="image/webp">
+        <img src="{{ '/assets/images/max-player.jpg' | relative_url }}" alt="Player" class="avatar-image avatar-player" id="avatarPlayer">
+      </picture>
+      <picture>
+        <source srcset="{{ '/assets/images/max-creator.webp' | relative_url }}" type="image/webp">
+        <img src="{{ '/assets/images/max-creator.jpg' | relative_url }}" alt="Creator" class="avatar-image avatar-creator" id="avatarCreator">
+      </picture>
     </div>
   </div>
 </section>
