@@ -5,15 +5,16 @@ layout: default
 <!-- Interactive Grid Background -->
 <canvas id="gridCanvas"></canvas>
 
-<!-- Fixed GAMES Background Text -->
-<div class="games-bg-text">
-  <h1 class="games-text">GAMES</h1>
-</div>
-
 <!-- Main Content -->
 <div class="page-container">
   <!-- Hero Section -->
   <section class="hero games-hero">
+    
+    <!-- GAMES Text Mask Container -->
+    <div class="games-mask-container">
+      <h1 class="games-text">GAMES</h1>
+    </div>
+    
     <!-- Game Cards -->
     <div class="cards-wrapper">
       <div class="games-grid" id="gamesGrid">
@@ -62,18 +63,37 @@ layout: default
 </div>
 
 <style>
-/* Games Page - Override ALL white backgrounds */
-html, body,
-body .page-container,
-body .page-container .hero,
-body .page-container .hero.games-hero,
-body .page-container section.hero,
-body .page-container section.hero.games-hero {
-  background: transparent !important;
+/* Games Page - Match Original Design */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
 }
 
 body {
-  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+/* Grid Background Layer */
+#gridCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Main Content Container */
+.page-container {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding-bottom: 0;
 }
 
 /* Games Page Specific Styles */
@@ -87,56 +107,44 @@ body {
   position: relative;
 }
 
-/* Grid Background Layer */
-#gridCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+/* GAMES Mask Container - holds space for fixed text */
+.games-mask-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-/* Fixed GAMES Background Text */
-.games-bg-text {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  text-align: center;
-  pointer-events: none;
-}
-
-.games-text {
-  font-size: clamp(120px, 20vw, 280px);
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.06);
-  letter-spacing: -12px;
-  line-height: 1;
-  margin: 0;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Main Content Container */
-.page-container {
+  padding: 30px 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   position: relative;
-  z-index: 2;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
-/* Cards Wrapper - Push below GAMES text */
+/* GAMES Text - Fixed background title */
+.games-text {
+  font-size: clamp(80px, 15vw, 180px);
+  font-weight: 800;
+  letter-spacing: -8px;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1;
+  text-align: center;
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Cards Wrapper - pushes below GAMES text */
 .cards-wrapper {
   position: relative;
   z-index: 2;
-  padding: 200px 40px 80px;
-  max-width: 1400px;
+  padding: 0 40px 100px;
+  max-width: var(--max-content-width);
   margin: 0 auto;
   width: 100%;
+  margin-top: calc(clamp(80px, 15vw, 180px) + 25px);
 }
 
 /* Games Grid */
@@ -144,6 +152,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
 }
 
 /* Game Card - Two-tone structure */
@@ -309,52 +318,100 @@ body {
   border-color: #333;
 }
 
-/* Footer - White background */
+/* Footer - WHITE background (matching original design) */
 .footer {
   background: #fff !important;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #eee;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+}
+
+.footer .footer-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer .footer-copyright {
+  font-size: 13px;
+  color: #666;
+}
+
+.footer .footer-nav {
+  display: flex;
+  gap: 24px;
 }
 
 .footer .footer-nav a {
   color: #666;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
 }
 
 .footer .footer-nav a:hover {
   color: #000;
 }
 
+.footer .footer-social {
+  display: flex;
+  gap: 16px;
+}
+
 .footer .footer-social-link {
   color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 .footer .footer-social-link:hover {
   color: #000;
 }
 
+.footer .footer-version {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .games-grid { grid-template-columns: repeat(2, 1fr); }
-  .games-text { letter-spacing: -8px; }
-  .cards-wrapper { padding: 160px 30px 60px; }
+  .games-text { letter-spacing: -4px; }
 }
 
 @media (max-width: 768px) {
   .games-grid { grid-template-columns: repeat(2, 1fr); }
-  .games-text { font-size: clamp(80px, 18vw, 150px); }
+  .footer { 
+    padding: 20px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 @media (max-width: 640px) {
-  .cards-wrapper { padding: 120px 20px 60px; }
+  .games-mask-container { padding: 20px 20px 10px; }
+  .cards-wrapper { padding: 0 20px 60px; }
   .games-grid { grid-template-columns: 1fr; gap: 16px; }
-  .games-text { 
-    font-size: clamp(60px, 15vw, 100px); 
-    letter-spacing: -4px;
-  }
 
   .pagination-btn, .pagination-number {
     width: 36px;
     height: 36px;
     font-size: 13px;
+  }
+  
+  .footer-inner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
   }
 }
 </style>
@@ -484,14 +541,11 @@ document.addEventListener('touchmove', (e) => {
 
 // Animation loop
 function animate() {
-  // Smooth mouse following
   mouseX += (targetMouseX - mouseX) * 0.1;
   mouseY += (targetMouseY - mouseY) * 0.1;
   
-  // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // Update and draw cells
   cells.forEach(cell => {
     cell.update();
     cell.draw();
@@ -519,11 +573,9 @@ function updatePagination() {
     card.style.display = cardPage === currentPage ? 'block' : 'none';
   });
   
-  // Update pagination buttons
   document.querySelector('.pagination-btn.prev').disabled = currentPage === 1;
   document.querySelector('.pagination-btn.next').disabled = currentPage === totalPages;
   
-  // Update page numbers
   const pageNumbers = document.getElementById('pageNumbers');
   pageNumbers.innerHTML = '';
   for (let i = 1; i <= totalPages; i++) {
@@ -545,6 +597,5 @@ function changePage(delta) {
   updatePagination();
 }
 
-// Initialize pagination
 updatePagination();
 </script>
