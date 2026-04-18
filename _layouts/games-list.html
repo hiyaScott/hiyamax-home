@@ -94,8 +94,8 @@ layout: default
 <style>
 /* Games Page - Match Original Design */
 html, body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -130,14 +130,11 @@ body {
   user-select: none;
 }
 
-/* Main Content Container (Scrollable) */
+/* Main Content Container */
 .page-container {
   position: relative;
   z-index: 2;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  min-height: 100vh;
   padding-top: var(--header-height);
 }
 
