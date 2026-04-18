@@ -1,0 +1,20 @@
+{% comment %}
+Game Card Component (Full version matching original design)
+Usage: {% include game-card-full.html game=game %}
+{% endcomment %}
+
+<a href="{{ include.game.url | relative_url }}" class="game-card" data-page="1">
+  <div class="card-image" style="background: {{ include.game.color | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">
+    {{ include.game.emoji | default: '🎮' }}
+    {% if include.game.status %}
+      <span class="status-badge {% if include.game.status == 'Beta' %}beta{% endif %}">{{ include.game.status }}</span>
+    {% endif %}
+    {% if include.game.platform %}
+      <span class="platform-tag">{{ include.game.platform }}</span>
+    {% endif %}
+  </div>
+  <div class="card-content">
+    <h3 class="card-title">{{ include.game.title }}</h3>
+    <div class="card-meta">{{ include.game.category | default: include.game.description }} · 2024</div>
+  </div>
+</a>

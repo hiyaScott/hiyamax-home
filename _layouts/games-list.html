@@ -1,19 +1,581 @@
 ---
 layout: default
-title: Games
 ---
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <h1>Games</h1>
-    <p class="page-description">Explore my game development journey</p>
-  </div>
-</section>
+<!-- Interactive Grid Background -->
+<canvas id="gridCanvas"></canvas>
 
-<section class="games-list">
-  <div class="games-grid">
-    {% for game in site.games %}
-      {% include game-card.html game=game %}
-    {% endfor %}
-  </div>
-</section>
+<!-- Main Content -->
+<div class="page-container">
+  {% include header.html %}
+  
+  <!-- Hero Section -->
+  <section class="hero games-hero">
+    <!-- GAMES Text Mask -->
+    <div class="games-mask-container">
+      <h1 class="games-text">GAMES</h1>
+    </div>
+    
+    <!-- Game Cards -->
+    <div class="cards-wrapper">
+      <div class="games-grid" id="gamesGrid">
+        {% for game in site.games %}
+          {% include game-card-full.html game=game %}
+        {% endfor %}
+        
+        <!-- Placeholder cards to match original design (12 cards total) -->
+        {% assign placeholders = "Blade Chronicles,Stellar Drift,Castle of Echoes,Precision Strike,Tidal Forces,Mind Maze,Inferno Protocol,Canvas Odyssey,Voltage Rush" | split: "," %}
+        {% assign emojis = "⚔️,🚀,🏰,🎯,🌊,🧩,🔥,🎨,⚡" | split: "," %}
+        {% assign categories = "Action RPG,Racing,Adventure,Shooter,Simulation,Puzzle,Survival,Creative,Arcade" | split: "," %}
+        {% assign platforms = "PC / Console,Mobile / PC,PC,Mobile,PC / Console,Mobile / PC,PC,Mobile,PC / Console" | split: "," %}
+        {% assign statuses = "Beta,Live,Beta,Live,Beta,Live,Beta,Live,Beta" | split: "," %}
+        {% assign years = "2025,2024,TBA,2024,2025,2024,TBA,2024,2025" | split: "," %}
+        
+        {% for i in (0..8) %}
+        <div class="game-card" data-page="{% if i < 6 %}1{% else %}2{% endif %}">
+          <div class="card-image" style="background: linear-gradient(135deg, hsl({{ i | times: 40 | plus: 200 }}, 70%, 60%) 0%, hsl({{ i | times: 40 | plus: 240 }}, 70%, 50%) 100%);">
+            {{ emojis[i] }}
+            <span class="status-badge {% if statuses[i] == 'Beta' %}beta{% endif %}">{{ statuses[i] }}</span>
+            <span class="platform-tag">{{ platforms[i] }}</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">{{ placeholders[i] }}</h3>
+            <div class="card-meta">{{ categories[i] }} · {{ years[i] }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <button class="pagination-btn prev" onclick="changePage(-1)">←</button>
+        <div class="pagination-numbers" id="pageNumbers"></div>
+        <button class="pagination-btn next" onclick="changePage(1)">→</button>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+  
+  {% include footer.html %}
+</div>
+
+<style>
+/* Games Page Specific Styles */
+.games-hero {
+  min-height: calc(100vh - 70px);
+  height: auto;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--header-height);
+  position: relative;
+}
+
+/* Grid Background Layer */
+#gridCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Main Content Container */
+.page-container {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* GAMES Letter Mask Container */
+.games-mask-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+  padding: 30px 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* GAMES Text - Fixed background title */
+.games-text {
+  font-size: clamp(80px, 15vw, 180px);
+  font-weight: 800;
+  letter-spacing: -8px;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1;
+  text-align: center;
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Cards Container */
+.cards-wrapper {
+  flex: 1;
+  padding: 0 40px 100px;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  margin-top: calc(clamp(80px, 15vw, 180px) + 25px);
+}
+
+/* Games Grid - 3 columns */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Game Card - Exact match to original */
+.game-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* Card Image - Top layer with color */
+.card-image {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+/* Status Badge */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+
+.status-badge.beta {
+  background: #fff;
+  color: #000;
+  border: none;
+}
+
+/* Platform Tag */
+.platform-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+/* Card Content - White bottom layer */
+.card-content {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1a1a1a;
+}
+
+.card-meta {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 0;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.pagination-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-number {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.pagination-number:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.pagination-number.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+  .games-text { letter-spacing: -4px; }
+}
+
+@media (max-width: 768px) {
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .games-mask-container { padding: 40px 20px 30px; }
+  .cards-wrapper { padding: 0 20px 60px; }
+  .games-grid { grid-template-columns: 1fr; gap: 16px; }
+  
+  .pagination-btn, .pagination-number {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+}
+</style>
+
+<script>
+// Interactive Grid with GAMES Text Mask
+const canvas = document.getElementById('gridCanvas');
+const ctx = canvas.getContext('2d');
+
+// Grid configuration
+const CELL_SIZE = 30;
+const CELL_GAP = 4;
+const INFLUENCE_RADIUS = 400;
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let targetMouseX = mouseX;
+let targetMouseY = mouseY;
+
+class GridCell {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.centerX = x + CELL_SIZE / 2;
+    this.centerY = y + CELL_SIZE / 2;
+    this.rotation = 0;
+    this.targetRotation = 0;
+    this.scale = 1;
+    this.targetScale = 1;
+  }
+  
+  update() {
+    const isReturningToCenter = (targetMouseX === window.innerWidth / 2 && targetMouseY === window.innerHeight / 2);
+    
+    if (isReturningToCenter) {
+      this.rotation = 0;
+      this.scale = 1;
+      this.targetRotation = 0;
+      this.targetScale = 1;
+      return;
+    }
+    
+    const dx = this.centerX - mouseX;
+    const dy = this.centerY - mouseY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    if (distance < INFLUENCE_RADIUS) {
+      const influence = 1 - (distance / INFLUENCE_RADIUS);
+      const angle = Math.atan2(dy, dx);
+      this.targetRotation = angle * (180 / Math.PI) * influence * 0.3;
+      this.targetScale = 1 + influence * 0.2;
+    } else {
+      this.targetRotation = 0;
+      this.targetScale = 1;
+    }
+    
+    this.rotation += (this.targetRotation - this.rotation) * 0.1;
+    this.scale += (this.targetScale - this.scale) * 0.1;
+  }
+  
+  draw() {
+    ctx.save();
+    ctx.translate(this.centerX, this.centerY);
+    ctx.rotate(this.rotation * Math.PI / 180);
+    ctx.scale(this.scale, this.scale);
+    
+    const alpha = 0.6 + (this.scale - 1) * 2.0;
+    ctx.fillStyle = `rgba(220, 220, 220, ${alpha})`;
+    ctx.fillRect(-CELL_SIZE/2, -CELL_SIZE/2, CELL_SIZE, CELL_SIZE);
+    ctx.restore();
+  }
+}
+
+let cells = [];
+
+function initGrid() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  cells = [];
+  const cols = Math.ceil(canvas.width / (CELL_SIZE + CELL_GAP)) + 2;
+  const rows = Math.ceil(canvas.height / (CELL_SIZE + CELL_GAP)) + 2;
+  
+  for (let i = -1; i < cols; i++) {
+    for (let j = -1; j < rows; j++) {
+      const x = i * (CELL_SIZE + CELL_GAP);
+      const y = j * (CELL_SIZE + CELL_GAP);
+      cells.push(new GridCell(x, y));
+    }
+  }
+}
+
+initGrid();
+
+// Mouse tracking
+let lastActivity = Date.now();
+
+document.addEventListener('mousemove', (e) => {
+  lastActivity = Date.now();
+  targetMouseX = e.clientX;
+  targetMouseY = e.clientY;
+});
+
+// Touch support
+let isTouching = false;
+
+document.addEventListener('touchstart', (e) => {
+  isTouching = true;
+  if (e.touches.length > 0) {
+    lastActivity = Date.now();
+    targetMouseX = e.touches[0].clientX;
+    targetMouseY = e.touches[0].clientY;
+  }
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+  isTouching = true;
+  if (e.touches.length > 0) {
+    lastActivity = Date.now();
+    targetMouseX = e.touches[0].clientX;
+    targetMouseY = e.touches[0].clientY;
+  }
+}, { passive: true });
+
+const resetToCenter = () => {
+  isTouching = false;
+  targetMouseX = window.innerWidth / 2;
+  targetMouseY = window.innerHeight / 2;
+};
+
+document.addEventListener('touchend', (e) => { if (e.touches.length === 0) resetToCenter(); }, { passive: true });
+document.addEventListener('touchcancel', (e) => { if (e.touches.length === 0) resetToCenter(); }, { passive: true });
+document.addEventListener('mouseleave', resetToCenter);
+
+// Pagination Logic
+const CARDS_PER_PAGE = 9;
+let currentPage = 1;
+
+function initPagination() {
+  const cards = document.querySelectorAll('.game-card');
+  const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+  
+  const pageNumbers = document.getElementById('pageNumbers');
+  if (!pageNumbers) return;
+  
+  pageNumbers.innerHTML = '';
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'pagination-number' + (i === currentPage ? ' active' : '');
+    btn.textContent = i;
+    btn.onclick = () => goToPage(i);
+    pageNumbers.appendChild(btn);
+  }
+  
+  updateCardsVisibility();
+  updatePaginationButtons(totalPages);
+}
+
+function updateCardsVisibility() {
+  const cards = document.querySelectorAll('.game-card');
+  const start = (currentPage - 1) * CARDS_PER_PAGE;
+  const end = start + CARDS_PER_PAGE;
+  
+  cards.forEach((card, index) => {
+    card.style.display = (index >= start && index < end) ? '' : 'none';
+  });
+}
+
+function updatePaginationButtons(totalPages) {
+  const prevBtn = document.querySelector('.pagination-btn.prev');
+  const nextBtn = document.querySelector('.pagination-btn.next');
+  
+  if (prevBtn) prevBtn.disabled = currentPage === 1;
+  if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+  
+  document.querySelectorAll('.pagination-number').forEach((btn, index) => {
+    btn.classList.toggle('active', index + 1 === currentPage);
+  });
+}
+
+function changePage(direction) {
+  const cards = document.querySelectorAll('.game-card');
+  const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+  const newPage = currentPage + direction;
+  
+  if (newPage >= 1 && newPage <= totalPages) {
+    currentPage = newPage;
+    updateCardsVisibility();
+    updatePaginationButtons(totalPages);
+  }
+}
+
+function goToPage(page) {
+  currentPage = page;
+  updateCardsVisibility();
+  const cards = document.querySelectorAll('.game-card');
+  const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+  updatePaginationButtons(totalPages);
+}
+
+// Resize handler
+window.addEventListener('resize', initGrid);
+
+// Animation loop
+function animate() {
+  requestAnimationFrame(animate);
+  
+  if (Date.now() - lastActivity > 300) {
+    targetMouseX = window.innerWidth / 2;
+    targetMouseY = window.innerHeight / 2;
+  }
+  
+  mouseX += (targetMouseX - mouseX) * 0.15;
+  mouseY += (targetMouseY - mouseY) * 0.15;
+  
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  for (const cell of cells) {
+    cell.update();
+    cell.draw();
+  }
+}
+
+animate();
+
+// Initialize pagination when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPagination);
+} else {
+  initPagination();
+}
+</script>
