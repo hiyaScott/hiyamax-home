@@ -43,7 +43,7 @@ html, body {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: transparent;
+  background: #fff;  /* 白色兜底背景，覆盖 canvas */
   color: #333;
 }
 
@@ -256,8 +256,7 @@ body {
 /* Footer Styles (for footer included by default layout) */
 .footer {
   background: #fff;
-  padding: 30px 40px;
-  padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  padding: 30px 40px 60px;  /* 增加底部 padding */
   border-top: 1px solid #eee;
   position: relative;
   z-index: 3;
