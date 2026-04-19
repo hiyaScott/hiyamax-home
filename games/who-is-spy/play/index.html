@@ -503,21 +503,25 @@
         /* 关闭按钮 */
         .close-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.9);
-            border: none;
-            color: #764ba2;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 20px;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+            z-index: 1000;
+        }
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
         }
         
         /* 提示文字 */
@@ -574,7 +578,7 @@
     </style>
 </head>
 <body>
-    <button class="close-btn" onclick="window.close()">✕</button>
+    <button class="close-btn" onclick="window.close()" title="关闭">✕</button>
     <div class="game-container">
         <div class="header">
             <h1>🕵️ 谁是卧底</h1>

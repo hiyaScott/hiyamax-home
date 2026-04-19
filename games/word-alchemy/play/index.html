@@ -62,19 +62,28 @@
             gap: 12px;
         }
 
-        .back-btn {
-            padding: 8px 14px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+        .close-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 13px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s;
+            z-index: 1000;
+            text-decoration: none;
         }
 
-        .back-btn:hover {
-            background: var(--bg-tertiary);
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
         }
 
@@ -638,12 +647,12 @@
     </style>
 </head>
 <body>
+    <!-- 关闭按钮 -->
+    <a href="javascript:window.close()" class="close-btn" title="关闭">&#x2715;</a>
+
     <!-- 导航栏 -->
     <nav class="nav-bar">
-        <div class="nav-left">
-            <a href="../games.html" class="back-btn">← 返回</a>
-            <span class="game-title">词语炼金术</span>
-        </div>
+        <span class="game-title">词语炼金术</span>
         <div class="stats-mini">
             <div>关卡 <span id="navLevel">1</span></div>
             <div>得分 <span id="navScore">0</span></div>
