@@ -106,43 +106,52 @@ year: 2024
   color: #667eea;
 }
 
-.wa-intro-start-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 56px;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  border: none;
-  border-radius: 14px;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
-  letter-spacing: 1px;
-  margin: 20px auto 40px;
-}
-
-.wa-intro-start-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
-}
-
-.wa-hero-image {
+.wa-hero-wrapper {
+  position: relative;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto 32px;
+  margin: 0 auto 40px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
 }
 
-.wa-hero-image img {
+.wa-hero-wrapper img {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.wa-hero-overlay {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.wa-intro-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 48px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.5), 0 0 0 4px rgba(255,255,255,0.3);
+  letter-spacing: 1px;
+  backdrop-filter: blur(8px);
+}
+
+.wa-intro-start-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.6), 0 0 0 4px rgba(255,255,255,0.4);
 }
 
 @media (max-width: 768px) {
@@ -159,31 +168,35 @@ year: 2024
     font-size: 16px;
   }
   
-  .wa-intro-icon {
-    font-size: 72px;
-  }
-  
   .wa-intro-section {
     padding: 20px;
   }
   
-  .wa-intro-start-btn {
-    padding: 16px 40px;
-    font-size: 16px;
-    width: 100%;
-    justify-content: center;
+  .wa-hero-wrapper {
+    border-radius: 12px;
+    margin-bottom: 32px;
   }
   
-  .wa-hero-image {
-    border-radius: 12px;
-    margin-bottom: 24px;
+  .wa-hero-overlay {
+    bottom: 16px;
+  }
+  
+  .wa-intro-start-btn {
+    padding: 14px 36px;
+    font-size: 15px;
   }
 }
 </style>
 
 <div class="wa-intro-container">
-  <div class="wa-hero-image">
+  <div class="wa-hero-wrapper">
     <img src="{{ '/assets/images/games/word-alchemy-hero.webp' | relative_url }}" alt="词语炼金术 - 魔法书">
+    <div class="wa-hero-overlay">
+      <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="wa-intro-start-btn" target="_blank" rel="noopener">
+        <span>✨</span>
+        <span>开始游戏</span>
+      </a>
+    </div>
   </div>
   
   <div class="wa-intro-content">
@@ -214,10 +227,5 @@ year: 2024
         </ul>
       </div>
     </div>
-    
-    <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="wa-intro-start-btn" target="_blank" rel="noopener">
-      <span>✨</span>
-      <span>开始游戏</span>
-    </a>
   </div>
 </div>
