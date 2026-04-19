@@ -12,6 +12,227 @@ year: 2024
 <style>
 /* Word Alchemy Game Styles - Self-contained */
 .word-alchemy-game {
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
+}
+
+.word-alchemy-game * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== 介绍页样式（浅色主题） ===== */
+.wa-intro-page {
+  background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%);
+  color: #1a1a2e;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 20px;
+}
+
+.wa-intro-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.wa-intro-back-btn {
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  color: #586069;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.wa-intro-back-btn:hover {
+  background: #f6f8fa;
+  color: #1a1a2e;
+}
+
+.wa-intro-content {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  flex: 1;
+}
+
+.wa-intro-icon {
+  font-size: 96px;
+  margin-bottom: 16px;
+  animation: wa-float 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 32px rgba(245, 158, 11, 0.3));
+}
+
+.wa-intro-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.wa-intro-subtitle {
+  font-size: 20px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.wa-intro-tags {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.wa-intro-tag {
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.wa-intro-section {
+  text-align: left;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.wa-intro-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wa-intro-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #4b5563;
+}
+
+.wa-intro-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.wa-intro-feature {
+  text-align: center;
+  padding: 20px 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.wa-intro-feature-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.wa-intro-feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.wa-intro-feature-desc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.wa-intro-screenshot {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.wa-intro-screenshot-inner {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+}
+
+.wa-intro-slot {
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.1);
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.wa-intro-slot.filled {
+  border-style: solid;
+  border-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.2);
+}
+
+.wa-intro-operator {
+  color: rgba(255,255,255,0.5);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.wa-intro-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 56px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+  letter-spacing: 1px;
+  margin: 40px 0;
+}
+
+.wa-intro-start-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
+}
+
+.wa-intro-start-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ===== 游戏界面样式（深色主题） ===== */
+.wa-game-interface {
   --wa-bg-primary: #0f172a;
   --wa-bg-secondary: #1e293b;
   --wa-bg-tertiary: #334155;
@@ -22,26 +243,20 @@ year: 2024
   --wa-text-secondary: #94a3b8;
   --wa-text-muted: #64748b;
   --wa-border: rgba(148, 163, 184, 0.2);
-  font-family: 'Noto Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
-}
-
-.word-alchemy-game * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.word-alchemy-game {
   background: var(--wa-bg-primary);
   color: var(--wa-text-primary);
   min-height: 100vh;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding: 16px;
   line-height: 1.6;
   border-radius: 20px;
   overflow: hidden;
+}
+
+.wa-game-interface.active {
+  display: flex;
 }
 
 /* 顶部导航 */
@@ -61,18 +276,18 @@ year: 2024
   gap: 12px;
 }
 
-.wa-back-btn {
+.wa-back-to-intro-btn {
   padding: 8px 14px;
   background: var(--wa-bg-secondary);
   border: 1px solid var(--wa-border);
   border-radius: 8px;
   color: var(--wa-text-secondary);
-  text-decoration: none;
   font-size: 13px;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
-.wa-back-btn:hover {
+.wa-back-to-intro-btn:hover {
   background: var(--wa-bg-tertiary);
   color: var(--wa-text-primary);
 }
@@ -537,96 +752,6 @@ year: 2024
   color: var(--wa-text-muted);
 }
 
-/* 启动封面样式 */
-.wa-launch-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.wa-launch-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.wa-launch-icon {
-  font-size: 80px;
-  margin-bottom: 24px;
-  animation: wa-float 3s ease-in-out infinite;
-}
-
-.wa-launch-title {
-  font-size: 42px;
-  font-weight: 800;
-  color: #f8fafc;
-  margin-bottom: 12px;
-  text-shadow: 0 0 40px rgba(245, 158, 11, 0.6);
-  animation: wa-glow 2s ease-in-out infinite;
-  letter-spacing: 4px;
-}
-
-.wa-launch-subtitle {
-  font-size: 18px;
-  color: #94a3b8;
-  margin-bottom: 48px;
-  font-weight: 500;
-}
-
-.wa-launch-btn {
-  padding: 18px 64px;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  border: none;
-  border-radius: 16px;
-  color: #0f172a;
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
-  letter-spacing: 2px;
-}
-
-.wa-launch-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.6);
-}
-
-.wa-launch-btn:active {
-  transform: scale(0.98);
-}
-
-.wa-launch-hint {
-  margin-top: 64px;
-  padding: 24px 32px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 16px;
-  max-width: 420px;
-  text-align: center;
-}
-
-.wa-launch-hint-title {
-  font-size: 14px;
-  color: #06b6d4;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.wa-launch-hint-text {
-  font-size: 13px;
-  color: #94a3b8;
-  line-height: 1.8;
-}
-
 @keyframes wa-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
@@ -638,8 +763,35 @@ year: 2024
 }
 
 /* 响应式 */
+@media (max-width: 768px) {
+  .wa-intro-page {
+    padding: 16px;
+  }
+  
+  .wa-intro-title {
+    font-size: 32px;
+  }
+  
+  .wa-intro-subtitle {
+    font-size: 16px;
+  }
+  
+  .wa-intro-icon {
+    font-size: 72px;
+  }
+  
+  .wa-intro-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .wa-intro-start-btn {
+    padding: 16px 40px;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 480px) {
-  .word-alchemy-game {
+  .wa-game-interface {
     padding: 12px;
   }
 
@@ -700,30 +852,6 @@ year: 2024
   .wa-element-name {
     font-size: 13px;
   }
-
-  .wa-launch-icon {
-    font-size: 64px;
-  }
-
-  .wa-launch-title {
-    font-size: 32px;
-  }
-
-  .wa-launch-subtitle {
-    font-size: 16px;
-    margin-bottom: 36px;
-  }
-
-  .wa-launch-btn {
-    padding: 16px 48px;
-    font-size: 18px;
-  }
-
-  .wa-launch-hint {
-    margin-top: 48px;
-    padding: 20px 24px;
-    max-width: 340px;
-  }
 }
 
 @media (max-width: 360px) {
@@ -752,32 +880,85 @@ year: 2024
 </style>
 
 <div class="word-alchemy-game">
-  <!-- 启动封面 -->
-  <div class="wa-launch-screen" id="wa-launchScreen">
-    <div class="wa-launch-icon">🔮</div>
-    <div class="wa-launch-title">词语炼金术</div>
-    <div class="wa-launch-subtitle">Word Alchemy</div>
-    <button class="wa-launch-btn" onclick="waStartGame()">✨ 开始炼成</button>
-    <div class="wa-launch-hint">
-      <div class="wa-launch-hint-title">💡 玩法说明</div>
-      <div class="wa-launch-hint-text">
-        选择两个元素放入炼金台，点击「炼成」合成新元素。<br>
-        每种组合都可能产生意想不到的结果！<br>
-        合成目标元素即可进入下一关卡。
+  <!-- ===== 介绍页 ===== -->
+  <div class="wa-intro-page" id="wa-introPage">
+    <div class="wa-intro-header">
+      <a href="{{ '/games/' | relative_url }}" class="wa-intro-back-btn">← 返回</a>
+    </div>
+    
+    <div class="wa-intro-content">
+      <div class="wa-intro-icon">🔮</div>
+      <h1 class="wa-intro-title">词语炼金术</h1>
+      <p class="wa-intro-subtitle">Word Alchemy — 元素合成解谜游戏</p>
+      
+      <div class="wa-intro-tags">
+        <span class="wa-intro-tag">🧩 Puzzle</span>
+        <span class="wa-intro-tag">🎯 7 Levels</span>
+        <span class="wa-intro-tag">🌐 Web</span>
+        <span class="wa-intro-tag">2024</span>
       </div>
+      
+      <div class="wa-intro-section">
+        <div class="wa-intro-section-title">🎮 游戏简介</div>
+        <p class="wa-intro-desc">
+          在这个神秘的炼金世界里，你将扮演一位炼金术士，通过组合不同的基础元素来创造全新的物质。从简单的「火」与「水」开始，逐步解锁更复杂的配方，最终合成目标元素来完成关卡。超过 50 种元素等待你的发现！
+        </p>
+      </div>
+      
+      <div class="wa-intro-section">
+        <div class="wa-intro-section-title">⚡ 核心玩法</div>
+        <div class="wa-intro-features">
+          <div class="wa-intro-feature">
+            <div class="wa-intro-feature-icon">🧪</div>
+            <div class="wa-intro-feature-title">选择元素</div>
+            <div class="wa-intro-feature-desc">从元素库挑选两个</div>
+          </div>
+          <div class="wa-intro-feature">
+            <div class="wa-intro-feature-icon">⚗️</div>
+            <div class="wa-intro-feature-title">炼成合成</div>
+            <div class="wa-intro-feature-desc">放入炼金台组合</div>
+          </div>
+          <div class="wa-intro-feature">
+            <div class="wa-intro-feature-icon">🔓</div>
+            <div class="wa-intro-feature-title">解锁配方</div>
+            <div class="wa-intro-feature-desc">发现新元素与配方</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="wa-intro-section">
+        <div class="wa-intro-section-title">📸 游戏预览</div>
+        <div class="wa-intro-screenshot">
+          <div class="wa-intro-screenshot-inner">
+            <div class="wa-intro-slot filled">🔥</div>
+            <span class="wa-intro-operator">+</span>
+            <div class="wa-intro-slot filled">💧</div>
+            <span class="wa-intro-operator">=</span>
+            <div class="wa-intro-slot filled">♨️</div>
+          </div>
+        </div>
+        <p class="wa-intro-desc" style="text-align: center; font-size: 13px; color: #6b7280;">
+          火 + 水 = 蒸汽 · 每种组合都可能产生意想不到的结果！
+        </p>
+      </div>
+      
+      <button class="wa-intro-start-btn" onclick="waStartGame()">
+        <span>✨</span>
+        <span>开始游戏</span>
+      </button>
     </div>
   </div>
 
-  <!-- 游戏内容 -->
-  <div id="wa-gameContent" style="display:none; width:100%;">
+  <!-- ===== 游戏界面 ===== -->
+  <div class="wa-game-interface" id="wa-gameInterface">
     <!-- 导航栏 -->
     <nav class="wa-nav-bar">
       <div class="wa-nav-left">
-        <a href="{{ '/games/' | relative_url }}" class="wa-back-btn">← 返回</a>
+        <button class="wa-back-to-intro-btn" onclick="waBackToIntro()">← 返回介绍</button>
         <span class="wa-game-title">词语炼金术</span>
       </div>
       <div class="wa-stats-mini">
-        <div>关卡 <span id="wa-navLevel">1</span></div>
+        <div>关卡 <span id="wa-navLevel">1</span>/7</div>
         <div>得分 <span id="wa-navScore">0</span></div>
       </div>
     </nav>
@@ -858,18 +1039,59 @@ year: 2024
 <script>
 // 启动游戏函数
 window.waStartGame = function() {
-  // 隐藏启动封面
-  document.getElementById('wa-launchScreen').classList.add('hidden');
+  // 隐藏介绍页
+  document.getElementById('wa-introPage').style.display = 'none';
   
-  // 显示游戏内容
-  document.getElementById('wa-gameContent').style.display = 'block';
+  // 显示游戏界面
+  document.getElementById('wa-gameInterface').classList.add('active');
   
-  // 尝试进入全屏模式
-  const gameContainer = document.querySelector('.word-alchemy-game');
-  if (gameContainer && gameContainer.requestFullscreen) {
-    gameContainer.requestFullscreen().catch(err => {
-      console.log('全屏请求失败:', err);
-    });
+  // 初始化游戏
+  waInitGame();
+  
+  // 手机端尝试进入全屏
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    const gameInterface = document.getElementById('wa-gameInterface');
+    if (gameInterface.requestFullscreen) {
+      gameInterface.requestFullscreen().catch(err => {
+        console.log('全屏请求失败:', err);
+      });
+    } else if (gameInterface.webkitRequestFullscreen) {
+      gameInterface.webkitRequestFullscreen().catch(err => {
+        console.log('全屏请求失败:', err);
+      });
+    }
+  }
+};
+
+// 返回介绍页
+window.waBackToIntro = function() {
+  // 显示介绍页
+  document.getElementById('wa-introPage').style.display = 'flex';
+  
+  // 隐藏游戏界面
+  document.getElementById('wa-gameInterface').classList.remove('active');
+  
+  // 退出全屏（如果在全屏状态）
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => {
+        console.log('退出全屏失败:', err);
+      });
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen().catch(err => {
+        console.log('退出全屏失败:', err);
+      });
+    }
+  }
+};
+
+// 游戏初始化
+window.waInitGame = function() {
+  if (!window.waGameInitialized) {
+    waLoadLevel();
+    waRenderElements();
+    waRenderRecipes();
+    window.waGameInitialized = true;
   }
 };
 
@@ -914,9 +1136,6 @@ window.waStartGame = function() {
     { target: '金属', hint: '石头 + 火' },
     { target: '工具', hint: '金属 + 火' },
     { target: '木材', hint: '植物 + 工具' },
-    { target: '生命', hint: '植物 + 云' },
-    { target: '人', hint: '生命 + 土' },
-    { target: '知识', hint: '人 + 火' },
   ];
 
   // 游戏状态
@@ -959,13 +1178,7 @@ window.waStartGame = function() {
     return '其他';
   }
 
-  function init() {
-    loadLevel();
-    renderElements();
-    renderRecipes();
-  }
-
-  function loadLevel() {
+  window.waLoadLevel = function() {
     const lvl = levels[(level - 1) % levels.length];
     document.getElementById('wa-targetWord').textContent = lvl.target;
     document.getElementById('wa-levelDisplay').textContent = String(level).padStart(2, '0');
@@ -973,9 +1186,9 @@ window.waStartGame = function() {
     document.getElementById('wa-navScore').textContent = score;
     document.getElementById('wa-progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
     waClearSlots();
-  }
+  };
 
-  function renderElements() {
+  window.waRenderElements = function() {
     const grid = document.getElementById('wa-elementsGrid');
     const categorized = {};
     unlockedElements.forEach(el => {
@@ -1007,9 +1220,9 @@ window.waStartGame = function() {
 
     grid.innerHTML = html;
     document.getElementById('wa-elementCount').textContent = `${unlockedElements.length}/50`;
-  }
+  };
 
-  function renderRecipes() {
+  window.waRenderRecipes = function() {
     const container = document.getElementById('wa-recipes');
     if (unlockedRecipes.length === 0) {
       container.innerHTML = '<span style="color:var(--wa-text-muted);font-size:13px;">暂无已解锁配方</span>';
@@ -1041,7 +1254,7 @@ window.waStartGame = function() {
 
     container.innerHTML = html;
     document.getElementById('wa-recipeCountBadge').textContent = unlockedRecipes.length;
-  }
+  };
 
   // 暴露给全局的函数
   window.waSelectElement = function(element) {
@@ -1049,14 +1262,14 @@ window.waStartGame = function() {
       slots[0] = null;
       selectedSlot = 1;
       waUpdateSlots();
-      renderElements();
+      waRenderElements();
       return;
     }
     if (slots[1] === element) {
       slots[1] = null;
       selectedSlot = 2;
       waUpdateSlots();
-      renderElements();
+      waRenderElements();
       return;
     }
 
@@ -1064,7 +1277,7 @@ window.waStartGame = function() {
     selectedSlot = selectedSlot === 1 ? 2 : 1;
 
     waUpdateSlots();
-    renderElements();
+    waRenderElements();
   };
 
   window.waUpdateSlots = function() {
@@ -1092,14 +1305,14 @@ window.waStartGame = function() {
     slots = [null, null];
     selectedSlot = 1;
     waUpdateSlots();
-    renderElements();
+    waRenderElements();
   };
 
   window.waClearSlot = function(slotNum) {
     slots[slotNum - 1] = null;
     selectedSlot = slotNum;
     waUpdateSlots();
-    renderElements();
+    waRenderElements();
   };
 
   window.waCombine = function() {
@@ -1120,12 +1333,12 @@ window.waStartGame = function() {
 
       if (isNewElement) {
         unlockedElements.push(result);
-        renderElements();
+        waRenderElements();
       }
 
       if (isNewRecipe) {
         unlockedRecipes.push({ input: [slots[0], slots[1]].sort(), output: result });
-        renderRecipes();
+        waRenderRecipes();
         newRecipeCount++;
         score += 50;
       } else {
@@ -1139,10 +1352,14 @@ window.waStartGame = function() {
         document.getElementById('wa-navScore').textContent = score;
         waShowPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
         setTimeout(() => {
-          level++;
-          combineCount = 0;
-          newRecipeCount = 0;
-          loadLevel();
+          if (level < 7) {
+            level++;
+            combineCount = 0;
+            newRecipeCount = 0;
+            waLoadLevel();
+          } else {
+            waShowPopup('🏆', '恭喜通关！', '7/7', '已完成所有关卡');
+          }
         }, 2000);
       } else {
         if (isNewRecipe) {
