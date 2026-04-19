@@ -7,232 +7,194 @@ emoji: 🔮
 type: Puzzle
 platform: Web
 year: 2024
-layout: none
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>词语炼金术 | HiyaMax</title>
-  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+.wa-intro-container {
+  background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%);
+  color: #1a1a2e;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 24px;
+}
 
-    body {
-      background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%);
-      color: #1a1a2e;
-      font-family: 'Noto Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 24px;
-    }
+.wa-intro-content {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+.wa-intro-icon {
+  font-size: 96px;
+  margin-bottom: 16px;
+  animation: wa-float 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 32px rgba(245, 158, 11, 0.3));
+}
 
-    .back-btn {
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      padding: 8px 14px;
-      background: #fff;
-      border: 1px solid #e1e4e8;
-      border-radius: 8px;
-      color: #586069;
-      text-decoration: none;
-      font-size: 14px;
-      transition: all 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
+@keyframes wa-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
 
-    .back-btn:hover {
-      background: #f6f8fa;
-      color: #1a1a2e;
-    }
+.wa-intro-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
 
-    .icon {
-      font-size: 96px;
-      margin-bottom: 16px;
-      animation: float 3s ease-in-out infinite;
-      filter: drop-shadow(0 8px 32px rgba(245, 158, 11, 0.3));
-    }
+.wa-intro-subtitle {
+  font-size: 20px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
+.wa-intro-tags {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
 
-    h1 {
-      font-size: 42px;
-      font-weight: 800;
-      color: #1a1a2e;
-      margin-bottom: 8px;
-      letter-spacing: 2px;
-    }
+.wa-intro-tag {
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
 
-    .subtitle {
-      font-size: 20px;
-      color: #6b7280;
-      margin-bottom: 24px;
-      font-weight: 500;
-    }
+.wa-intro-section {
+  text-align: left;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
 
-    .tags {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
+.wa-intro-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    .tag {
-      padding: 8px 16px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 20px;
-      font-size: 13px;
-      color: #6b7280;
-      font-weight: 500;
-    }
+.wa-intro-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #4b5563;
+}
 
-    .section {
-      text-align: left;
-      margin-bottom: 24px;
-      padding: 24px;
-      background: #fff;
-      border-radius: 16px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
+.wa-intro-desc ul {
+  list-style: none;
+  padding-left: 0;
+}
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1a1a2e;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.wa-intro-desc li {
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+}
 
-    .desc {
-      font-size: 15px;
-      line-height: 1.8;
-      color: #4b5563;
-    }
+.wa-intro-desc li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #667eea;
+}
 
-    .desc ul {
-      list-style: none;
-      padding-left: 0;
-    }
+.wa-intro-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 56px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+  letter-spacing: 1px;
+  margin: 20px auto 40px;
+}
 
-    .desc li {
-      margin-bottom: 12px;
-      padding-left: 20px;
-      position: relative;
-    }
+.wa-intro-start-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
+}
 
-    .desc li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #667eea;
-    }
+@media (max-width: 768px) {
+  .wa-intro-container {
+    padding: 24px 16px;
+    min-height: calc(100vh - 160px);
+  }
+  
+  .wa-intro-title {
+    font-size: 32px;
+  }
+  
+  .wa-intro-subtitle {
+    font-size: 16px;
+  }
+  
+  .wa-intro-icon {
+    font-size: 72px;
+  }
+  
+  .wa-intro-section {
+    padding: 20px;
+  }
+  
+  .wa-intro-start-btn {
+    padding: 16px 40px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
 
-    .start-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 56px;
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
-      letter-spacing: 1px;
-      margin: 20px auto 40px;
-    }
-
-    .start-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
-    }
-
-    .start-btn:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 16px;
-      }
-      
-      h1 {
-        font-size: 32px;
-      }
-      
-      .subtitle {
-        font-size: 16px;
-      }
-      
-      .icon {
-        font-size: 72px;
-      }
-      
-      .section {
-        padding: 20px;
-      }
-      
-      .start-btn {
-        padding: 16px 40px;
-        font-size: 16px;
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="icon">🔮</div>
-    <h1>词语炼金术</h1>
-    <p class="subtitle">Word Alchemy - 元素合成解谜游戏</p>
+<div class="wa-intro-container">
+  <div class="wa-intro-content">
+    <div class="wa-intro-icon">🔮</div>
+    <h1 class="wa-intro-title">词语炼金术</h1>
+    <p class="wa-intro-subtitle">Word Alchemy - 元素合成解谜游戏</p>
     
-    <div class="tags">
-      <span class="tag">🧩 解谜</span>
-      <span class="tag">💡 益智</span>
-      <span class="tag">🎯 合成</span>
+    <div class="wa-intro-tags">
+      <span class="wa-intro-tag">🧩 解谜</span>
+      <span class="wa-intro-tag">💡 益智</span>
+      <span class="wa-intro-tag">🎯 合成</span>
     </div>
     
-    <div class="section">
-      <div class="section-title">📖 游戏介绍</div>
-      <div class="desc">
+    <div class="wa-intro-section">
+      <div class="wa-intro-section-title">📖 游戏介绍</div>
+      <div class="wa-intro-desc">
         <p>《词语炼金术》是一款创意元素合成解谜游戏。从基础的🔥火、💧水、🌍土、💨风四种元素开始，通过不断的组合与探索，发现隐藏在这个世界中的 50+ 种神秘元素。</p>
       </div>
     </div>
     
-    <div class="section">
-      <div class="section-title">🎮 核心玩法</div>
-      <div class="desc">
+    <div class="wa-intro-section">
+      <div class="wa-intro-section-title">🎮 核心玩法</div>
+      <div class="wa-intro-desc">
         <ul>
           <li><strong>元素合成</strong>：将两种不同的元素组合，创造出全新的元素</li>
           <li><strong>配方探索</strong>：50+ 种隐藏配方等待你的发现</li>
@@ -242,10 +204,9 @@ layout: none
       </div>
     </div>
     
-    <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="start-btn" target="_blank" rel="noopener">
+    <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="wa-intro-start-btn" target="_blank" rel="noopener">
       <span>✨</span>
       <span>开始游戏</span>
     </a>
   </div>
-</body>
-</html>
+</div>
