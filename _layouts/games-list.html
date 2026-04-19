@@ -30,7 +30,7 @@ layout: default
       {% assign platforms = "PC / Console,Mobile / PC,PC,Mobile,PC / Console,Mobile / PC,PC,Mobile,PC / Console" | split: "," %}
       {% assign years = "2025,2024,TBA,2024,2025,2024,TBA,2024,2025" | split: "," %}
       
-      {% for i in (0..8) %}
+      {% for i in (0..2) %}
       <div class="game-card" data-page="1">
         <div class="card-image">
           {{ emojis[i] }}
@@ -503,7 +503,7 @@ window.addEventListener('resize', () => {
   initGrid();
 });
 
-// Pagination - 9 cards per page
+// Pagination - 3 cards per page (test mode)
 let currentPage = 1;
 const totalPages = 1;
 const cardsPerPage = 9;
