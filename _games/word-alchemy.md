@@ -1039,6 +1039,9 @@ const levels = [
   { target: '金属', hint: '石头 + 火' },
   { target: '工具', hint: '金属 + 火' },
   { target: '木材', hint: '植物 + 工具' },
+  { target: '生命', hint: '植物 + 云' },
+  { target: '人', hint: '生命 + 土' },
+  { target: '知识', hint: '人 + 火' },
 ];
 
 let level = 1;
@@ -1262,14 +1265,14 @@ function combine() {
       document.getElementById('navScore').textContent = score;
       showPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
       setTimeout(() => {
-        if (level < 7) {
-          level++;
-          combineCount = 0;
-          newRecipeCount = 0;
-          loadLevel();
-        } else {
-          showPopup('🏆', '恭喜通关！', '7/7', '已完成所有关卡');
-        }
+        if (level < 10) {
+            level++;
+            combineCount = 0;
+            newRecipeCount = 0;
+            loadLevel();
+          } else {
+            showPopup('🏆', '恭喜通关！', '10/10', '已完成所有关卡');
+          }
       }, 2000);
     } else {
       if (isNewRecipe) {
