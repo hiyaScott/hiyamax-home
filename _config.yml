@@ -21,6 +21,15 @@ collections:
   games:
     output: true
     permalink: /games/:name/
+  books:
+    output: true
+    permalink: /books/:name/
+  artworks:
+    output: true
+    permalink: /artworks/:name/
+  hiyamaxtm:
+    output: true
+    permalink: /hiyamaxtm/:name/
 
 # Exclude from processing
 exclude:

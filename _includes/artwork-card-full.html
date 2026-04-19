@@ -1,0 +1,11 @@
+<div class="artwork-card" onclick="window.location.href='{{ artwork.url | relative_url }}'">
+  <div class="card-image" style="background: {{ artwork.color }}">
+    <span style="font-size: 48px;">{{ artwork.emoji }}</span>
+    <span class="type-badge">{{ artwork.category }}</span>
+    <span class="year-badge">{{ artwork.year }}</span>
+  </div>
+  <div class="card-content">
+    <h3 class="card-title">{{ artwork.title }}</h3>
+    <p class="card-meta">{{ artwork.description }}</p>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="product-card" onclick="window.location.href='{{ product.url | relative_url }}'">
+  <div class="card-image" style="background: {{ product.color }}">
+    <span style="font-size: 48px;">{{ product.emoji }}</span>
+    <span class="type-badge">{{ product.category }}</span>
+    <span class="price-badge">{{ product.price }}</span>
+  </div>
+  <div class="card-content">
+    <h3 class="card-title">{{ product.title }}</h3>
+    <p class="card-meta">{{ product.description }}</p>
+  </div>
+</div>

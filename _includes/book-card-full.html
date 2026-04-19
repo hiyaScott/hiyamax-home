@@ -1,0 +1,11 @@
+<div class="book-card" onclick="window.location.href='{{ book.url | relative_url }}'">
+  <div class="card-image" style="background: {{ book.color }}">
+    <span style="font-size: 48px;">{{ book.emoji }}</span>
+    <span class="type-badge">{{ book.category }}</span>
+    <span class="year-badge">{{ book.year }}</span>
+  </div>
+  <div class="card-content">
+    <h3 class="card-title">{{ book.title }}</h3>
+    <p class="card-meta">{{ book.description }}</p>
+  </div>
+</div>

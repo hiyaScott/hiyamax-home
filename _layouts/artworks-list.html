@@ -1,0 +1,457 @@
+---
+layout: default
+---
+
+<!-- Interactive Grid Background -->
+<canvas id="gridCanvas"></canvas>
+
+<!-- ARTWORKS Text (Fixed Background) -->
+<div class="artworks-text-fixed">ARTWORKS</div>
+
+<!-- Main Content Container -->
+<div class="page-container">
+  
+  <!-- ARTWORKS Mask Container (holds space) -->
+  <div class="artworks-mask-container">
+    <div class="artworks-spacer"></div>
+  </div>
+  
+  <!-- Artwork Cards -->
+  <div class="cards-wrapper">
+    <div class="artworks-grid" id="artworksGrid">
+      {% for artwork in site.artworks %}
+        {% include artwork-card-full.html artwork=artwork %}
+      {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+      <button class="pagination-btn prev" onclick="changePage(-1)">←</button>
+      <div class="pagination-numbers" id="pageNumbers"></div>
+      <button class="pagination-btn next" onclick="changePage(1)">→</button>
+    </div>
+  </div>
+  
+</div>
+
+<style>
+/* Artworks Page - Match Original Design */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+/* Grid Background Layer - Behind everything */
+#gridCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Fixed ARTWORKS Text Background */
+.artworks-text-fixed {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(60px, 12vw, 140px);
+  font-weight: 800;
+  letter-spacing: -6px;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Main Content - Flex grow to push footer down, transparent background */
+.page-container {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  padding-top: var(--header-height);
+  background: transparent;
+}
+
+/* ARTWORKS Mask Container - holds space for fixed text */
+.artworks-mask-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+  padding: 30px 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.artworks-spacer {
+  height: clamp(80px, 15vw, 180px);
+}
+
+/* Cards Wrapper */
+.cards-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 0 40px 60px;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Artworks Grid */
+.artworks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Artwork Card - Two-tone structure */
+.artwork-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.artwork-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Card top section - darker background */
+.card-image {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  position: relative;
+  background: linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%);
+}
+
+/* Card bottom section - lighter background with transparency */
+.card-content {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  flex: 1;
+}
+
+/* Type badge - Top Left */
+.type-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+
+/* Year badge - Top Right */
+.year-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.card-meta {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.pagination-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #fff;
+  border-color: rgba(0,0,0,0.4);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-number {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.pagination-number:hover {
+  background: #fff;
+  border-color: rgba(0,0,0,0.4);
+}
+
+.pagination-number.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .artworks-grid { grid-template-columns: repeat(2, 1fr); }
+  .artworks-text-fixed { letter-spacing: -4px; }
+  .artworks-mask-container { padding: 20px 30px 10px; }
+  .cards-wrapper { padding: 0 30px 40px; }
+}
+
+@media (max-width: 768px) {
+  .artworks-grid { grid-template-columns: repeat(2, 1fr); }
+  .artworks-text-fixed { font-size: clamp(50px, 12vw, 100px); top: 80px; }
+}
+
+@media (max-width: 640px) {
+  .artworks-mask-container { padding: 15px 20px 10px; }
+  .cards-wrapper { padding: 0 20px 30px; }
+  .artworks-grid { grid-template-columns: 1fr; gap: 16px; }
+  .artworks-text-fixed { 
+    font-size: clamp(40px, 10vw, 60px); 
+    letter-spacing: -4px;
+    top: 80px;
+  }
+}
+</style>
+
+<script>
+// Interactive Grid Background
+const canvas = document.getElementById('gridCanvas');
+const ctx = canvas.getContext('2d');
+
+const CELL_SIZE = 30;
+const CELL_GAP = 4;
+const INFLUENCE_RADIUS = 400;
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let targetMouseX = mouseX;
+let targetMouseY = mouseY;
+
+class GridCell {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.centerX = x + CELL_SIZE / 2;
+    this.centerY = y + CELL_SIZE / 2;
+    this.rotation = 0;
+    this.targetRotation = 0;
+    this.scale = 1;
+    this.targetScale = 1;
+  }
+  
+  update() {
+    const isReturningToCenter = (targetMouseX === window.innerWidth / 2 && targetMouseY === window.innerHeight / 2);
+    
+    if (isReturningToCenter) {
+      this.rotation = 0;
+      this.scale = 1;
+      return;
+    }
+    
+    const dx = this.centerX - mouseX;
+    const dy = this.centerY - mouseY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    if (distance < INFLUENCE_RADIUS) {
+      const influence = 1 - (distance / INFLUENCE_RADIUS);
+      const angle = Math.atan2(dy, dx);
+      this.targetRotation = angle * (180 / Math.PI) * influence * 0.3;
+      this.targetScale = 1 + influence * 0.2;
+    } else {
+      this.targetRotation = 0;
+      this.targetScale = 1;
+    }
+    
+    this.rotation += (this.targetRotation - this.rotation) * 0.1;
+    this.scale += (this.targetScale - this.scale) * 0.1;
+  }
+  
+  draw() {
+    ctx.save();
+    ctx.translate(this.centerX, this.centerY);
+    ctx.rotate(this.rotation * Math.PI / 180);
+    ctx.scale(this.scale, this.scale);
+    
+    const alpha = 0.6 + (this.scale - 1) * 2.0;
+    ctx.fillStyle = `rgba(220, 220, 220, ${alpha})`;
+    ctx.fillRect(-CELL_SIZE/2, -CELL_SIZE/2, CELL_SIZE, CELL_SIZE);
+    ctx.restore();
+  }
+}
+
+let cells = [];
+
+function initGrid() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  cells = [];
+  const cols = Math.ceil(canvas.width / (CELL_SIZE + CELL_GAP)) + 2;
+  const rows = Math.ceil(canvas.height / (CELL_SIZE + CELL_GAP)) + 2;
+  
+  for (let i = -1; i < cols; i++) {
+    for (let j = -1; j < rows; j++) {
+      const x = i * (CELL_SIZE + CELL_GAP);
+      const y = j * (CELL_SIZE + CELL_GAP);
+      cells.push(new GridCell(x, y));
+    }
+  }
+}
+
+initGrid();
+
+// Mouse tracking
+let mouseTimeout;
+
+document.addEventListener('mousemove', (e) => {
+  targetMouseX = e.clientX;
+  targetMouseY = e.clientY;
+  
+  clearTimeout(mouseTimeout);
+  mouseTimeout = setTimeout(() => {
+    targetMouseX = window.innerWidth / 2;
+    targetMouseY = window.innerHeight / 2;
+  }, 100);
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    targetMouseX = e.touches[0].clientX;
+    targetMouseY = e.touches[0].clientY;
+    
+    clearTimeout(mouseTimeout);
+    mouseTimeout = setTimeout(() => {
+      targetMouseX = window.innerWidth / 2;
+      targetMouseY = window.innerHeight / 2;
+    }, 100);
+  }
+}, { passive: true });
+
+function animate() {
+  mouseX += (targetMouseX - mouseX) * 0.1;
+  mouseY += (targetMouseY - mouseY) * 0.1;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  cells.forEach(cell => {
+    cell.update();
+    cell.draw();
+  });
+  
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+  initGrid();
+});
+
+// Pagination - 9 cards per page
+let currentPage = 1;
+const totalPages = 1;
+const cardsPerPage = 9;
+
+function updatePagination() {
+  const cards = document.querySelectorAll('.artwork-card');
+  cards.forEach((card, index) => {
+    const cardPage = Math.floor(index / cardsPerPage) + 1;
+    card.style.display = cardPage === currentPage ? 'block' : 'none';
+  });
+  
+  document.querySelector('.pagination-btn.prev').disabled = currentPage === 1;
+  document.querySelector('.pagination-btn.next').disabled = currentPage === totalPages;
+  
+  const pageNumbers = document.getElementById('pageNumbers');
+  pageNumbers.innerHTML = '';
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.className = `pagination-number ${i === currentPage ? 'active' : ''}`;
+    btn.textContent = i;
+    btn.onclick = () => {
+      currentPage = i;
+      updatePagination();
+    };
+    pageNumbers.appendChild(btn);
+  }
+}
+
+function changePage(delta) {
+  currentPage += delta;
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+  updatePagination();
+}
+
+updatePagination();
+</script>
