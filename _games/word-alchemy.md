@@ -29,18 +29,6 @@ year: 2024
   justify-content: center;
 }
 
-.wa-intro-icon {
-  font-size: 96px;
-  margin-bottom: 16px;
-  animation: wa-float 3s ease-in-out infinite;
-  filter: drop-shadow(0 8px 32px rgba(245, 158, 11, 0.3));
-}
-
-@keyframes wa-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-
 .wa-intro-title {
   font-size: 42px;
   font-weight: 800;
@@ -199,7 +187,6 @@ year: 2024
   </div>
   
   <div class="wa-intro-content">
-    <div class="wa-intro-icon">🔮</div>
     <h1 class="wa-intro-title">词语炼金术</h1>
     <p class="wa-intro-subtitle">Word Alchemy - 元素合成解谜游戏</p>
     
