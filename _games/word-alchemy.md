@@ -212,8 +212,6 @@ layout: none
   </style>
 </head>
 <body>
-  <a href="{{ '/games/' | relative_url }}" class="back-btn">← 返回</a>
-  
   <div class="container">
     <div class="icon">🔮</div>
     <h1>词语炼金术</h1>
@@ -244,7 +242,7 @@ layout: none
       </div>
     </div>
     
-    <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="start-btn">
+    <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="start-btn" target="_blank" rel="noopener">
       <span>✨</span>
       <span>开始游戏</span>
     </a>
