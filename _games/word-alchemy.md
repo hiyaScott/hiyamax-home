@@ -142,6 +142,21 @@ year: 2024
   box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
 }
 
+.wa-hero-image {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
+}
+
+.wa-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .wa-intro-container {
     padding: 24px 16px;
@@ -170,10 +185,19 @@ year: 2024
     width: 100%;
     justify-content: center;
   }
+  
+  .wa-hero-image {
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
 }
 </style>
 
 <div class="wa-intro-container">
+  <div class="wa-hero-image">
+    <img src="{{ '/assets/images/games/word-alchemy-hero.webp' | relative_url }}" alt="词语炼金术 - 魔法书">
+  </div>
+  
   <div class="wa-intro-content">
     <div class="wa-intro-icon">🔮</div>
     <h1 class="wa-intro-title">词语炼金术</h1>
