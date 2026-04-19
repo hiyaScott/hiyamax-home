@@ -1,8 +1,8 @@
 <div class="artwork-card" onclick="window.location.href='{{ artwork.url | relative_url }}'">
-  <div class="card-image" style="background: {{ artwork.color }}">
-    <span style="font-size: 48px;">{{ artwork.emoji }}</span>
-    <span class="type-badge">{{ artwork.category }}</span>
-    <span class="year-badge">{{ artwork.year }}</span>
+  <div class="card-image" style="{% if artwork.image %}background-image: url('{{ artwork.image | relative_url }}'); background-size: cover; background-position: center;{% else %}background: {{ artwork.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endif %}">
+    {% unless artwork.image %}<span style="font-size: 48px;">{{ artwork.emoji | default: '🎨' }}</span>{% endunless %}
+    <span class="type-badge">{{ artwork.category | default: 'Artwork' }}</span>
+    <span class="year-badge">{{ artwork.year | default: '2025' }}</span>
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ artwork.title }}</h3>

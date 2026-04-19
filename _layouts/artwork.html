@@ -1,0 +1,244 @@
+---
+layout: default
+---
+
+<!-- Artwork Detail Page -->
+<div class="artwork-detail-page">
+  
+  <!-- Back Button -->
+  <a href="{{ '/artworks/' | relative_url }}" class="back-link">
+    <span class="back-arrow">←</span>
+    <span>Back to Artworks</span>
+  </a>
+  
+  <!-- Main Content -->
+  <div class="artwork-content">
+    
+    <!-- Left: Large Image -->
+    <div class="artwork-image-section">
+      <div class="artwork-image-container">
+        {% if page.image %}
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="artwork-image">
+        {% else %}
+          <div class="artwork-image-placeholder" style="background: {{ page.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}">
+            <span style="font-size: 120px;">{{ page.emoji | default: '🎨' }}</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Right: Info Panel -->
+    <div class="artwork-info-section">
+      
+      <!-- Header -->
+      <div class="artwork-header">
+        <span class="artwork-category">{{ page.category | default: 'Artwork' }}</span>
+        <span class="artwork-year">{{ page.year | default: '2025' }}</span>
+      </div>
+      
+      <!-- Title -->
+      <h1 class="artwork-title">{{ page.title }}</h1>
+      
+      <!-- Meta Info -->
+      <div class="artwork-meta">
+        {% if page.medium %}
+          <div class="meta-item">
+            <span class="meta-label">Medium</span>
+            <span class="meta-value">{{ page.medium }}</span>
+          </div>
+        {% endif %}
+        {% if page.size %}
+          <div class="meta-item">
+            <span class="meta-label">Size</span>
+            <span class="meta-value">{{ page.size }}</span>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Description -->
+      <div class="artwork-description">
+        {{ content }}
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<style>
+/* Artwork Detail Page */
+.artwork-detail-page {
+  min-height: calc(100vh - var(--header-height));
+  padding: 100px 40px 60px;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 30px;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #111;
+}
+
+.back-arrow {
+  font-size: 18px;
+}
+
+/* Main Content - Two Column Layout */
+.artwork-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Left: Image Section */
+.artwork-image-section {
+  position: sticky;
+  top: 100px;
+}
+
+.artwork-image-container {
+  background: #f5f5f5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.artwork-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.artwork-image-placeholder {
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right: Info Section */
+.artwork-info-section {
+  padding-top: 20px;
+}
+
+.artwork-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.artwork-category {
+  padding: 4px 12px;
+  background: #111;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.artwork-year {
+  padding: 4px 12px;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.artwork-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 24px;
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+/* Meta Info */
+.artwork-meta {
+  display: flex;
+  gap: 32px;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 24px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  font-weight: 500;
+}
+
+.meta-value {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Description */
+.artwork-description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.artwork-description p {
+  margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .artwork-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .artwork-image-section {
+    position: relative;
+    top: 0;
+  }
+  
+  .artwork-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .artwork-detail-page {
+    padding: 80px 20px 40px;
+  }
+  
+  .artwork-title {
+    font-size: 28px;
+  }
+  
+  .artwork-meta {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+</style>
