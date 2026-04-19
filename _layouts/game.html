@@ -21,16 +21,16 @@ layout: default
 </div>
 
 <style>
-  /* Game Detail Page - Dark Theme */
+  /* Game Detail Page - Light Theme */
   html, body {
-    background: #0f172a;
+    background: #f8fafc;
     min-height: 100vh;
   }
   
-  /* Breadcrumb - Dark */
+  /* Breadcrumb - Light */
   .breadcrumb {
-    background: #1e293b;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    background: #fff;
+    border-bottom: 1px solid #eee;
     padding-top: var(--header-height);
   }
   
@@ -42,29 +42,29 @@ layout: default
   }
   
   .breadcrumb a {
-    color: #94a3b8;
+    color: #666;
     text-decoration: none;
   }
   
-  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb a:hover { color: #000; }
   
   .breadcrumb-separator {
     margin: 0 8px;
-    color: #64748b;
+    color: #999;
   }
   
   .breadcrumb-current {
-    color: #fff;
+    color: #333;
     font-weight: 500;
   }
   
-  /* Game Page - Transparent */
+  /* Game Page - Light background */
   .game-page {
     max-width: var(--max-content-width);
     margin: 0 auto;
     padding: 40px;
     min-height: calc(100vh - var(--header-height) - 200px);
-    background: transparent;
+    background: #f8fafc;
   }
   
   .game-wrapper {
@@ -79,7 +79,7 @@ layout: default
     padding: 40px;
   }
   
-  /* Code blocks - Dark theme */
+  /* Code blocks - Light theme */
   .game-container pre {
     background: #1e293b;
     border: 1px solid rgba(148, 163, 184, 0.2);
@@ -90,12 +90,12 @@ layout: default
   }
   
   .game-container code {
-    background: rgba(148, 163, 184, 0.15);
+    background: rgba(0, 0, 0, 0.05);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'Monaco', 'Consolas', monospace;
     font-size: 14px;
-    color: #38bdf8;
+    color: #333;
   }
   
   .game-container pre code {
@@ -104,19 +104,19 @@ layout: default
     color: #e2e8f0;
   }
   
-  /* Regular text in game content */
+  /* Regular text in game content - Dark text for light background */
   .game-container {
-    color: #f8fafc;
+    color: #333;
   }
   
   .game-container h1,
   .game-container h2,
   .game-container h3 {
-    color: #f8fafc;
+    color: #111;
   }
   
   .game-container p {
-    color: #94a3b8;
+    color: #666;
   }
   
   /* Game Footer - White background */
@@ -125,26 +125,6 @@ layout: default
     padding: 30px 40px 60px;
     border-top: 1px solid #eee;
     margin-top: 0;
-  }
-  
-  .footer .footer-nav a {
-    color: #666;
-  }
-  
-  .footer .footer-nav a:hover {
-    color: #000;
-  }
-  
-  .footer .footer-social-link {
-    color: #666;
-  }
-  
-  .footer .footer-social-link:hover {
-    color: #000;
-  }
-  
-  .footer .footer-version {
-    color: #999;
   }
   
   .footer .footer-inner {
@@ -161,17 +141,19 @@ layout: default
   }
   
   .footer .footer-nav a {
-    color: #94a3b8;
+    color: #666;
     text-decoration: none;
     font-size: 13px;
     transition: color 0.2s;
   }
   
-  .footer .footer-nav a:hover { color: #fff; }
+  .footer .footer-nav a:hover {
+    color: #000;
+  }
   
   .footer .footer-copyright {
     font-size: 13px;
-    color: #64748b;
+    color: #666;
   }
   
   .footer .footer-social {
@@ -180,7 +162,7 @@ layout: default
   }
   
   .footer .footer-social-link {
-    color: #94a3b8;
+    color: #666;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,13 +170,15 @@ layout: default
     transition: color 0.2s;
   }
   
-  .footer .footer-social-link:hover { color: #fff; }
+  .footer .footer-social-link:hover {
+    color: #000;
+  }
   
   .footer .footer-version {
     text-align: center;
     margin-top: 10px;
     font-size: 12px;
-    color: #475569;
+    color: #999;
   }
   
   @media (max-width: 768px) {
