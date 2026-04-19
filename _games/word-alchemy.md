@@ -10,18 +10,7 @@ year: 2024
 ---
 
 <style>
-/* Word Alchemy Game Styles - Self-contained */
-.word-alchemy-game {
-  font-family: 'Noto Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
-}
-
-.word-alchemy-game * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ===== 介绍页样式（浅色主题） ===== */
+/* ========== 介绍页样式（浅色主题） ========== */
 .wa-intro-page {
   background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%);
   color: #1a1a2e;
@@ -114,7 +103,7 @@ year: 2024
 }
 
 .wa-intro-section-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #1a1a2e;
   margin-bottom: 16px;
@@ -129,79 +118,22 @@ year: 2024
   color: #4b5563;
 }
 
-.wa-intro-features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 20px;
+.wa-intro-desc ul {
+  list-style: none;
+  padding-left: 0;
 }
 
-.wa-intro-feature {
-  text-align: center;
-  padding: 20px 16px;
-  background: #f9fafb;
-  border-radius: 12px;
-}
-
-.wa-intro-feature-icon {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.wa-intro-feature-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 4px;
-}
-
-.wa-intro-feature-desc {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.wa-intro-screenshot {
-  width: 100%;
-  aspect-ratio: 16/10;
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0;
-  overflow: hidden;
+.wa-intro-desc li {
+  margin-bottom: 12px;
+  padding-left: 20px;
   position: relative;
 }
 
-.wa-intro-screenshot-inner {
-  display: flex;
-  gap: 16px;
-  padding: 24px;
-}
-
-.wa-intro-slot {
-  width: 64px;
-  height: 64px;
-  background: rgba(255,255,255,0.1);
-  border: 2px dashed rgba(255,255,255,0.3);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-}
-
-.wa-intro-slot.filled {
-  border-style: solid;
-  border-color: #06b6d4;
-  background: rgba(6, 182, 212, 0.2);
-}
-
-.wa-intro-operator {
-  color: rgba(255,255,255,0.5);
-  font-size: 20px;
-  display: flex;
-  align-items: center;
+.wa-intro-desc li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #667eea;
 }
 
 .wa-intro-start-btn {
@@ -219,7 +151,7 @@ year: 2024
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
   letter-spacing: 1px;
-  margin: 40px 0;
+  margin: 20px 0 40px;
 }
 
 .wa-intro-start-btn:hover {
@@ -231,535 +163,9 @@ year: 2024
   transform: translateY(0) scale(0.98);
 }
 
-/* ===== 游戏界面样式（深色主题） ===== */
-.wa-game-interface {
-  --wa-bg-primary: #0f172a;
-  --wa-bg-secondary: #1e293b;
-  --wa-bg-tertiary: #334155;
-  --wa-accent-gold: #f59e0b;
-  --wa-accent-cyan: #06b6d4;
-  --wa-accent-purple: #8b5cf6;
-  --wa-text-primary: #f8fafc;
-  --wa-text-secondary: #94a3b8;
-  --wa-text-muted: #64748b;
-  --wa-border: rgba(148, 163, 184, 0.2);
-  background: var(--wa-bg-primary);
-  color: var(--wa-text-primary);
-  min-height: 100vh;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  line-height: 1.6;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.wa-game-interface.active {
-  display: flex;
-}
-
-/* 顶部导航 */
-.wa-nav-bar {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-}
-
-.wa-nav-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.wa-back-to-intro-btn {
-  padding: 8px 14px;
-  background: var(--wa-bg-secondary);
-  border: 1px solid var(--wa-border);
-  border-radius: 8px;
-  color: var(--wa-text-secondary);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.wa-back-to-intro-btn:hover {
-  background: var(--wa-bg-tertiary);
-  color: var(--wa-text-primary);
-}
-
-.wa-game-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--wa-text-primary);
-}
-
-.wa-stats-mini {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
-  color: var(--wa-text-secondary);
-}
-
-.wa-stats-mini span {
-  color: var(--wa-accent-gold);
-  font-weight: 600;
-}
-
-/* 主游戏区域 */
-.wa-game-container {
-  width: 100%;
-  background: var(--wa-bg-secondary);
-  border-radius: 20px;
-  border: 1px solid var(--wa-border);
-  overflow: hidden;
-}
-
-/* 目标区域 */
-.wa-target-section {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
-  border-bottom: 2px solid var(--wa-accent-gold);
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 100px;
-}
-
-.wa-target-left {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.wa-target-level-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.wa-level-code {
-  font-size: 11px;
-  color: var(--wa-text-muted);
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.wa-target-label-badge {
-  font-size: 10px;
-  color: var(--wa-accent-gold);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  background: rgba(245, 158, 11, 0.2);
-  padding: 3px 8px;
-  border-radius: 10px;
-}
-
-.wa-target-stat {
-  font-size: 13px;
-  color: var(--wa-text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.wa-target-stat-value {
-  color: var(--wa-accent-gold);
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.wa-target-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 20px;
-  border-left: 1px solid rgba(245, 158, 11, 0.3);
-  margin-left: 20px;
-}
-
-.wa-target-word {
-  font-size: 72px;
-  font-weight: 800;
-  color: var(--wa-text-primary);
-  text-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
-  letter-spacing: 8px;
-  line-height: 1;
-}
-
-/* 炼金台 */
-.wa-alchemy-section {
-  padding: 32px 24px;
-  background: var(--wa-bg-secondary);
-}
-
-.wa-alchemy-table {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.wa-slot {
-  width: 88px;
-  height: 88px;
-  background: var(--wa-bg-tertiary);
-  border: 2px dashed var(--wa-border);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.wa-slot:hover {
-  border-color: var(--wa-accent-cyan);
-  background: rgba(6, 182, 212, 0.1);
-}
-
-.wa-slot.filled {
-  border-style: solid;
-  border-color: var(--wa-accent-cyan);
-  background: rgba(6, 182, 212, 0.15);
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-}
-
-.wa-slot.selected {
-  border-color: var(--wa-accent-gold);
-  background: rgba(245, 158, 11, 0.15);
-}
-
-.wa-operator {
-  font-size: 24px;
-  color: var(--wa-text-muted);
-  font-weight: 300;
-}
-
-.wa-result-slot {
-  width: 88px;
-  height: 88px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
-  border: 2px solid var(--wa-accent-gold);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: var(--wa-accent-gold);
-}
-
-.wa-main-action {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.wa-btn-combine {
-  padding: 16px 48px;
-  background: linear-gradient(135deg, var(--wa-accent-gold) 0%, #d97706 100%);
-  border: none;
-  border-radius: 12px;
-  color: var(--wa-bg-primary);
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
-}
-
-.wa-btn-combine:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-}
-
-.wa-btn-combine:active {
-  transform: translateY(0);
-}
-
-.wa-btn-combine:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.wa-btn-secondary {
-  padding: 14px 24px;
-  background: var(--wa-bg-tertiary);
-  border: 1px solid var(--wa-border);
-  border-radius: 10px;
-  color: var(--wa-text-secondary);
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.wa-btn-secondary:hover {
-  background: var(--wa-bg-primary);
-  color: var(--wa-text-primary);
-}
-
-/* 元素库 */
-.wa-elements-section {
-  padding: 20px 24px;
-  background: var(--wa-bg-primary);
-  border-top: 1px solid var(--wa-border);
-}
-
-.wa-section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.wa-section-title {
-  font-size: 14px;
-  color: var(--wa-text-secondary);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.wa-section-count {
-  font-size: 12px;
-  color: var(--wa-text-muted);
-  background: var(--wa-bg-tertiary);
-  padding: 4px 12px;
-  border-radius: 12px;
-}
-
-.wa-elements-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-}
-
-.wa-element-btn {
-  aspect-ratio: 1;
-  background: var(--wa-bg-secondary);
-  border: 2px solid var(--wa-border);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  padding: 8px 4px;
-  position: relative;
-  overflow: hidden;
-}
-
-.wa-element-btn:hover {
-  border-color: var(--wa-accent-cyan);
-  background: rgba(6, 182, 212, 0.1);
-  transform: translateY(-2px);
-}
-
-.wa-element-btn.selected {
-  border-color: var(--wa-accent-gold);
-  background: rgba(245, 158, 11, 0.15);
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
-}
-
-.wa-element-btn.in-slot-1 {
-  border-top: 3px solid var(--wa-accent-cyan);
-}
-
-.wa-element-btn.in-slot-2 {
-  border-top: 3px solid var(--wa-accent-purple);
-}
-
-.wa-element-icon {
-  font-size: 28px;
-  margin-bottom: 4px;
-}
-
-.wa-element-name {
-  font-size: 12px;
-  color: var(--wa-text-secondary);
-  font-weight: 500;
-}
-
-/* 配方书 */
-.wa-recipes-section {
-  background: var(--wa-bg-secondary);
-  border-top: 1px solid var(--wa-border);
-}
-
-.wa-recipes-toggle {
-  width: 100%;
-  padding: 16px 24px;
-  background: transparent;
-  border: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  color: var(--wa-text-secondary);
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.wa-recipes-toggle:hover {
-  background: var(--wa-bg-tertiary);
-  color: var(--wa-text-primary);
-}
-
-.wa-recipes-toggle.expanded {
-  color: var(--wa-accent-gold);
-}
-
-.wa-recipes-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.wa-recipes-content.expanded {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.wa-recipes-inner {
-  padding: 16px 24px;
-}
-
-.wa-recipe-category {
-  margin-bottom: 16px;
-}
-
-.wa-recipe-category-title {
-  font-size: 12px;
-  color: var(--wa-accent-cyan);
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.wa-recipe-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.wa-recipe-item {
-  font-size: 13px;
-  color: var(--wa-text-secondary);
-  background: var(--wa-bg-tertiary);
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-
-/* 提示按钮 */
-.wa-hint-btn {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  background: var(--wa-accent-cyan);
-  border: none;
-  border-radius: 50%;
-  color: var(--wa-bg-primary);
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.wa-hint-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 24px rgba(6, 182, 212, 0.5);
-}
-
-/* 弹窗 */
-.wa-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-}
-
-.wa-overlay.show {
-  display: flex;
-}
-
-.wa-popup {
-  background: var(--wa-bg-secondary);
-  border: 1px solid var(--wa-border);
-  border-radius: 20px;
-  padding: 32px 40px;
-  text-align: center;
-  max-width: 320px;
-  animation: wa-popupIn 0.3s ease;
-}
-
-@keyframes wa-popupIn {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.wa-popup-icon {
-  font-size: 56px;
-  margin-bottom: 12px;
-}
-
-.wa-popup-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--wa-text-primary);
-  margin-bottom: 16px;
-}
-
-.wa-popup-highlight {
-  font-size: 42px;
-  font-weight: 800;
-  color: var(--wa-accent-gold);
-  margin-bottom: 12px;
-  text-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
-}
-
-.wa-popup-formula {
-  font-size: 16px;
-  color: var(--wa-text-secondary);
-  margin-bottom: 8px;
-}
-
-.wa-popup-subtitle {
-  font-size: 14px;
-  color: var(--wa-text-muted);
-}
-
 @keyframes wa-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
-}
-
-@keyframes wa-glow {
-  0%, 100% { text-shadow: 0 0 40px rgba(245, 158, 11, 0.6); }
-  50% { text-shadow: 0 0 60px rgba(245, 158, 11, 0.9), 0 0 80px rgba(245, 158, 11, 0.4); }
 }
 
 /* 响应式 */
@@ -780,265 +186,775 @@ year: 2024
     font-size: 72px;
   }
   
-  .wa-intro-features {
-    grid-template-columns: 1fr;
-  }
-  
   .wa-intro-start-btn {
     padding: 16px 40px;
     font-size: 16px;
   }
 }
 
+/* ========== 游戏界面样式（深色主题 - 完全复制 scott-portfolio 版本） ========== */
+.wa-game-interface {
+  display: none;
+}
+
+.wa-game-interface.active {
+  display: block;
+}
+
+.wa-game-interface * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 色彩系统 */
+.wa-game-interface {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --accent-gold: #f59e0b;
+  --accent-cyan: #06b6d4;
+  --accent-purple: #8b5cf6;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: rgba(148, 163, 184, 0.2);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  line-height: 1.6;
+}
+
+/* 顶部导航 */
+.wa-game-interface .nav-bar {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.wa-game-interface .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-game-interface .back-btn {
+  padding: 8px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wa-game-interface .back-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.wa-game-interface .game-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wa-game-interface .stats-mini {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.wa-game-interface .stats-mini span {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+/* 主游戏区域 */
+.wa-game-interface .game-container {
+  width: 100%;
+  max-width: 600px;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* 目标区域 */
+.wa-game-interface .target-section {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border-bottom: 2px solid var(--accent-gold);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100px;
+}
+
+.wa-game-interface .target-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wa-game-interface .target-level-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wa-game-interface .level-code {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.wa-game-interface .target-label-badge {
+  font-size: 10px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  background: rgba(245, 158, 11, 0.2);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.wa-game-interface .target-stat {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wa-game-interface .target-stat-value {
+  color: var(--accent-gold);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.wa-game-interface .target-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+  border-left: 1px solid rgba(245, 158, 11, 0.3);
+  margin-left: 20px;
+}
+
+.wa-game-interface .target-word {
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+  letter-spacing: 8px;
+  line-height: 1;
+}
+
+/* 炼金台 */
+.wa-game-interface .alchemy-section {
+  padding: 32px 24px;
+  background: var(--bg-secondary);
+}
+
+.wa-game-interface .alchemy-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.wa-game-interface .slot {
+  width: 88px;
+  height: 88px;
+  background: var(--bg-tertiary);
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.wa-game-interface .slot:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.wa-game-interface .slot.filled {
+  border-style: solid;
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.15);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.wa-game-interface .slot.selected {
+  border-color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.wa-game-interface .slot::after {
+  content: attr(data-slot);
+  position: absolute;
+  bottom: 4px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.wa-game-interface .operator {
+  font-size: 24px;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.wa-game-interface .result-slot {
+  width: 88px;
+  height: 88px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border: 2px solid var(--accent-gold);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--accent-gold);
+}
+
+/* 主操作按钮 */
+.wa-game-interface .main-action {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.wa-game-interface .btn-combine {
+  padding: 16px 48px;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #d97706 100%);
+  border: none;
+  border-radius: 12px;
+  color: var(--bg-primary);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+}
+
+.wa-game-interface .btn-combine:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.wa-game-interface .btn-combine:active {
+  transform: translateY(0);
+}
+
+.wa-game-interface .btn-combine:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.wa-game-interface .btn-secondary {
+  padding: 14px 24px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wa-game-interface .btn-secondary:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* 元素库 - 7列 */
+.wa-game-interface .elements-section {
+  padding: 20px 24px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border);
+}
+
+.wa-game-interface .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wa-game-interface .section-title {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wa-game-interface .section-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.wa-game-interface .elements-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.wa-game-interface .element-btn {
+  aspect-ratio: 1;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 8px 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wa-game-interface .element-btn:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+  transform: translateY(-2px);
+}
+
+.wa-game-interface .element-btn.selected {
+  border-color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.wa-game-interface .element-btn.in-slot-1 {
+  border-top: 3px solid var(--accent-cyan);
+}
+
+.wa-game-interface .element-btn.in-slot-2 {
+  border-top: 3px solid var(--accent-purple);
+}
+
+.wa-game-interface .element-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.wa-game-interface .element-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 配方书 */
+.wa-game-interface .recipes-section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.wa-game-interface .recipes-toggle {
+  width: 100%;
+  padding: 16px 24px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.wa-game-interface .recipes-toggle:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.wa-game-interface .recipes-toggle.expanded {
+  color: var(--accent-gold);
+}
+
+.wa-game-interface .recipes-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.wa-game-interface .recipes-content.expanded {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.wa-game-interface .recipes-inner {
+  padding: 16px 24px;
+}
+
+.wa-game-interface .recipe-category {
+  margin-bottom: 16px;
+}
+
+.wa-game-interface .recipe-category-title {
+  font-size: 12px;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.wa-game-interface .recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wa-game-interface .recipe-item {
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* 提示按钮 */
+.wa-game-interface .hint-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: var(--accent-cyan);
+  border: none;
+  border-radius: 50%;
+  color: var(--bg-primary);
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.wa-game-interface .hint-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(6, 182, 212, 0.5);
+}
+
+/* 弹窗 */
+.wa-game-interface .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.wa-game-interface .overlay.show {
+  display: flex;
+}
+
+.wa-game-interface .popup {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 40px;
+  text-align: center;
+  max-width: 320px;
+  animation: popupIn 0.3s ease;
+}
+
+@keyframes popupIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.wa-game-interface .popup-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+}
+
+.wa-game-interface .popup-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.wa-game-interface .popup-highlight {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+  text-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+}
+
+.wa-game-interface .popup-formula {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.wa-game-interface .popup-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* 响应式 */
 @media (max-width: 480px) {
   .wa-game-interface {
     padding: 12px;
   }
 
-  .wa-target-section {
+  .wa-game-interface .target-section {
     padding: 16px 20px;
     min-height: 80px;
   }
 
-  .wa-target-word {
+  .wa-game-interface .target-word {
     font-size: 48px;
     letter-spacing: 4px;
   }
 
-  .wa-target-right {
+  .wa-game-interface .target-right {
     padding-left: 16px;
     margin-left: 16px;
   }
 
-  .wa-target-label-badge {
+  .wa-game-interface .target-label-badge {
     font-size: 9px;
     padding: 2px 6px;
   }
 
-  .wa-target-stat {
+  .wa-game-interface .target-stat {
     font-size: 11px;
   }
 
-  .wa-slot, .wa-result-slot {
+  .wa-game-interface .slot, .wa-game-interface .result-slot {
     width: 72px;
     height: 72px;
     font-size: 28px;
   }
 
-  .wa-alchemy-table {
+  .wa-game-interface .alchemy-table {
     gap: 8px;
   }
 
-  .wa-btn-combine {
+  .wa-game-interface .btn-combine {
     padding: 14px 36px;
     font-size: 16px;
   }
 
-  .wa-elements-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+  .wa-game-interface .elements-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
   }
 
-  .wa-element-btn {
-    border-radius: 12px;
-    padding: 10px 4px;
+  .wa-game-interface .element-btn {
+    border-radius: 10px;
+    padding: 6px 2px;
   }
 
-  .wa-element-icon {
-    font-size: 28px;
-    margin-bottom: 6px;
+  .wa-game-interface .element-icon {
+    font-size: 20px;
   }
 
-  .wa-element-name {
-    font-size: 13px;
+  .wa-game-interface .element-name {
+    font-size: 9px;
   }
 }
 
 @media (max-width: 360px) {
-  .wa-elements-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+  .wa-game-interface .elements-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
   }
 
-  .wa-element-btn {
-    border-radius: 10px;
-    padding: 8px 2px;
+  .wa-game-interface .element-btn {
+    border-radius: 8px;
+    padding: 4px 2px;
   }
 
-  .wa-element-icon {
-    font-size: 24px;
+  .wa-game-interface .element-icon {
+    font-size: 18px;
   }
 
-  .wa-element-name {
-    font-size: 12px;
+  .wa-game-interface .element-name {
+    font-size: 8px;
   }
 
-  .wa-target-word {
+  .wa-game-interface .target-word {
     font-size: 36px;
   }
 }
 </style>
 
-<div class="word-alchemy-game">
-  <!-- ===== 介绍页 ===== -->
-  <div class="wa-intro-page" id="wa-introPage">
-    <div class="wa-intro-header">
-      <a href="{{ '/games/' | relative_url }}" class="wa-intro-back-btn">← 返回</a>
+<!-- ========== 介绍页 ========== -->
+<div class="wa-intro-page" id="wa-introPage">
+  <div class="wa-intro-header">
+    <a href="{{ '/games/' | relative_url }}" class="wa-intro-back-btn">← 返回</a>
+  </div>
+  
+  <div class="wa-intro-content">
+    <div class="wa-intro-icon">🔮</div>
+    <h1 class="wa-intro-title">词语炼金术</h1>
+    <p class="wa-intro-subtitle">Word Alchemy - 元素合成解谜游戏</p>
+    
+    <div class="wa-intro-tags">
+      <span class="wa-intro-tag">🧩 解谜</span>
+      <span class="wa-intro-tag">💡 益智</span>
+      <span class="wa-intro-tag">🎯 合成</span>
     </div>
     
-    <div class="wa-intro-content">
-      <div class="wa-intro-icon">🔮</div>
-      <h1 class="wa-intro-title">词语炼金术</h1>
-      <p class="wa-intro-subtitle">Word Alchemy — 元素合成解谜游戏</p>
-      
-      <div class="wa-intro-tags">
-        <span class="wa-intro-tag">🧩 Puzzle</span>
-        <span class="wa-intro-tag">🎯 7 Levels</span>
-        <span class="wa-intro-tag">🌐 Web</span>
-        <span class="wa-intro-tag">2024</span>
+    <div class="wa-intro-section">
+      <div class="wa-intro-section-title">📖 游戏介绍</div>
+      <div class="wa-intro-desc">
+        <p>《词语炼金术》是一款创意元素合成解谜游戏。从基础的🔥火、💧水、🌍土、💨风四种元素开始，通过不断的组合与探索，发现隐藏在这个世界中的 50+ 种神秘元素。</p>
       </div>
-      
-      <div class="wa-intro-section">
-        <div class="wa-intro-section-title">🎮 游戏简介</div>
-        <p class="wa-intro-desc">
-          在这个神秘的炼金世界里，你将扮演一位炼金术士，通过组合不同的基础元素来创造全新的物质。从简单的「火」与「水」开始，逐步解锁更复杂的配方，最终合成目标元素来完成关卡。超过 50 种元素等待你的发现！
-        </p>
-      </div>
-      
-      <div class="wa-intro-section">
-        <div class="wa-intro-section-title">⚡ 核心玩法</div>
-        <div class="wa-intro-features">
-          <div class="wa-intro-feature">
-            <div class="wa-intro-feature-icon">🧪</div>
-            <div class="wa-intro-feature-title">选择元素</div>
-            <div class="wa-intro-feature-desc">从元素库挑选两个</div>
-          </div>
-          <div class="wa-intro-feature">
-            <div class="wa-intro-feature-icon">⚗️</div>
-            <div class="wa-intro-feature-title">炼成合成</div>
-            <div class="wa-intro-feature-desc">放入炼金台组合</div>
-          </div>
-          <div class="wa-intro-feature">
-            <div class="wa-intro-feature-icon">🔓</div>
-            <div class="wa-intro-feature-title">解锁配方</div>
-            <div class="wa-intro-feature-desc">发现新元素与配方</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="wa-intro-section">
-        <div class="wa-intro-section-title">📸 游戏预览</div>
-        <div class="wa-intro-screenshot">
-          <div class="wa-intro-screenshot-inner">
-            <div class="wa-intro-slot filled">🔥</div>
-            <span class="wa-intro-operator">+</span>
-            <div class="wa-intro-slot filled">💧</div>
-            <span class="wa-intro-operator">=</span>
-            <div class="wa-intro-slot filled">♨️</div>
-          </div>
-        </div>
-        <p class="wa-intro-desc" style="text-align: center; font-size: 13px; color: #6b7280;">
-          火 + 水 = 蒸汽 · 每种组合都可能产生意想不到的结果！
-        </p>
-      </div>
-      
-      <button class="wa-intro-start-btn" onclick="waStartGame()">
-        <span>✨</span>
-        <span>开始游戏</span>
-      </button>
     </div>
+    
+    <div class="wa-intro-section">
+      <div class="wa-intro-section-title">🎮 核心玩法</div>
+      <div class="wa-intro-desc">
+        <ul>
+          <li><strong>元素合成</strong>：将两种不同的元素组合，创造出全新的元素</li>
+          <li><strong>配方探索</strong>：50+ 种隐藏配方等待你的发现</li>
+          <li><strong>关卡挑战</strong>：完成特定目标，解锁更多元素</li>
+          <li><strong>炼金图鉴</strong>：收集所有元素，完成你的炼金百科</li>
+        </ul>
+      </div>
+    </div>
+    
+    <button class="wa-intro-start-btn" onclick="startGame()">
+      <span>✨</span>
+      <span>开始游戏</span>
+    </button>
   </div>
+</div>
 
-  <!-- ===== 游戏界面 ===== -->
-  <div class="wa-game-interface" id="wa-gameInterface">
-    <!-- 导航栏 -->
-    <nav class="wa-nav-bar">
-      <div class="wa-nav-left">
-        <button class="wa-back-to-intro-btn" onclick="waBackToIntro()">← 返回介绍</button>
-        <span class="wa-game-title">词语炼金术</span>
-      </div>
-      <div class="wa-stats-mini">
-        <div>关卡 <span id="wa-navLevel">1</span>/7</div>
-        <div>得分 <span id="wa-navScore">0</span></div>
-      </div>
-    </nav>
+<!-- ========== 游戏界面（完全复制 scott-portfolio 版本） ========== -->
+<div class="wa-game-interface" id="wa-gameInterface">
+  <!-- 导航栏 -->
+  <nav class="nav-bar">
+    <div class="nav-left">
+      <button class="back-btn" onclick="backToIntro()">← 返回介绍</button>
+      <span class="game-title">词语炼金术</span>
+    </div>
+    <div class="stats-mini">
+      <div>关卡 <span id="navLevel">1</span></div>
+      <div>得分 <span id="navScore">0</span></div>
+    </div>
+  </nav>
 
-    <!-- 主游戏区 -->
-    <div class="wa-game-container">
-      <!-- 目标区域 -->
-      <div class="wa-target-section">
-        <div class="wa-target-left">
-          <div class="wa-target-level-row">
-            <span class="wa-level-code">LV.<span id="wa-levelDisplay">01</span></span>
-            <span class="wa-target-label-badge">当前目标</span>
-          </div>
-          <div class="wa-target-stat">
-            合成进度 <span class="wa-target-stat-value" id="wa-progressText">0/1</span>
-          </div>
+  <!-- 主游戏区 -->
+  <div class="game-container">
+    <!-- 目标区域 -->
+    <div class="target-section">
+      <div class="target-left">
+        <div class="target-level-row">
+          <span class="level-code">LV.<span id="levelDisplay">01</span></span>
+          <span class="target-label-badge">当前目标</span>
         </div>
-        <div class="wa-target-right">
-          <div class="wa-target-word" id="wa-targetWord">蒸汽</div>
+        <div class="target-stat">
+          合成进度 <span class="target-stat-value" id="progressText">0/1</span>
         </div>
       </div>
-
-      <!-- 炼金台 -->
-      <div class="wa-alchemy-section">
-        <div class="wa-alchemy-table">
-          <div class="wa-slot" id="wa-slot1" onclick="waClearSlot(1)" data-slot="1">?</div>
-          <span class="wa-operator">+</span>
-          <div class="wa-slot" id="wa-slot2" onclick="waClearSlot(2)" data-slot="2">?</div>
-          <span class="wa-operator">=</span>
-          <div class="wa-result-slot" id="wa-result">?</div>
-        </div>
-        <div class="wa-main-action">
-          <button class="wa-btn-combine" onclick="waCombine()">✨ 炼成</button>
-          <button class="wa-btn-secondary" onclick="waClearSlots()">清空</button>
-        </div>
+      <div class="target-right">
+        <div class="target-word" id="targetWord">蒸汽</div>
       </div>
+    </div>
 
-      <!-- 元素库 -->
-      <div class="wa-elements-section">
-        <div class="wa-section-header">
-          <div class="wa-section-title">🔮 元素库 <span class="wa-section-count" id="wa-elementCount">4/50</span></div>
-        </div>
-        <div class="wa-elements-grid" id="wa-elementsGrid">
+    <!-- 炼金台 -->
+    <div class="alchemy-section">
+      <div class="alchemy-table">
+        <div class="slot" id="slot1" onclick="clearSlot(1)" data-slot="1">?</div>
+        <span class="operator">+</span>
+        <div class="slot" id="slot2" onclick="clearSlot(2)" data-slot="2">?</div>
+        <span class="operator">=</span>
+        <div class="result-slot" id="result">?</div>
+      </div>
+      <div class="main-action">
+        <button class="btn-combine" onclick="combine()">✨ 炼成</button>
+        <button class="btn-secondary" onclick="clearSlots()">清空</button>
+      </div>
+    </div>
+
+    <!-- 元素库 -->
+    <div class="elements-section">
+      <div class="section-header">
+        <div class="section-title">🔮 元素库 <span class="section-count" id="elementCount">4/50</span></div>
+      </div>
+      <div class="elements-grid" id="elementsGrid">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+
+    <!-- 配方书 -->
+    <div class="recipes-section">
+      <button class="recipes-toggle" id="recipesToggle" onclick="toggleRecipes()">
+        <span>📖 已解锁配方 <span id="recipeCountBadge">0</span></span>
+        <span id="toggleArrow">▼</span>
+      </button>
+      <div class="recipes-content" id="recipesContent">
+        <div class="recipes-inner" id="recipes">
           <!-- 动态生成 -->
         </div>
       </div>
-
-      <!-- 配方书 -->
-      <div class="wa-recipes-section">
-        <button class="wa-recipes-toggle" id="wa-recipesToggle" onclick="waToggleRecipes()">
-          <span>📖 已解锁配方 <span id="wa-recipeCountBadge">0</span></span>
-          <span id="wa-toggleArrow">▼</span>
-        </button>
-        <div class="wa-recipes-content" id="wa-recipesContent">
-          <div class="wa-recipes-inner" id="wa-recipes">
-            <!-- 动态生成 -->
-          </div>
-        </div>
-      </div>
     </div>
+  </div>
 
-    <!-- 提示按钮 -->
-    <button class="wa-hint-btn" onclick="waShowHint()" title="提示">💡</button>
+  <!-- 提示按钮 -->
+  <button class="hint-btn" onclick="showHint()" title="提示">💡</button>
 
-    <!-- 弹窗 -->
-    <div class="wa-overlay" id="wa-overlay">
-      <div class="wa-popup" id="wa-popup">
-        <div class="wa-popup-icon" id="wa-popupIcon">✨</div>
-        <div class="wa-popup-title" id="wa-popupTitle">炼成成功</div>
-        <div class="wa-popup-highlight" id="wa-popupHighlight"></div>
-        <div class="wa-popup-formula" id="wa-popupFormula"></div>
-        <div class="wa-popup-subtitle" id="wa-popupSubtitle"></div>
-      </div>
+  <!-- 弹窗 -->
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <div class="popup-icon" id="popupIcon">✨</div>
+      <div class="popup-title" id="popupTitle">炼成成功</div>
+      <div class="popup-highlight" id="popupHighlight"></div>
+      <div class="popup-formula" id="popupFormula"></div>
+      <div class="popup-subtitle" id="popupSubtitle"></div>
     </div>
   </div>
 </div>
 
 <script>
-// 启动游戏函数
-window.waStartGame = function() {
+// ========== 页面切换函数 ==========
+function startGame() {
   // 隐藏介绍页
   document.getElementById('wa-introPage').style.display = 'none';
   
@@ -1046,7 +962,7 @@ window.waStartGame = function() {
   document.getElementById('wa-gameInterface').classList.add('active');
   
   // 初始化游戏
-  waInitGame();
+  initGame();
   
   // 手机端尝试进入全屏
   if (window.matchMedia('(pointer: coarse)').matches) {
@@ -1061,10 +977,9 @@ window.waStartGame = function() {
       });
     }
   }
-};
+}
 
-// 返回介绍页
-window.waBackToIntro = function() {
+function backToIntro() {
   // 显示介绍页
   document.getElementById('wa-introPage').style.display = 'flex';
   
@@ -1083,326 +998,320 @@ window.waBackToIntro = function() {
       });
     }
   }
+}
+
+// ========== 游戏逻辑（完全复制 scott-portfolio 版本） ==========
+const recipes = {
+  '火+水': '蒸汽', '火+土': '岩浆', '水+土': '泥浆',
+  '火+风': '烟', '水+风': '云', '土+风': '沙尘',
+  '蒸汽+水': '雾', '云+水': '雨', '雨+土': '植物',
+  '植物+火': '灰烬', '岩浆+水': '石头', '石头+火': '金属',
+  '金属+火': '工具', '植物+工具': '木材', '木材+火': '炭',
+  '植物+云': '生命', '生命+水': '鱼', '鱼+工具': '食物',
+  '生命+土': '人', '人+工具': '房子', '房子+生命': '家庭',
+  '金属+石头': '城堡', '云+风': '风暴', '风暴+水': '海啸',
+  '人+火': '知识', '知识+人': '科学', '科学+金属': '机器',
+  '机器+生命': '机器人', '家庭+爱': '幸福', '人+人': '爱',
+  '人+鱼': '人鱼', '火+鱼': '烤鱼', '机器+人': '人造人15号',
+  '石头+生命': '孙悟空', '猫+互联网': '网红猫', '狗+工作': '社畜',
+  '手机+床': '熬夜', '周一+工作': '痛苦', '周五+下班': '自由',
+  '梦想+现实': '幻灭', '面包+火': '吐司', '番茄+蛋': '番茄炒蛋',
+  '土豆+火': '薯条', '牛奶+时间': '奶酪', '葡萄+时间': '葡萄酒',
+  '肉+时间': '腊肉', '人+鸟': '天使', '人+狼': '狼人',
+  '咖啡+工作': '加班', '纸+笔': '作业', '书+枕头': '失眠',
 };
 
-// 游戏初始化
-window.waInitGame = function() {
-  if (!window.waGameInitialized) {
-    waLoadLevel();
-    waRenderElements();
-    waRenderRecipes();
-    window.waGameInitialized = true;
-  }
+const elementCategories = {
+  '基础': ['火', '水', '土', '风'],
+  '自然': ['蒸汽', '云', '雨', '雾', '风暴', '海啸', '沙尘', '烟'],
+  '物质': ['岩浆', '石头', '金属', '工具', '木材', '炭', '城堡'],
+  '生命': ['植物', '生命', '鱼', '人', '家庭'],
+  '食物': ['食物', '烤鱼', '吐司', '番茄炒蛋', '薯条', '奶酪', '葡萄酒', '腊肉'],
+  '概念': ['知识', '科学', '机器', '机器人', '爱', '幸福', '痛苦', '自由', '幻灭'],
+  '彩蛋': ['人鱼', '人造人15号', '网红猫', '社畜', '熬夜', '加班', '作业', '失眠', '天使', '狼人', '孙悟空']
 };
 
-// Word Alchemy Game Logic
-(function() {
-  // 游戏数据
-  const recipes = {
-    '火+水': '蒸汽', '火+土': '岩浆', '水+土': '泥浆',
-    '火+风': '烟', '水+风': '云', '土+风': '沙尘',
-    '蒸汽+水': '雾', '云+水': '雨', '雨+土': '植物',
-    '植物+火': '灰烬', '岩浆+水': '石头', '石头+火': '金属',
-    '金属+火': '工具', '植物+工具': '木材', '木材+火': '炭',
-    '植物+云': '生命', '生命+水': '鱼', '鱼+工具': '食物',
-    '生命+土': '人', '人+工具': '房子', '房子+生命': '家庭',
-    '金属+石头': '城堡', '云+风': '风暴', '风暴+水': '海啸',
-    '人+火': '知识', '知识+人': '科学', '科学+金属': '机器',
-    '机器+生命': '机器人', '家庭+爱': '幸福', '人+人': '爱',
-    '人+鱼': '人鱼', '火+鱼': '烤鱼', '机器+人': '人造人15号',
-    '石头+生命': '孙悟空', '猫+互联网': '网红猫', '狗+工作': '社畜',
-    '手机+床': '熬夜', '周一+工作': '痛苦', '周五+下班': '自由',
-    '梦想+现实': '幻灭', '面包+火': '吐司', '番茄+蛋': '番茄炒蛋',
-    '土豆+火': '薯条', '牛奶+时间': '奶酪', '葡萄+时间': '葡萄酒',
-    '肉+时间': '腊肉', '人+鸟': '天使', '人+狼': '狼人',
-    '咖啡+工作': '加班', '纸+笔': '作业', '书+枕头': '失眠',
+const levels = [
+  { target: '蒸汽', hint: '火 + 水' },
+  { target: '云', hint: '水 + 风' },
+  { target: '植物', hint: '雨 + 土' },
+  { target: '石头', hint: '岩浆 + 水' },
+  { target: '金属', hint: '石头 + 火' },
+  { target: '工具', hint: '金属 + 火' },
+  { target: '木材', hint: '植物 + 工具' },
+];
+
+let level = 1;
+let score = 0;
+let slots = [null, null];
+let selectedSlot = 1;
+let combineCount = 0;
+let newRecipeCount = 0;
+let recipesExpanded = false;
+let unlockedRecipes = [];
+let unlockedElements = ['火', '水', '土', '风'];
+let gameInitialized = false;
+
+function getElementIcon(element) {
+  const icons = {
+    '火': '🔥', '水': '💧', '土': '🌍', '风': '💨',
+    '蒸汽': '♨️', '云': '☁️', '雨': '🌧️', '雾': '🌫️',
+    '风暴': '⛈️', '海啸': '🌊', '沙尘': '🌪️', '烟': '💨',
+    '岩浆': '🌋', '石头': '🪨', '金属': '⚙️', '工具': '🔧',
+    '木材': '🪵', '炭': '🖤', '城堡': '🏰',
+    '植物': '🌱', '生命': '🌿', '鱼': '🐟', '人': '👤',
+    '房子': '🏠', '家庭': '👨‍👩‍👧‍👦', '食物': '🍖',
+    '知识': '📚', '科学': '🔬', '机器': '⚙️', '机器人': '🤖',
+    '爱': '❤️', '幸福': '😊', '痛苦': '😣', '自由': '🕊️',
+    '人鱼': '🧜', '天使': '👼', '狼人': '🐺', '孙悟空': '🐵',
+    '网红猫': '😺', '社畜': '🐕‍🦺', '熬夜': '📱', '加班': '☕',
+    '作业': '📝', '失眠': '🛏️', '幻灭': '💔',
+    '烤鱼': '🐠', '人造人15号': '🤖',
+    '吐司': '🍞', '番茄炒蛋': '🍳', '薯条': '🍟',
+    '奶酪': '🧀', '葡萄酒': '🍷', '腊肉': '🥓'
   };
+  return icons[element] || '✨';
+}
 
-  const elementCategories = {
-    '基础': ['火', '水', '土', '风'],
-    '自然': ['蒸汽', '云', '雨', '雾', '风暴', '海啸', '沙尘', '烟'],
-    '物质': ['岩浆', '石头', '金属', '工具', '木材', '炭', '城堡'],
-    '生命': ['植物', '生命', '鱼', '人', '家庭'],
-    '食物': ['食物', '烤鱼', '吐司', '番茄炒蛋', '薯条', '奶酪', '葡萄酒', '腊肉'],
-    '概念': ['知识', '科学', '机器', '机器人', '爱', '幸福', '痛苦', '自由', '幻灭'],
-    '彩蛋': ['人鱼', '人造人15号', '网红猫', '社畜', '熬夜', '加班', '作业', '失眠', '天使', '狼人', '孙悟空']
-  };
+function getElementCategory(element) {
+  for (const [cat, elements] of Object.entries(elementCategories)) {
+    if (elements.includes(element)) return cat;
+  }
+  return '其他';
+}
 
-  const levels = [
-    { target: '蒸汽', hint: '火 + 水' },
-    { target: '云', hint: '水 + 风' },
-    { target: '植物', hint: '雨 + 土' },
-    { target: '石头', hint: '岩浆 + 水' },
-    { target: '金属', hint: '石头 + 火' },
-    { target: '工具', hint: '金属 + 火' },
-    { target: '木材', hint: '植物 + 工具' },
-  ];
+function initGame() {
+  if (!gameInitialized) {
+    loadLevel();
+    renderElements();
+    renderRecipes();
+    gameInitialized = true;
+  }
+}
 
-  // 游戏状态
-  let level = 1;
-  let score = 0;
-  let slots = [null, null];
-  let selectedSlot = 1;
-  let combineCount = 0;
-  let newRecipeCount = 0;
-  let recipesExpanded = false;
-  let unlockedRecipes = [];
-  let unlockedElements = ['火', '水', '土', '风'];
+function loadLevel() {
+  const lvl = levels[(level - 1) % levels.length];
+  document.getElementById('targetWord').textContent = lvl.target;
+  document.getElementById('levelDisplay').textContent = String(level).padStart(2, '0');
+  document.getElementById('navLevel').textContent = level;
+  document.getElementById('navScore').textContent = score;
+  document.getElementById('progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
+  clearSlots();
+}
 
-  // 元素图标
-  function getElementIcon(element) {
-    const icons = {
-      '火': '🔥', '水': '💧', '土': '🌍', '风': '💨',
-      '蒸汽': '♨️', '云': '☁️', '雨': '🌧️', '雾': '🌫️',
-      '风暴': '⛈️', '海啸': '🌊', '沙尘': '🌪️', '烟': '💨',
-      '岩浆': '🌋', '石头': '🪨', '金属': '⚙️', '工具': '🔧',
-      '木材': '🪵', '炭': '🖤', '城堡': '🏰',
-      '植物': '🌱', '生命': '🌿', '鱼': '🐟', '人': '👤',
-      '房子': '🏠', '家庭': '👨‍👩‍👧‍👦', '食物': '🍖',
-      '知识': '📚', '科学': '🔬', '机器': '⚙️', '机器人': '🤖',
-      '爱': '❤️', '幸福': '😊', '痛苦': '😣', '自由': '🕊️',
-      '人鱼': '🧜', '天使': '👼', '狼人': '🐺', '孙悟空': '🐵',
-      '网红猫': '😺', '社畜': '🐕‍🦺', '熬夜': '📱', '加班': '☕',
-      '作业': '📝', '失眠': '🛏️', '幻灭': '💔',
-      '烤鱼': '🐠', '人造人15号': '🤖',
-      '吐司': '🍞', '番茄炒蛋': '🍳', '薯条': '🍟',
-      '奶酪': '🧀', '葡萄酒': '🍷', '腊肉': '🥓'
-    };
-    return icons[element] || '✨';
+function renderElements() {
+  const grid = document.getElementById('elementsGrid');
+  const categorized = {};
+  unlockedElements.forEach(el => {
+    const cat = getElementCategory(el);
+    if (!categorized[cat]) categorized[cat] = [];
+    categorized[cat].push(el);
+  });
+
+  const order = ['基础', '自然', '物质', '生命', '食物', '概念', '彩蛋'];
+  let html = '';
+
+  order.forEach(cat => {
+    if (categorized[cat]) {
+      categorized[cat].forEach(el => {
+        const inSlot1 = slots[0] === el ? 'in-slot-1' : '';
+        const inSlot2 = slots[1] === el ? 'in-slot-2' : '';
+        const selected = (slots[0] === el || slots[1] === el) ? 'selected' : '';
+        html += `
+          <div class="element-btn ${selected} ${inSlot1} ${inSlot2}" 
+               onclick="selectElement('${el}')" 
+               data-element="${el}">
+            <span class="element-icon">${getElementIcon(el)}</span>
+            <span class="element-name">${el}</span>
+          </div>
+        `;
+      });
+    }
+  });
+
+  grid.innerHTML = html;
+  document.getElementById('elementCount').textContent = `${unlockedElements.length}/50`;
+}
+
+function renderRecipes() {
+  const container = document.getElementById('recipes');
+  if (unlockedRecipes.length === 0) {
+    container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">暂无已解锁配方</span>';
+    document.getElementById('recipeCountBadge').textContent = '0';
+    return;
   }
 
-  function getElementCategory(element) {
-    for (const [cat, elements] of Object.entries(elementCategories)) {
-      if (elements.includes(element)) return cat;
+  const categorized = {};
+  unlockedRecipes.forEach(r => {
+    const cat = getElementCategory(r.output);
+    if (!categorized[cat]) categorized[cat] = [];
+    categorized[cat].push(r);
+  });
+
+  const order = ['基础', '自然', '物质', '生命', '食物', '概念', '彩蛋'];
+  let html = '';
+
+  order.forEach(cat => {
+    if (categorized[cat]) {
+      html += `<div class="recipe-category">`;
+      html += `<div class="recipe-category-title">${cat}</div>`;
+      html += `<div class="recipe-list">`;
+      categorized[cat].forEach(r => {
+        html += `<div class="recipe-item">${r.input.join('+')}=${r.output}</div>`;
+      });
+      html += `</div></div>`;
     }
-    return '其他';
-  }
+  });
 
-  window.waLoadLevel = function() {
-    const lvl = levels[(level - 1) % levels.length];
-    document.getElementById('wa-targetWord').textContent = lvl.target;
-    document.getElementById('wa-levelDisplay').textContent = String(level).padStart(2, '0');
-    document.getElementById('wa-navLevel').textContent = level;
-    document.getElementById('wa-navScore').textContent = score;
-    document.getElementById('wa-progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
-    waClearSlots();
-  };
+  container.innerHTML = html;
+  document.getElementById('recipeCountBadge').textContent = unlockedRecipes.length;
+}
 
-  window.waRenderElements = function() {
-    const grid = document.getElementById('wa-elementsGrid');
-    const categorized = {};
-    unlockedElements.forEach(el => {
-      const cat = getElementCategory(el);
-      if (!categorized[cat]) categorized[cat] = [];
-      categorized[cat].push(el);
-    });
-
-    const order = ['基础', '自然', '物质', '生命', '食物', '概念', '彩蛋'];
-    let html = '';
-
-    order.forEach(cat => {
-      if (categorized[cat]) {
-        categorized[cat].forEach(el => {
-          const inSlot1 = slots[0] === el ? 'in-slot-1' : '';
-          const inSlot2 = slots[1] === el ? 'in-slot-2' : '';
-          const selected = (slots[0] === el || slots[1] === el) ? 'selected' : '';
-          html += `
-            <div class="wa-element-btn ${selected} ${inSlot1} ${inSlot2}" 
-                 onclick="waSelectElement('${el}')" 
-                 data-element="${el}">
-              <span class="wa-element-icon">${getElementIcon(el)}</span>
-              <span class="wa-element-name">${el}</span>
-            </div>
-          `;
-        });
-      }
-    });
-
-    grid.innerHTML = html;
-    document.getElementById('wa-elementCount').textContent = `${unlockedElements.length}/50`;
-  };
-
-  window.waRenderRecipes = function() {
-    const container = document.getElementById('wa-recipes');
-    if (unlockedRecipes.length === 0) {
-      container.innerHTML = '<span style="color:var(--wa-text-muted);font-size:13px;">暂无已解锁配方</span>';
-      document.getElementById('wa-recipeCountBadge').textContent = '0';
-      return;
-    }
-
-    const categorized = {};
-    unlockedRecipes.forEach(r => {
-      const cat = getElementCategory(r.output);
-      if (!categorized[cat]) categorized[cat] = [];
-      categorized[cat].push(r);
-    });
-
-    const order = ['基础', '自然', '物质', '生命', '食物', '概念', '彩蛋'];
-    let html = '';
-
-    order.forEach(cat => {
-      if (categorized[cat]) {
-        html += `<div class="wa-recipe-category">`;
-        html += `<div class="wa-recipe-category-title">${cat}</div>`;
-        html += `<div class="wa-recipe-list">`;
-        categorized[cat].forEach(r => {
-          html += `<div class="wa-recipe-item">${r.input.join('+')}=${r.output}</div>`;
-        });
-        html += `</div></div>`;
-      }
-    });
-
-    container.innerHTML = html;
-    document.getElementById('wa-recipeCountBadge').textContent = unlockedRecipes.length;
-  };
-
-  // 暴露给全局的函数
-  window.waSelectElement = function(element) {
-    if (slots[0] === element) {
-      slots[0] = null;
-      selectedSlot = 1;
-      waUpdateSlots();
-      waRenderElements();
-      return;
-    }
-    if (slots[1] === element) {
-      slots[1] = null;
-      selectedSlot = 2;
-      waUpdateSlots();
-      waRenderElements();
-      return;
-    }
-
-    slots[selectedSlot - 1] = element;
-    selectedSlot = selectedSlot === 1 ? 2 : 1;
-
-    waUpdateSlots();
-    waRenderElements();
-  };
-
-  window.waUpdateSlots = function() {
-    const slot1 = document.getElementById('wa-slot1');
-    const slot2 = document.getElementById('wa-slot2');
-    const resultSlot = document.getElementById('wa-result');
-
-    slot1.textContent = slots[0] ? getElementIcon(slots[0]) : '?';
-    slot1.className = 'wa-slot' + (slots[0] ? ' filled' : '');
-
-    slot2.textContent = slots[1] ? getElementIcon(slots[1]) : '?';
-    slot2.className = 'wa-slot' + (slots[1] ? ' filled' : '');
-
-    if (slots[0] && slots[1]) {
-      const key1 = `${slots[0]}+${slots[1]}`;
-      const key2 = `${slots[1]}+${slots[0]}`;
-      const result = recipes[key1] || recipes[key2];
-      resultSlot.textContent = result ? getElementIcon(result) : '✗';
-    } else {
-      resultSlot.textContent = '?';
-    }
-  };
-
-  window.waClearSlots = function() {
-    slots = [null, null];
+function selectElement(element) {
+  if (slots[0] === element) {
+    slots[0] = null;
     selectedSlot = 1;
-    waUpdateSlots();
-    waRenderElements();
-  };
+    updateSlots();
+    renderElements();
+    return;
+  }
+  if (slots[1] === element) {
+    slots[1] = null;
+    selectedSlot = 2;
+    updateSlots();
+    renderElements();
+    return;
+  }
 
-  window.waClearSlot = function(slotNum) {
-    slots[slotNum - 1] = null;
-    selectedSlot = slotNum;
-    waUpdateSlots();
-    waRenderElements();
-  };
+  slots[selectedSlot - 1] = element;
+  selectedSlot = selectedSlot === 1 ? 2 : 1;
 
-  window.waCombine = function() {
-    if (!slots[0] || !slots[1]) {
-      waShowPopup('⚠️', '请先选择两个元素', '', '点击元素库中的元素');
-      return;
-    }
+  updateSlots();
+  renderElements();
+}
 
-    combineCount++;
+function updateSlots() {
+  const slot1 = document.getElementById('slot1');
+  const slot2 = document.getElementById('slot2');
+  const resultSlot = document.getElementById('result');
+
+  slot1.textContent = slots[0] ? getElementIcon(slots[0]) : '?';
+  slot1.className = 'slot' + (slots[0] ? ' filled' : '');
+
+  slot2.textContent = slots[1] ? getElementIcon(slots[1]) : '?';
+  slot2.className = 'slot' + (slots[1] ? ' filled' : '');
+
+  if (slots[0] && slots[1]) {
     const key1 = `${slots[0]}+${slots[1]}`;
     const key2 = `${slots[1]}+${slots[0]}`;
     const result = recipes[key1] || recipes[key2];
+    resultSlot.textContent = result ? getElementIcon(result) : '✗';
+  } else {
+    resultSlot.textContent = '?';
+  }
+}
 
-    if (result) {
-      const isTarget = result === document.getElementById('wa-targetWord').textContent;
-      const isNewRecipe = !unlockedRecipes.find(r => r.output === result);
-      const isNewElement = !unlockedElements.includes(result);
+function clearSlots() {
+  slots = [null, null];
+  selectedSlot = 1;
+  updateSlots();
+  renderElements();
+}
 
-      if (isNewElement) {
-        unlockedElements.push(result);
-        waRenderElements();
-      }
+function clearSlot(slotNum) {
+  slots[slotNum - 1] = null;
+  selectedSlot = slotNum;
+  updateSlots();
+  renderElements();
+}
 
-      if (isNewRecipe) {
-        unlockedRecipes.push({ input: [slots[0], slots[1]].sort(), output: result });
-        waRenderRecipes();
-        newRecipeCount++;
-        score += 50;
-      } else {
-        score += 10;
-      }
+function combine() {
+  if (!slots[0] || !slots[1]) {
+    showPopup('⚠️', '请先选择两个元素', '', '点击元素库中的元素');
+    return;
+  }
 
-      document.getElementById('wa-navScore').textContent = score;
+  combineCount++;
+  const key1 = `${slots[0]}+${slots[1]}`;
+  const key2 = `${slots[1]}+${slots[0]}`;
+  const result = recipes[key1] || recipes[key2];
 
-      if (isTarget) {
-        score += 100;
-        document.getElementById('wa-navScore').textContent = score;
-        waShowPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
-        setTimeout(() => {
-          if (level < 7) {
-            level++;
-            combineCount = 0;
-            newRecipeCount = 0;
-            waLoadLevel();
-          } else {
-            waShowPopup('🏆', '恭喜通关！', '7/7', '已完成所有关卡');
-          }
-        }, 2000);
-      } else {
-        if (isNewRecipe) {
-          waShowPopup('✨', '新配方解锁', result, `${slots[0]} + ${slots[1]}`);
-        } else {
-          waShowPopup('📝', '已有配方', result, '已收录至配方书');
-        }
-      }
+  if (result) {
+    const isTarget = result === document.getElementById('targetWord').textContent;
+    const isNewRecipe = !unlockedRecipes.find(r => r.output === result);
+    const isNewElement = !unlockedElements.includes(result);
 
-      waClearSlots();
+    if (isNewElement) {
+      unlockedElements.push(result);
+      renderElements();
+    }
+
+    if (isNewRecipe) {
+      unlockedRecipes.push({ input: [slots[0], slots[1]].sort(), output: result });
+      renderRecipes();
+      newRecipeCount++;
+      score += 50;
     } else {
-      waShowPopup('❌', '无法组合', '', '试试其他组合方式');
+      score += 10;
     }
-  };
 
-  window.waShowPopup = function(icon, title, highlight, subtitle) {
-    document.getElementById('wa-popupIcon').textContent = icon;
-    document.getElementById('wa-popupTitle').textContent = title;
-    document.getElementById('wa-popupHighlight').textContent = highlight;
-    document.getElementById('wa-popupFormula').textContent = subtitle;
-    document.getElementById('wa-overlay').classList.add('show');
+    document.getElementById('navScore').textContent = score;
 
-    setTimeout(() => {
-      document.getElementById('wa-overlay').classList.remove('show');
-    }, 2000);
-  };
-
-  window.waToggleRecipes = function() {
-    recipesExpanded = !recipesExpanded;
-    document.getElementById('wa-recipesToggle').classList.toggle('expanded', recipesExpanded);
-    document.getElementById('wa-recipesContent').classList.toggle('expanded', recipesExpanded);
-  };
-
-  window.waShowHint = function() {
-    const lvl = levels[(level - 1) % levels.length];
-    waShowPopup('💡', '提示', '', lvl.hint);
-  };
-
-  // 点击遮罩关闭弹窗
-  document.getElementById('wa-overlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-      this.classList.remove('show');
+    if (isTarget) {
+      score += 100;
+      document.getElementById('navScore').textContent = score;
+      showPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
+      setTimeout(() => {
+        if (level < 7) {
+          level++;
+          combineCount = 0;
+          newRecipeCount = 0;
+          loadLevel();
+        } else {
+          showPopup('🏆', '恭喜通关！', '7/7', '已完成所有关卡');
+        }
+      }, 2000);
+    } else {
+      if (isNewRecipe) {
+        showPopup('✨', '新配方解锁', result, `${slots[0]} + ${slots[1]}`);
+      } else {
+        showPopup('📝', '已有配方', result, '已收录至配方书');
+      }
     }
-  });
-})();
+
+    clearSlots();
+  } else {
+    showPopup('❌', '无法组合', '', '试试其他组合方式');
+  }
+}
+
+function showPopup(icon, title, highlight, subtitle) {
+  document.getElementById('popupIcon').textContent = icon;
+  document.getElementById('popupTitle').textContent = title;
+  document.getElementById('popupHighlight').textContent = highlight;
+  document.getElementById('popupFormula').textContent = subtitle;
+  document.getElementById('overlay').classList.add('show');
+
+  setTimeout(() => {
+    document.getElementById('overlay').classList.remove('show');
+  }, 2000);
+}
+
+function toggleRecipes() {
+  recipesExpanded = !recipesExpanded;
+  document.getElementById('recipesToggle').classList.toggle('expanded', recipesExpanded);
+  document.getElementById('recipesContent').classList.toggle('expanded', recipesExpanded);
+}
+
+function showHint() {
+  const lvl = levels[(level - 1) % levels.length];
+  showPopup('💡', '提示', '', lvl.hint);
+}
+
+// 点击遮罩关闭弹窗
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.classList.remove('show');
+  }
+});
 </script>
