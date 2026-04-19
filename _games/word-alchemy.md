@@ -98,7 +98,6 @@ year: 2024
 /* 主游戏区域 */
 .wa-game-container {
   width: 100%;
-  max-width: 600px;
   background: var(--wa-bg-secondary);
   border-radius: 20px;
   border: 1px solid var(--wa-border);
@@ -538,6 +537,106 @@ year: 2024
   color: var(--wa-text-muted);
 }
 
+/* 启动封面样式 */
+.wa-launch-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.wa-launch-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.wa-launch-icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+  animation: wa-float 3s ease-in-out infinite;
+}
+
+.wa-launch-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 12px;
+  text-shadow: 0 0 40px rgba(245, 158, 11, 0.6);
+  animation: wa-glow 2s ease-in-out infinite;
+  letter-spacing: 4px;
+}
+
+.wa-launch-subtitle {
+  font-size: 18px;
+  color: #94a3b8;
+  margin-bottom: 48px;
+  font-weight: 500;
+}
+
+.wa-launch-btn {
+  padding: 18px 64px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  border-radius: 16px;
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+  letter-spacing: 2px;
+}
+
+.wa-launch-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.6);
+}
+
+.wa-launch-btn:active {
+  transform: scale(0.98);
+}
+
+.wa-launch-hint {
+  margin-top: 64px;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  max-width: 420px;
+  text-align: center;
+}
+
+.wa-launch-hint-title {
+  font-size: 14px;
+  color: #06b6d4;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.wa-launch-hint-text {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.8;
+}
+
+@keyframes wa-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes wa-glow {
+  0%, 100% { text-shadow: 0 0 40px rgba(245, 158, 11, 0.6); }
+  50% { text-shadow: 0 0 60px rgba(245, 158, 11, 0.9), 0 0 80px rgba(245, 158, 11, 0.4); }
+}
+
 /* 响应式 */
 @media (max-width: 480px) {
   .word-alchemy-game {
@@ -600,6 +699,30 @@ year: 2024
   .wa-element-name {
     font-size: 9px;
   }
+
+  .wa-launch-icon {
+    font-size: 64px;
+  }
+
+  .wa-launch-title {
+    font-size: 32px;
+  }
+
+  .wa-launch-subtitle {
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+
+  .wa-launch-btn {
+    padding: 16px 48px;
+    font-size: 18px;
+  }
+
+  .wa-launch-hint {
+    margin-top: 48px;
+    padding: 20px 24px;
+    max-width: 340px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -628,91 +751,127 @@ year: 2024
 </style>
 
 <div class="word-alchemy-game">
-  <!-- 导航栏 -->
-  <nav class="wa-nav-bar">
-    <div class="wa-nav-left">
-      <a href="{{ '/games/' | relative_url }}" class="wa-back-btn">← 返回</a>
-      <span class="wa-game-title">词语炼金术</span>
-    </div>
-    <div class="wa-stats-mini">
-      <div>关卡 <span id="wa-navLevel">1</span></div>
-      <div>得分 <span id="wa-navScore">0</span></div>
-    </div>
-  </nav>
-
-  <!-- 主游戏区 -->
-  <div class="wa-game-container">
-    <!-- 目标区域 -->
-    <div class="wa-target-section">
-      <div class="wa-target-left">
-        <div class="wa-target-level-row">
-          <span class="wa-level-code">LV.<span id="wa-levelDisplay">01</span></span>
-          <span class="wa-target-label-badge">当前目标</span>
-        </div>
-        <div class="wa-target-stat">
-          合成进度 <span class="wa-target-stat-value" id="wa-progressText">0/1</span>
-        </div>
-      </div>
-      <div class="wa-target-right">
-        <div class="wa-target-word" id="wa-targetWord">蒸汽</div>
-      </div>
-    </div>
-
-    <!-- 炼金台 -->
-    <div class="wa-alchemy-section">
-      <div class="wa-alchemy-table">
-        <div class="wa-slot" id="wa-slot1" onclick="waClearSlot(1)" data-slot="1">?</div>
-        <span class="wa-operator">+</span>
-        <div class="wa-slot" id="wa-slot2" onclick="waClearSlot(2)" data-slot="2">?</div>
-        <span class="wa-operator">=</span>
-        <div class="wa-result-slot" id="wa-result">?</div>
-      </div>
-      <div class="wa-main-action">
-        <button class="wa-btn-combine" onclick="waCombine()">✨ 炼成</button>
-        <button class="wa-btn-secondary" onclick="waClearSlots()">清空</button>
-      </div>
-    </div>
-
-    <!-- 元素库 -->
-    <div class="wa-elements-section">
-      <div class="wa-section-header">
-        <div class="wa-section-title">🔮 元素库 <span class="wa-section-count" id="wa-elementCount">4/50</span></div>
-      </div>
-      <div class="wa-elements-grid" id="wa-elementsGrid">
-        <!-- 动态生成 -->
-      </div>
-    </div>
-
-    <!-- 配方书 -->
-    <div class="wa-recipes-section">
-      <button class="wa-recipes-toggle" id="wa-recipesToggle" onclick="waToggleRecipes()">
-        <span>📖 已解锁配方 <span id="wa-recipeCountBadge">0</span></span>
-        <span id="wa-toggleArrow">▼</span>
-      </button>
-      <div class="wa-recipes-content" id="wa-recipesContent">
-        <div class="wa-recipes-inner" id="wa-recipes">
-          <!-- 动态生成 -->
-        </div>
+  <!-- 启动封面 -->
+  <div class="wa-launch-screen" id="wa-launchScreen">
+    <div class="wa-launch-icon">🔮</div>
+    <div class="wa-launch-title">词语炼金术</div>
+    <div class="wa-launch-subtitle">Word Alchemy</div>
+    <button class="wa-launch-btn" onclick="waStartGame()">✨ 开始炼成</button>
+    <div class="wa-launch-hint">
+      <div class="wa-launch-hint-title">💡 玩法说明</div>
+      <div class="wa-launch-hint-text">
+        选择两个元素放入炼金台，点击「炼成」合成新元素。<br>
+        每种组合都可能产生意想不到的结果！<br>
+        合成目标元素即可进入下一关卡。
       </div>
     </div>
   </div>
 
-  <!-- 提示按钮 -->
-  <button class="wa-hint-btn" onclick="waShowHint()" title="提示">💡</button>
+  <!-- 游戏内容 -->
+  <div id="wa-gameContent" style="display:none; width:100%;">
+    <!-- 导航栏 -->
+    <nav class="wa-nav-bar">
+      <div class="wa-nav-left">
+        <a href="{{ '/games/' | relative_url }}" class="wa-back-btn">← 返回</a>
+        <span class="wa-game-title">词语炼金术</span>
+      </div>
+      <div class="wa-stats-mini">
+        <div>关卡 <span id="wa-navLevel">1</span></div>
+        <div>得分 <span id="wa-navScore">0</span></div>
+      </div>
+    </nav>
 
-  <!-- 弹窗 -->
-  <div class="wa-overlay" id="wa-overlay">
-    <div class="wa-popup" id="wa-popup">
-      <div class="wa-popup-icon" id="wa-popupIcon">✨</div>
-      <div class="wa-popup-title" id="wa-popupTitle">炼成成功</div>
-      <div class="wa-popup-highlight" id="wa-popupHighlight"></div>
-      <div class="wa-popup-formula" id="wa-popupFormula"></div>
-      <div class="wa-popup-subtitle" id="wa-popupSubtitle"></div>
+    <!-- 主游戏区 -->
+    <div class="wa-game-container">
+      <!-- 目标区域 -->
+      <div class="wa-target-section">
+        <div class="wa-target-left">
+          <div class="wa-target-level-row">
+            <span class="wa-level-code">LV.<span id="wa-levelDisplay">01</span></span>
+            <span class="wa-target-label-badge">当前目标</span>
+          </div>
+          <div class="wa-target-stat">
+            合成进度 <span class="wa-target-stat-value" id="wa-progressText">0/1</span>
+          </div>
+        </div>
+        <div class="wa-target-right">
+          <div class="wa-target-word" id="wa-targetWord">蒸汽</div>
+        </div>
+      </div>
+
+      <!-- 炼金台 -->
+      <div class="wa-alchemy-section">
+        <div class="wa-alchemy-table">
+          <div class="wa-slot" id="wa-slot1" onclick="waClearSlot(1)" data-slot="1">?</div>
+          <span class="wa-operator">+</span>
+          <div class="wa-slot" id="wa-slot2" onclick="waClearSlot(2)" data-slot="2">?</div>
+          <span class="wa-operator">=</span>
+          <div class="wa-result-slot" id="wa-result">?</div>
+        </div>
+        <div class="wa-main-action">
+          <button class="wa-btn-combine" onclick="waCombine()">✨ 炼成</button>
+          <button class="wa-btn-secondary" onclick="waClearSlots()">清空</button>
+        </div>
+      </div>
+
+      <!-- 元素库 -->
+      <div class="wa-elements-section">
+        <div class="wa-section-header">
+          <div class="wa-section-title">🔮 元素库 <span class="wa-section-count" id="wa-elementCount">4/50</span></div>
+        </div>
+        <div class="wa-elements-grid" id="wa-elementsGrid">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 配方书 -->
+      <div class="wa-recipes-section">
+        <button class="wa-recipes-toggle" id="wa-recipesToggle" onclick="waToggleRecipes()">
+          <span>📖 已解锁配方 <span id="wa-recipeCountBadge">0</span></span>
+          <span id="wa-toggleArrow">▼</span>
+        </button>
+        <div class="wa-recipes-content" id="wa-recipesContent">
+          <div class="wa-recipes-inner" id="wa-recipes">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提示按钮 -->
+    <button class="wa-hint-btn" onclick="waShowHint()" title="提示">💡</button>
+
+    <!-- 弹窗 -->
+    <div class="wa-overlay" id="wa-overlay">
+      <div class="wa-popup" id="wa-popup">
+        <div class="wa-popup-icon" id="wa-popupIcon">✨</div>
+        <div class="wa-popup-title" id="wa-popupTitle">炼成成功</div>
+        <div class="wa-popup-highlight" id="wa-popupHighlight"></div>
+        <div class="wa-popup-formula" id="wa-popupFormula"></div>
+        <div class="wa-popup-subtitle" id="wa-popupSubtitle"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
+// 启动游戏函数
+window.waStartGame = function() {
+  // 隐藏启动封面
+  document.getElementById('wa-launchScreen').classList.add('hidden');
+  
+  // 显示游戏内容
+  document.getElementById('wa-gameContent').style.display = 'block';
+  
+  // 尝试进入全屏模式
+  const gameContainer = document.querySelector('.word-alchemy-game');
+  if (gameContainer && gameContainer.requestFullscreen) {
+    gameContainer.requestFullscreen().catch(err => {
+      console.log('全屏请求失败:', err);
+    });
+  }
+};
+
 // Word Alchemy Game Logic
 (function() {
   // 游戏数据
@@ -1020,9 +1179,6 @@ year: 2024
     const lvl = levels[(level - 1) % levels.length];
     waShowPopup('💡', '提示', '', lvl.hint);
   };
-
-  // 启动
-  init();
 
   // 点击遮罩关闭弹窗
   document.getElementById('wa-overlay').addEventListener('click', function(e) {
