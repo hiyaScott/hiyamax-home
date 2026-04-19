@@ -683,21 +683,22 @@ year: 2024
   }
 
   .wa-elements-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
   }
 
   .wa-element-btn {
-    border-radius: 10px;
-    padding: 6px 2px;
+    border-radius: 12px;
+    padding: 10px 4px;
   }
 
   .wa-element-icon {
-    font-size: 20px;
+    font-size: 28px;
+    margin-bottom: 6px;
   }
 
   .wa-element-name {
-    font-size: 9px;
+    font-size: 13px;
   }
 
   .wa-launch-icon {
@@ -727,21 +728,21 @@ year: 2024
 
 @media (max-width: 360px) {
   .wa-elements-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
   }
 
   .wa-element-btn {
-    border-radius: 8px;
-    padding: 4px 2px;
+    border-radius: 10px;
+    padding: 8px 2px;
   }
 
   .wa-element-icon {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   .wa-element-name {
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .wa-target-word {
