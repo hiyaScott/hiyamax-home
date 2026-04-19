@@ -192,7 +192,7 @@ year: 2024
   <div class="wa-hero-wrapper">
     <img src="{{ '/assets/images/games/word-alchemy-hero.webp' | relative_url }}" alt="词语炼金术 - 魔法书">
     <div class="wa-hero-overlay">
-      <a href="https://hiyascott.github.io/scott-portfolio/games/word-alchemy/" class="wa-intro-start-btn" target="_blank" rel="noopener">
+      <a href="{{ '/games/word-alchemy/play/' | relative_url }}" class="wa-intro-start-btn">
         <span>✨</span>
         <span>开始游戏</span>
       </a>
