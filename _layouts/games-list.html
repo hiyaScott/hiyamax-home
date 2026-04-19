@@ -22,27 +22,6 @@ layout: default
       {% for game in site.games %}
         {% include game-card-full.html game=game %}
       {% endfor %}
-      
-      <!-- Placeholder cards (9 cards, all on page 1) -->
-      {% assign placeholders = "Blade Chronicles,Stellar Drift,Castle of Echoes,Precision Strike,Tidal Forces,Mind Maze,Inferno Protocol,Canvas Odyssey,Voltage Rush" | split: "," %}
-      {% assign emojis = "⚔️,🚀,🏰,🎯,🌊,🧩,🔥,🎨,⚡" | split: "," %}
-      {% assign categories = "Action RPG,Racing,Adventure,Shooter,Simulation,Puzzle,Survival,Creative,Arcade" | split: "," %}
-      {% assign platforms = "PC / Console,Mobile / PC,PC,Mobile,PC / Console,Mobile / PC,PC,Mobile,PC / Console" | split: "," %}
-      {% assign years = "2025,2024,TBA,2024,2025,2024,TBA,2024,2025" | split: "," %}
-      
-      {% for i in (0..2) %}
-      <div class="game-card" data-page="1">
-        <div class="card-image">
-          {{ emojis[i] }}
-          <span class="type-badge">{{ categories[i] }}</span>
-          <span class="platform-badge">{{ platforms[i] }}</span>
-        </div>
-        <div class="card-content">
-          <h3 class="card-title">{{ placeholders[i] }}</h3>
-          <div class="card-meta">{{ categories[i] }} · {{ years[i] }}</div>
-        </div>
-      </div>
-      {% endfor %}
     </div>
     
     <!-- Pagination -->
