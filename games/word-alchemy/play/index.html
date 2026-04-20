@@ -856,8 +856,6 @@
             const lvl = levels[(level - 1) % levels.length];
             document.getElementById('targetWord').textContent = lvl.target;
             document.getElementById('levelDisplay').textContent = String(level).padStart(2, '0');
-            document.getElementById('navLevel').textContent = level;
-            document.getElementById('navScore').textContent = score;
             document.getElementById('scoreDisplay').textContent = score;
             document.getElementById('progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
             clearSlots();
@@ -1037,12 +1035,10 @@
                     score += 10;
                 }
 
-                document.getElementById('navScore').textContent = score;
                 document.getElementById('scoreDisplay').textContent = score;
 
                 if (isTarget) {
                     score += 100;
-                    document.getElementById('navScore').textContent = score;
                     document.getElementById('scoreDisplay').textContent = score;
                     showPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
                     setTimeout(() => {
