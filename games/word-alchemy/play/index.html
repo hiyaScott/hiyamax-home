@@ -329,8 +329,6 @@
             padding: 20px 24px;
             background: var(--bg-primary);
             border-top: 1px solid var(--border);
-            max-height: 340px;
-            overflow-y: auto;
         }
 
         .section-header {
@@ -360,7 +358,9 @@
         .elements-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(8, 1fr);
             gap: 10px;
+            min-height: 400px;
         }
 
         .element-btn {
@@ -576,7 +576,6 @@
             }
 
             .elements-section {
-                max-height: 320px;
                 padding: 16px 12px;
             }
 
@@ -814,6 +813,17 @@
         let recipesExpanded = false;
         let unlockedRecipes = [];
         let unlockedElements = ['火', '水', '土', '风'];
+        let isFreeMode = false;
+        let gameComplete = false;
+
+        // 音效对象
+        const sounds = {
+            click: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
+            combine: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'),
+            success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
+            complete: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
+            error: new Audio('https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3')
+        };
 
         // 元素图标
         function getElementIcon(element) {
@@ -821,7 +831,7 @@
                 '火': '🔥', '水': '💧', '土': '🌍', '风': '💨',
                 '蒸汽': '♨️', '云': '☁️', '雨': '🌧️', '雾': '🌫️',
                 '风暴': '⛈️', '海啸': '🌊', '沙尘': '🌪️', '烟': '💨',
-                '岩浆': '🌋', '石头': '🪨', '金属': '⚙️', '工具': '🔧',
+                '岩浆': '🌋', '石头': '⛰️', '金属': '⚙️', '工具': '🔧',
                 '木材': '🪵', '炭': '🖤', '城堡': '🏰',
                 '植物': '🌱', '生命': '🌿', '能量': '⚡', '鱼': '🐟', '人': '👤',
                 '房子': '🏠', '家庭': '👨‍👩‍👧‍👦', '食物': '🍖',
@@ -853,11 +863,36 @@
         }
 
         function loadLevel() {
-            const lvl = levels[(level - 1) % levels.length];
-            document.getElementById('targetWord').textContent = lvl.target;
-            document.getElementById('levelDisplay').textContent = String(level).padStart(2, '0');
+            // 检查是否需要跳到已解锁的关卡
+            if (!isFreeMode && !gameComplete) {
+                while (level <= levels.length) {
+                    const lvl = levels[level - 1];
+                    if (unlockedElements.includes(lvl.target)) {
+                        level++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                // 所有关卡目标都已解锁，进入自由探索模式
+                if (level > levels.length) {
+                    isFreeMode = true;
+                }
+            }
+            
+            // 更新UI
+            if (isFreeMode) {
+                document.getElementById('targetWord').textContent = '自由探索';
+                document.getElementById('levelDisplay').textContent = '∞';
+                document.getElementById('progressText').textContent = `${unlockedElements.length}/50`;
+            } else {
+                const lvl = levels[level - 1];
+                document.getElementById('targetWord').textContent = lvl.target;
+                document.getElementById('levelDisplay').textContent = String(level).padStart(2, '0');
+                document.getElementById('progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
+            }
+            
             document.getElementById('scoreDisplay').textContent = score;
-            document.getElementById('progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
             clearSlots();
         }
 
@@ -930,6 +965,8 @@
         }
 
         function selectElement(element) {
+            sounds.click.play().catch(() => {});
+            
             // 如果元素已在 slot1，且 slot2 为空，则填入 slot2（支持同元素双选）
             if (slots[0] === element && !slots[1]) {
                 slots[1] = element;
@@ -1007,6 +1044,7 @@
 
         function combine() {
             if (!slots[0] || !slots[1]) {
+                sounds.error.play().catch(() => {});
                 showPopup('⚠️', '请先选择两个元素', '', '点击元素库中的元素');
                 return;
             }
@@ -1024,6 +1062,19 @@
                 if (isNewElement) {
                     unlockedElements.push(result);
                     renderElements();
+                    
+                    // 检查是否集齐50个元素
+                    if (unlockedElements.length >= 50 && !gameComplete) {
+                        gameComplete = true;
+                        sounds.complete.play().catch(() => {});
+                        showPopup('🏆', '完美通关！', '50/50 元素集齐', '感谢游玩！');
+                        setTimeout(() => {
+                            document.querySelector('.alchemy-section').style.opacity = '0.3';
+                            document.querySelector('.alchemy-section').style.pointerEvents = 'none';
+                        }, 2000);
+                        clearSlots();
+                        return;
+                    }
                 }
 
                 if (isNewRecipe) {
@@ -1036,10 +1087,16 @@
                 }
 
                 document.getElementById('scoreDisplay').textContent = score;
+                
+                // 自由探索模式更新进度
+                if (isFreeMode) {
+                    document.getElementById('progressText').textContent = `${unlockedElements.length}/50`;
+                }
 
-                if (isTarget) {
+                if (isTarget && !isFreeMode && !gameComplete) {
                     score += 100;
                     document.getElementById('scoreDisplay').textContent = score;
+                    sounds.success.play().catch(() => {});
                     showPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
                     setTimeout(() => {
                         level++;
@@ -1048,6 +1105,7 @@
                         loadLevel();
                     }, 2000);
                 } else {
+                    sounds.combine.play().catch(() => {});
                     if (isNewRecipe) {
                         showPopup('✨', '新配方解锁', result, `${slots[0]} + ${slots[1]}`);
                     } else {
@@ -1057,6 +1115,7 @@
 
                 clearSlots();
             } else {
+                sounds.error.play().catch(() => {});
                 showPopup('❌', '无法组合', '', '试试其他组合方式');
             }
         }
