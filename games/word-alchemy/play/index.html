@@ -187,6 +187,17 @@
             line-height: 1;
         }
 
+        .target-stat-separator {
+            margin: 0 8px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .target-stat #scoreDisplay {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
         /* ========== 炼金台（操作核心） ========== */
         .alchemy-section {
             padding: 32px 24px;
@@ -667,7 +678,6 @@
         <span class="game-title">词语炼金术</span>
         <div class="stats-mini">
             <div>关卡 <span id="navLevel">1</span></div>
-            <div>得分 <span id="navScore">0</span></div>
         </div>
     </nav>
 
@@ -682,6 +692,8 @@
                 </div>
                 <div class="target-stat">
                     合成进度 <span class="target-stat-value" id="progressText">0/1</span>
+                    <span class="target-stat-separator">|</span>
+                    得分 <span class="target-stat-value" id="scoreDisplay">0</span>
                 </div>
             </div>
             <div class="target-right">
@@ -849,6 +861,7 @@
             document.getElementById('levelDisplay').textContent = String(level).padStart(2, '0');
             document.getElementById('navLevel').textContent = level;
             document.getElementById('navScore').textContent = score;
+            document.getElementById('scoreDisplay').textContent = score;
             document.getElementById('progressText').textContent = `${combineCount}/${level === 1 ? 1 : 2}`;
             clearSlots();
         }
@@ -1028,10 +1041,12 @@
                 }
 
                 document.getElementById('navScore').textContent = score;
+                document.getElementById('scoreDisplay').textContent = score;
 
                 if (isTarget) {
                     score += 100;
                     document.getElementById('navScore').textContent = score;
+                    document.getElementById('scoreDisplay').textContent = score;
                     showPopup('🎉', '关卡完成！', result, `${slots[0]} + ${slots[1]}`);
                     setTimeout(() => {
                         level++;
