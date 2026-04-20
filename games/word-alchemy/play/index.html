@@ -318,6 +318,8 @@
             padding: 20px 24px;
             background: var(--bg-primary);
             border-top: 1px solid var(--border);
+            max-height: 340px;
+            overflow-y: auto;
         }
 
         .section-header {
@@ -562,6 +564,11 @@
                 padding: 12px;
             }
 
+            .elements-section {
+                max-height: 320px;
+                padding: 16px 12px;
+            }
+
             .target-section {
                 padding: 16px 20px;
                 min-height: 80px;
@@ -621,22 +628,28 @@
         }
 
         @media (max-width: 360px) {
+            .elements-section {
+                max-height: 300px;
+                padding: 12px 8px;
+            }
+
             .elements-grid {
                 grid-template-columns: repeat(7, 1fr);
-                gap: 4px;
+                gap: 3px;
             }
 
             .element-btn {
-                border-radius: 8px;
-                padding: 4px 2px;
+                border-radius: 6px;
+                padding: 3px 1px;
             }
 
             .element-icon {
-                font-size: 18px;
+                font-size: 16px;
+                margin-bottom: 2px;
             }
 
             .element-name {
-                font-size: 8px;
+                font-size: 7px;
             }
 
             .target-word {
@@ -803,12 +816,12 @@
                 '木材': '🪵', '炭': '🖤', '城堡': '🏰',
                 '植物': '🌱', '生命': '🌿', '能量': '⚡', '鱼': '🐟', '人': '👤',
                 '房子': '🏠', '家庭': '👨‍👩‍👧‍👦', '食物': '🍖',
-                '知识': '📚', '科学': '🔬', '机器': '⚙️', '机器人': '🤖',
+                '知识': '📚', '科学': '🔬', '机器': '🏭', '机器人': '🤖',
                 '爱': '❤️', '幸福': '😊', '痛苦': '😣', '自由': '🕊️',
                 '人鱼': '🧜', '天使': '👼', '狼人': '🐺', '孙悟空': '🐵',
                 '网红猫': '😺', '社畜': '🐕‍🦺', '熬夜': '📱', '加班': '☕',
                 '作业': '📝', '失眠': '🛏️', '幻灭': '💔',
-                '烤鱼': '🐠', '人造人15号': '🤖',
+                '烤鱼': '🐠', '人造人15号': '🦾',
                 '吐司': '🍞', '番茄炒蛋': '🍳', '薯条': '🍟',
                 '奶酪': '🧀', '葡萄酒': '🍷', '腊肉': '🥓'
             };
@@ -1059,4 +1072,4 @@
         });
     </script>
 </body>
-</html>
+</html>l>

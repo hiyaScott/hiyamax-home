@@ -1,5 +1,5 @@
 {% comment %}
-Game Card Component (Full version matching original design)
+Game Card Component (Full version matching original design - Artworks style)
 Usage: {% include game-card-full.html game=game %}
 
 标签规范：
@@ -8,8 +8,8 @@ Usage: {% include game-card-full.html game=game %}
 {% endcomment %}
 
 <a href="{{ include.game.url | relative_url }}" class="game-card" data-page="1">
-  <div class="card-image">
-    {{ include.game.emoji | default: '🎮' }}
+  <div class="card-image" style="{% if include.game.image %}background-image: url('{{ include.game.image | relative_url }}'); background-size: cover; background-position: center;{% else %}background: {{ include.game.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endif %}">
+    {% unless include.game.image %}<span style="font-size: 48px;">{{ include.game.emoji | default: '🎮' }}</span>{% endunless %}
     {% if include.game.type %}
       <span class="type-badge">{{ include.game.type }}</span>
     {% endif %}
@@ -19,6 +19,6 @@ Usage: {% include game-card-full.html game=game %}
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ include.game.title }}</h3>
-    <div class="card-meta">{{ include.game.category | default: include.game.description }} · {{ include.game.year | default: '2024' }}</div>
+    <p class="card-meta">{{ include.game.description | default: include.game.category }}</p>
   </div>
 </a>

@@ -1,9 +1,10 @@
 ---
 title: Word Alchemy
-description: 词语炼金术 - 元素合成解谜游戏
+description: 组合基础元素创造新世界，从火+水=蒸汽到人+人=爱，探索50+种神秘配方
 category: Puzzle
 color: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 emoji: 🔮
+image: /assets/images/games/word-alchemy-hero.webp
 type: Puzzle
 platform: Web
 year: 2024
