@@ -4,6 +4,7 @@ description: 记录小朋友一天喊多少次"妈妈"的亲子互动计数器
 category: Utility
 color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)
 emoji: 👶
+image: /assets/images/games/mama-counter-hero.png
 type: Utility
 platform: Mobile
 year: 2024

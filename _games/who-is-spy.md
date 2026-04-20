@@ -4,6 +4,7 @@ description: 多人推理派对游戏，找出隐藏在你身边的卧底
 category: Party
 color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)
 emoji: 🕵️
+image: /assets/images/games/undercover-hero.png
 type: Party
 platform: Web
 year: 2024
