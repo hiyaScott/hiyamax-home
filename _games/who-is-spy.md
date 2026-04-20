@@ -110,32 +110,17 @@ year: 2024
 .ws-hero-wrapper {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 40px;
-  border-radius: 16px;
+  max-width: none;
+  margin: 0 0 40px 0;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(79, 172, 254, 0.25);
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 16px;
 }
 
-.ws-hero-content {
-  text-align: center;
-  color: #fff;
-  padding: 40px;
-}
-
-.ws-hero-emoji {
-  font-size: 120px;
-  margin-bottom: 20px;
-}
-
-.ws-hero-text {
-  font-size: 24px;
-  font-weight: 600;
+.ws-hero-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .ws-hero-overlay {
@@ -194,12 +179,9 @@ year: 2024
     min-height: 250px;
   }
   
-  .ws-hero-emoji {
-    font-size: 80px;
-  }
-  
-  .ws-hero-text {
-    font-size: 18px;
+  .ws-hero-wrapper img {
+    width: 100%;
+    height: auto;
   }
   
   .ws-hero-overlay {
@@ -215,10 +197,7 @@ year: 2024
 
 <div class="ws-intro-container">
   <div class="ws-hero-wrapper">
-    <div class="ws-hero-content">
-      <div class="ws-hero-emoji">🕵️</div>
-      <div class="ws-hero-text">谁是卧底</div>
-    </div>
+    <img src="{{ '/assets/images/games/undercover-hero.png' | relative_url }}" alt="谁是卧底">
     <div class="ws-hero-overlay">
       <a href="{{ '/games/who-is-spy/play/' | relative_url }}" target="_blank" rel="noopener" class="ws-intro-start-btn">
         <span>🎮</span>

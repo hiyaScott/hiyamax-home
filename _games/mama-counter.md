@@ -110,32 +110,17 @@ year: 2024
 .mc-hero-wrapper {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 40px;
-  border-radius: 16px;
+  max-width: none;
+  margin: 0 0 40px 0;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(245, 87, 108, 0.25);
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 16px;
 }
 
-.mc-hero-content {
-  text-align: center;
-  color: #fff;
-  padding: 40px;
-}
-
-.mc-hero-emoji {
-  font-size: 120px;
-  margin-bottom: 20px;
-}
-
-.mc-hero-text {
-  font-size: 24px;
-  font-weight: 600;
+.mc-hero-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .mc-hero-overlay {
@@ -194,12 +179,9 @@ year: 2024
     min-height: 250px;
   }
   
-  .mc-hero-emoji {
-    font-size: 80px;
-  }
-  
-  .mc-hero-text {
-    font-size: 18px;
+  .mc-hero-wrapper img {
+    width: 100%;
+    height: auto;
   }
   
   .mc-hero-overlay {
@@ -215,10 +197,7 @@ year: 2024
 
 <div class="mc-intro-container">
   <div class="mc-hero-wrapper">
-    <div class="mc-hero-content">
-      <div class="mc-hero-emoji">👶</div>
-      <div class="mc-hero-text">妈妈计数器</div>
-    </div>
+    <img src="{{ '/assets/images/games/mama-counter-hero.png' | relative_url }}" alt="妈妈计数器">
     <div class="mc-hero-overlay">
       <a href="{{ '/games/mama-counter/play/' | relative_url }}" target="_blank" rel="noopener" class="mc-intro-start-btn">
         <span>🎙️</span>
