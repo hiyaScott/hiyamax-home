@@ -1,15 +1,16 @@
-{% comment %}
-Game Card Component (Full version matching original design - Artworks style)
-Usage: {% include game-card-full.html game=game %}
-
-标签规范：
-- type-badge (左上角): App / Party / Puzzle / Blog / etc.
-- platform-badge (右上角): web / Scratch / Mobile / PC / etc.
-{% endcomment %}
-
 <a href="{{ include.game.url | relative_url }}" class="game-card" data-page="1">
-  <div class="card-image" style="{% if include.game.image %}background-image: url('{{ include.game.image | relative_url }}'); background-size: cover; background-position: center;{% else %}background: {{ include.game.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endif %}">
-    {% unless include.game.image %}<span style="font-size: 48px;">{{ include.game.emoji | default: '🎮' }}</span>{% endunless %}
+  <div class="card-image">
+    {% if include.game.image %}
+      {% assign img_base = include.game.image | remove: '.webp' | remove: '.jpg' | remove: '.png' %}
+      <picture>
+        <source srcset="{{ img_base }}.webp | relative_url" type="image/webp">
+        <img src="{{ include.game.image | relative_url }}" alt="{{ include.game.title }}" loading="lazy" class="card-img">
+      </picture>
+    {% else %}
+      <div class="card-bg" style="background: {{ include.game.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}">
+        <span style="font-size: 48px;">{{ include.game.emoji | default: '🎮' }}</span>
+      </div>
+    {% endif %}
     {% if include.game.type %}
       <span class="type-badge">{{ include.game.type }}</span>
     {% endif %}
