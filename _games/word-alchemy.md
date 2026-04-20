@@ -110,9 +110,8 @@ year: 2024
 .wa-hero-wrapper {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 40px;
-  border-radius: 16px;
+  max-width: none;
+  margin: 0 0 40px 0;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
 }
@@ -174,8 +173,8 @@ year: 2024
   }
   
   .wa-hero-wrapper {
-    border-radius: 12px;
-    margin-bottom: 32px;
+    width: 100%;
+    margin: 0 0 32px 0;
   }
   
   .wa-hero-overlay {

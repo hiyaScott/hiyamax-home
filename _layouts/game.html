@@ -62,13 +62,12 @@ layout: default
   .game-page {
     max-width: var(--max-content-width);
     margin: 0 auto;
-    padding: 40px;
     min-height: calc(100vh - var(--header-height) - 200px);
     background: #f8fafc;
   }
   
   .game-wrapper {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     background: transparent;
   }
@@ -76,7 +75,23 @@ layout: default
   .game-container {
     background: transparent;
     border-radius: 20px;
-    padding: 40px;
+    padding: 0 40px 40px;
+  }
+  
+  /* Hero banner full-width breakout */
+  .game-container .wa-hero-wrapper {
+    width: calc(100% + 80px);
+    max-width: none;
+    margin: 0 -40px;
+    position: relative;
+    left: 0;
+    overflow: hidden;
+  }
+  
+  .game-container .wa-hero-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   
   /* Code blocks - Light theme */
@@ -195,8 +210,15 @@ layout: default
   }
   
   @media (max-width: 640px) {
-    .game-page { padding: 20px; }
-    .game-container { padding: 25px; }
+    .game-container .wa-hero-wrapper {
+      width: calc(100% + 40px);
+      margin: 0 -20px;
+    }
+    
+    .game-container {
+      padding: 0 20px 20px;
+    }
+  }
     .breadcrumb-inner { padding: 12px 20px; }
   }
 </style>
