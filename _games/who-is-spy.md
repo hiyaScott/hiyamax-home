@@ -197,7 +197,10 @@ year: 2024
 
 <div class="ws-intro-container">
   <div class="ws-hero-wrapper">
-    <img src="{{ '/assets/images/games/undercover-hero.png' | relative_url }}" alt="谁是卧底">
+    <picture>
+      <source srcset="{{ '/assets/images/games/undercover-hero.webp' | relative_url }}" type="image/webp">
+      <img src="{{ '/assets/images/games/undercover-hero.png' | relative_url }}" alt="谁是卧底" loading="lazy">
+    </picture>
     <div class="ws-hero-overlay">
       <a href="{{ '/games/who-is-spy/play/' | relative_url }}" target="_blank" rel="noopener" class="ws-intro-start-btn">
         <span>🎮</span>

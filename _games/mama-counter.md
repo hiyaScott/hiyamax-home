@@ -197,7 +197,10 @@ year: 2024
 
 <div class="mc-intro-container">
   <div class="mc-hero-wrapper">
-    <img src="{{ '/assets/images/games/mama-counter-hero.png' | relative_url }}" alt="妈妈计数器">
+    <picture>
+      <source srcset="{{ '/assets/images/games/mama-counter-hero.webp' | relative_url }}" type="image/webp">
+      <img src="{{ '/assets/images/games/mama-counter-hero.png' | relative_url }}" alt="妈妈计数器" loading="lazy">
+    </picture>
     <div class="mc-hero-overlay">
       <a href="{{ '/games/mama-counter/play/' | relative_url }}" target="_blank" rel="noopener" class="mc-intro-start-btn">
         <span>🎙️</span>
