@@ -3,7 +3,7 @@
     {% if include.game.image %}
       {% assign img_base = include.game.image | remove: '.webp' | remove: '.jpg' | remove: '.png' %}
       <picture>
-        <source srcset="{{ img_base }}.webp | relative_url" type="image/webp">
+        <source srcset="{{ img_base | append: '.webp' | relative_url }}" type="image/webp">
         <img src="{{ include.game.image | relative_url }}" alt="{{ include.game.title }}" loading="lazy" class="card-img">
       </picture>
     {% else %}
