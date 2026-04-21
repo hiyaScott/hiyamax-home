@@ -34,8 +34,12 @@ body_class: home-page
   </div>
   
   <div class="works-grid">
-    {% assign all_works = site.games | concat: site.books | concat: site.artworks | concat: site.hiyamaxtm | sort: 'date' | reverse | limit: 3 %}
-    {% for work in all_works %}
+    {% assign all_works = site.games %}
+    {% assign all_works = all_works | concat: site.books %}
+    {% assign all_works = all_works | concat: site.artworks %}
+    {% assign all_works = all_works | concat: site.hiyamaxtm %}
+    {% assign sorted_works = all_works | sort: 'date' | reverse %}
+    {% for work in sorted_works limit: 3 %}
     <a href="{{ work.url | relative_url }}" class="work-card">
       <div class="work-image" style="background: {{ work.color | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">{{ work.emoji | default: '✨' }}</div>
       <div class="work-content">
