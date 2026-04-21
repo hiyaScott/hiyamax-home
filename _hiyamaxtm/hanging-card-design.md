@@ -1,6 +1,6 @@
 ---
 title: "HiyaMAX 挂卡设计"
-description: "玩具挂卡包装设计，Every high-five bonds our hearts！"
+description: "HiyaMax的挂卡平面设计"
 category: Design
 price: "¥0.00"
 color: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
