@@ -7,7 +7,7 @@ layout: default
 
 <!-- Fixed HiyaMAX™ Logo -->
 <div class="hiyamaxtm-logo-fixed">
-  <img src="{{ '/assets/images/logo-hiyamaxtm.webp' | relative_url }}" alt="HiyaMAX™" class="hiyamaxtm-logo-img">
+  <span class="hiyamaxtm-text-fixed">HiyaMAX™</span>
 </div>
 
 <!-- Main Content Container -->
@@ -74,10 +74,13 @@ body {
   user-select: none;
 }
 
-.hiyamaxtm-logo-img {
-  height: clamp(150px, 30vw, 300px);
-  width: auto;
+.hiyamaxtm-text-fixed {
+  font-size: clamp(48px, 10vw, 84px);
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -0.02em;
   display: block;
+}
 }
 
 /* Main Content - Flex grow to push footer down, transparent background */
@@ -102,7 +105,7 @@ body {
 }
 
 .hiyamaxtm-spacer {
-  height: clamp(80px, 15vw, 180px);
+  height: clamp(60px, 12vw, 100px);
 }
 
 /* Cards Wrapper */
@@ -335,21 +338,21 @@ body {
 /* Responsive */
 @media (max-width: 1024px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
-  .hiyamaxtm-logo-img { height: clamp(120px, 24vw, 210px); }
+  .hiyamaxtm-text-fixed { font-size: clamp(40px, 8vw, 72px); }
   .hiyamaxtm-mask-container { padding: 20px 30px 10px; }
   .cards-wrapper { padding: 0 30px 40px; }
 }
 
 @media (max-width: 768px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
-  .hiyamaxtm-logo-img { height: clamp(105px, 21vw, 180px); }
+  .hiyamaxtm-text-fixed { font-size: clamp(36px, 7vw, 60px); }
 }
 
 @media (max-width: 640px) {
   .hiyamaxtm-mask-container { padding: 15px 20px 10px; }
   .cards-wrapper { padding: 0 20px 30px; }
   .hiyamaxtm-grid { grid-template-columns: 1fr; gap: 16px; }
-  .hiyamaxtm-logo-img { height: clamp(90px, 18vw, 150px); }
+  .hiyamaxtm-text-fixed { font-size: clamp(32px, 6vw, 48px); }
 }
 </style>
 
