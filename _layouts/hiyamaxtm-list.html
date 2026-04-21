@@ -5,10 +5,8 @@ layout: default
 <!-- Interactive Grid Background -->
 <canvas id="gridCanvas"></canvas>
 
-<!-- Fixed HiyaMAX™ Logo -->
-<div class="hiyamaxtm-logo-fixed">
-  <span class="hiyamaxtm-text-fixed">HiyaMAX™</span>
-</div>
+<!-- HiyaMAX™ Text (Fixed Background) -->
+<div class="hiyamaxtm-text-fixed">HiyaMAX™</div>
 
 <!-- Main Content Container -->
 <div class="page-container">
@@ -63,24 +61,20 @@ body {
   z-index: 0;
 }
 
-/* Fixed HiyaMAX™ Logo */
-.hiyamaxtm-logo-fixed {
+/* Fixed HiyaMAX™ Text Background */
+.hiyamaxtm-text-fixed {
   position: fixed;
   top: 90px;
   left: 50%;
   transform: translateX(-50%);
+  font-size: clamp(48px, 10vw, 84px);
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.02em;
+  line-height: 1;
   z-index: 1;
   pointer-events: none;
   user-select: none;
-}
-
-.hiyamaxtm-text-fixed {
-  font-size: clamp(48px, 10vw, 84px);
-  font-weight: 800;
-  color: #111;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  display: block;
 }
 
 /* Main Content - Flex grow to push footer down, transparent background */
@@ -338,16 +332,14 @@ body {
 /* Responsive */
 @media (max-width: 1024px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
-  .hiyamaxtm-logo-fixed { top: 80px; }
-  .hiyamaxtm-text-fixed { font-size: clamp(40px, 8vw, 72px); letter-spacing: -2px; }
+  .hiyamaxtm-text-fixed { font-size: clamp(40px, 8vw, 72px); top: 80px; }
   .hiyamaxtm-mask-container { padding: 20px 30px 10px; }
   .cards-wrapper { padding: 0 30px 40px; }
 }
 
 @media (max-width: 768px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
-  .hiyamaxtm-logo-fixed { top: 80px; }
-  .hiyamaxtm-text-fixed { font-size: clamp(36px, 7vw, 60px); }
+  .hiyamaxtm-text-fixed { font-size: clamp(36px, 7vw, 60px); top: 80px; }
   .hiyamaxtm-mask-container { padding: 15px 20px 10px; }
 }
 
@@ -355,8 +347,7 @@ body {
   .hiyamaxtm-mask-container { padding: 15px 20px 10px; }
   .cards-wrapper { padding: 0 20px 30px; }
   .hiyamaxtm-grid { grid-template-columns: 1fr; gap: 16px; }
-  .hiyamaxtm-logo-fixed { top: 80px; }
-  .hiyamaxtm-text-fixed { font-size: clamp(32px, 6vw, 48px); letter-spacing: -2px; }
+  .hiyamaxtm-text-fixed { font-size: clamp(32px, 6vw, 48px); letter-spacing: -2px; top: 80px; }
 }
 </style>
 
