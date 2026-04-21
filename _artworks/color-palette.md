@@ -3,6 +3,7 @@ title: "Color Palette"
 description: "Minimalist study of nine color circles"
 category: Acrylic Painting
 year: 2025
+date: 2025-02-10
 image: /assets/artworks/color-palette.webp
 medium: Acrylic on Canvas
 size: "50 x 50 cm"

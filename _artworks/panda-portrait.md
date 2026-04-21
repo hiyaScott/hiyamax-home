@@ -3,6 +3,7 @@ title: "Panda Portrait"
 description: "Playful portrait with graffiti-inspired elements"
 category: Mixed Media
 year: 2025
+date: 2025-04-05
 image: /assets/artworks/panda-portrait.webp
 medium: Acrylic & Markers on Canvas
 size: "50 x 50 cm"

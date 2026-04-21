@@ -3,6 +3,7 @@ title: "Abstract Energy"
 description: "Vibrant abstract expression with bold brushstrokes"
 category: Acrylic Painting
 year: 2025
+date: 2025-01-20
 image: /assets/artworks/abstract-energy.webp
 medium: Acrylic on Canvas
 size: "60 x 80 cm"

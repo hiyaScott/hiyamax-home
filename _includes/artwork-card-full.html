@@ -16,6 +16,7 @@
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ artwork.title }}</h3>
-    <p class="card-meta">{{ artwork.description }}</p>
+    <p class="card-desc">{{ artwork.description }}</p>
+    <p class="card-date">{{ artwork.date | date: "%Y-%m-%d" }}</p>
   </div>
 </div>

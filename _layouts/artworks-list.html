@@ -19,7 +19,8 @@ layout: default
   <!-- Artwork Cards -->
   <div class="cards-wrapper">
     <div class="artworks-grid" id="artworksGrid">
-      {% for artwork in site.artworks %}
+      {% assign artworks_sorted = site.artworks | sort: 'date' | reverse %}
+      {% for artwork in artworks_sorted %}
         {% include artwork-card-full.html artwork=artwork %}
       {% endfor %}
     </div>
@@ -530,6 +531,12 @@ function changePage(delta) {
   currentPage += delta;
   if (currentPage < 1) currentPage = 1;
   if (currentPage > totalPages) currentPage = totalPages;
+  updatePagination();
+}
+
+updatePagination();
+</script>
+e > totalPages) currentPage = totalPages;
   updatePagination();
 }
 
