@@ -20,6 +20,7 @@
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ include.game.title }}</h3>
-    <p class="card-meta">{{ include.game.description | default: include.game.category }}</p>
+    <p class="card-desc">{{ include.game.description | default: include.game.category }}</p>
+    <p class="card-date">{{ include.game.date | date: "%Y-%m-%d" }}</p>
   </div>
 </a>
