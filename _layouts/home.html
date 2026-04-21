@@ -34,41 +34,15 @@ body_class: home-page
   </div>
   
   <div class="works-grid">
-    {% for work in page.works %}
-    <div class="work-card">
-      <div class="work-image" style="background: {{ work.gradient | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">{{ work.emoji }}</div>
+    {% assign all_works = site.games | concat: site.books | concat: site.artworks | concat: site.hiyamaxtm | sort: 'date' | reverse | limit: 3 %}
+    {% for work in all_works %}
+    <a href="{{ work.url | relative_url }}" class="work-card">
+      <div class="work-image" style="background: {{ work.color | default: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }};">{{ work.emoji | default: '✨' }}</div>
       <div class="work-content">
         <h4>{{ work.title }}</h4>
         <p>{{ work.category }}</p>
       </div>
-    </div>
+    </a>
     {% endfor %}
-    
-    <!-- Default works if none specified -->
-    {% unless page.works %}
-    <div class="work-card">
-      <div class="work-image">🎮</div>
-      <div class="work-content">
-        <h4>Pixel World Explorer</h4>
-        <p>Game Development</p>
-      </div>
-    </div>
-    
-    <div class="work-card">
-      <div class="work-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📚</div>
-      <div class="work-content">
-        <h4>Reading Tracker</h4>
-        <p>Web Application</p>
-      </div>
-    </div>
-    
-    <div class="work-card">
-      <div class="work-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🤖</div>
-      <div class="work-content">
-        <h4>Arduino Projects</h4>
-        <p>Hardware & Code</p>
-      </div>
-    </div>
-    {% endunless %}
   </div>
 </section>
