@@ -221,7 +221,7 @@ layout: hiyamaxtm-product
         <p><strong>产品名称：</strong>Jupiter 冰箱贴</p>
         <p><strong>设计日期：</strong>2025年12月25日</p>
         <p><strong>设计灵感：</strong>木星大红斑 + 好奇的眼睛</p>
-        <p><strong>产品类型：</strong>亚克力冰箱贴 / 文创周边</p>
+        <p><strong>产品类型：</strong>黄铜冰箱贴 / 文创周边</p>
         <p><strong>品牌关联：</strong>HiyaMAX™ 宇宙探索系列</p>
         <p><strong>核心概念：</strong>在日常中保持对宇宙的好奇</p>
         <p><strong>状态：</strong>设计完成</p>
