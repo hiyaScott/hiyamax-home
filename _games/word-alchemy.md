@@ -8,7 +8,7 @@ image: /assets/images/games/word-alchemy-hero.webp
 type: Puzzle
 platform: Web
 year: 2024
-date: 2024-03-21
+date: 2026-04-20
 ---
 
 <style>
