@@ -79,8 +79,8 @@ body {
   font-weight: 800;
   color: #111;
   letter-spacing: -0.02em;
+  line-height: 1;
   display: block;
-}
 }
 
 /* Main Content - Flex grow to push footer down, transparent background */
@@ -338,6 +338,7 @@ body {
 /* Responsive */
 @media (max-width: 1024px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
+  .hiyamaxtm-logo-fixed { top: 80px; }
   .hiyamaxtm-text-fixed { font-size: clamp(40px, 8vw, 72px); letter-spacing: -2px; }
   .hiyamaxtm-mask-container { padding: 20px 30px 10px; }
   .cards-wrapper { padding: 0 30px 40px; }
@@ -345,7 +346,8 @@ body {
 
 @media (max-width: 768px) {
   .hiyamaxtm-grid { grid-template-columns: repeat(2, 1fr); }
-  .hiyamaxtm-text-fixed { font-size: clamp(36px, 7vw, 60px); top: 80px; }
+  .hiyamaxtm-logo-fixed { top: 80px; }
+  .hiyamaxtm-text-fixed { font-size: clamp(36px, 7vw, 60px); }
   .hiyamaxtm-mask-container { padding: 15px 20px 10px; }
 }
 
@@ -353,7 +355,8 @@ body {
   .hiyamaxtm-mask-container { padding: 15px 20px 10px; }
   .cards-wrapper { padding: 0 20px 30px; }
   .hiyamaxtm-grid { grid-template-columns: 1fr; gap: 16px; }
-  .hiyamaxtm-text-fixed { font-size: clamp(32px, 6vw, 48px); letter-spacing: -2px; top: 80px; }
+  .hiyamaxtm-logo-fixed { top: 80px; }
+  .hiyamaxtm-text-fixed { font-size: clamp(32px, 6vw, 48px); letter-spacing: -2px; }
 }
 </style>
 
