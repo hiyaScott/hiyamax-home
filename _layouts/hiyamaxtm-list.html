@@ -21,7 +21,8 @@ layout: default
   <!-- Product Cards -->
   <div class="cards-wrapper">
     <div class="hiyamaxtm-grid" id="hiyamaxtmGrid">
-      {% for product in site.hiyamaxtm %}
+      {% assign products_sorted = site.hiyamaxtm | sort: 'date' | reverse %}
+      {% for product in products_sorted %}
         {% include product-card-full.html product=product %}
       {% endfor %}
     </div>
@@ -190,12 +191,23 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #111;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.card-meta {
+.card-desc {
   font-size: 13px;
   color: #666;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-date {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
 }
 
 /* Pagination */

@@ -1,0 +1,95 @@
+---
+layout: default
+---
+
+<!-- HiyaMAX™ Breadcrumb -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{{ '/hiyamax/' | relative_url }}">HiyaMAX™</a>
+    <span class="breadcrumb-separator">></span>
+    <span class="breadcrumb-current">{{ page.title }}</span>
+  </div>
+</nav>
+
+<!-- Product Container -->
+<div class="product-page">
+  <div class="product-wrapper">
+    <div class="product-container">
+      {{ content }}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Product Detail Page - Light Theme */
+  html, body {
+    background: #f8fafc;
+    min-height: 100vh;
+  }
+  
+  /* Breadcrumb - Light */
+  .breadcrumb {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding-top: var(--header-height);
+  }
+  
+  .breadcrumb-inner {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 12px 40px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .breadcrumb-inner a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .breadcrumb-inner a:hover {
+    color: #333;
+  }
+  
+  .breadcrumb-separator {
+    margin: 0 8px;
+    color: #ccc;
+  }
+  
+  .breadcrumb-current {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  /* Product Page Layout */
+  .product-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f8fafc;
+  }
+  
+  .product-wrapper {
+    flex: 1;
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    width: 100%;
+    padding: 40px;
+  }
+  
+  .product-container {
+    background: transparent;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .breadcrumb-inner {
+      padding: 12px 20px;
+    }
+    
+    .product-wrapper {
+      padding: 20px;
+    }
+  }
+</style>

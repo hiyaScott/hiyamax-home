@@ -6,6 +6,7 @@
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ product.title }}</h3>
-    <p class="card-meta">{{ product.description }}</p>
+    <p class="card-desc">{{ product.description }}</p>
+    <p class="card-date">{{ product.date | date: "%Y-%m-%d" }}</p>
   </div>
 </div>
