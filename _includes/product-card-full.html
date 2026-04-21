@@ -1,8 +1,11 @@
 <div class="product-card" onclick="window.location.href='{{ product.url | relative_url }}'">
-  <div class="card-image" style="background: {{ product.color }}">
-    <span style="font-size: 48px;">{{ product.emoji }}</span>
+  <div class="card-image" style="{% unless product.image %}background: {{ product.color }}{% endunless %}">
+    {% if product.image %}
+      <img src="{{ product.image | relative_url }}" alt="{{ product.title }}" class="card-image-img">
+    {% else %}
+      <span style="font-size: 48px;">{{ product.emoji }}</span>
+    {% endif %}
     <span class="type-badge">{{ product.category }}</span>
-    <span class="price-badge">{{ product.price }}</span>
   </div>
   <div class="card-content">
     <h3 class="card-title">{{ product.title }}</h3>
