@@ -29,7 +29,7 @@ collections:
     permalink: /artworks/:name/
   hiyamaxtm:
     output: true
-    permalink: /hiyamaxtm/:name/
+    permalink: /hiyamax/:name/
 
 # Exclude from processing
 exclude:
