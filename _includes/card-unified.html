@@ -1,0 +1,41 @@
+<article class="work-card" data-page="1" onclick="window.location.href='{{ include.item.url | relative_url }}'">
+  <div class="card-image" style="{% unless include.item.image %}background: {{ include.item.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endunless %}">
+    {% if include.item.image %}
+      {% assign img_base = include.item.image | remove: '.webp' | remove: '.jpg' | remove: '.png' %}
+      <picture>
+        <source srcset="{{ img_base }}.webp | relative_url" type="image/webp">
+        <img src="{{ include.item.image | relative_url }}" alt="{{ include.item.title }}" loading="lazy" class="card-img">
+      </picture>
+    {% else %}
+      <div class="card-bg">
+        <span style="font-size: 48px;">{{ include.item.emoji | default: '✨' }}</span>
+      </div>
+    {% endif %}
+    
+    {% if include.item.category %}
+      <span class="type-badge">{{ include.item.category }}</span>
+    {% elsif include.item.type %}
+      <span class="type-badge">{{ include.item.type }}</span>
+    {% endif %}
+    
+    {% if include.item.year %}
+      <span class="year-badge">{{ include.item.year }}</span>
+    {% endif %}
+    
+    {% if include.item.status %}
+      <span class="status-badge {{ include.item.status | downcase }}">{{ include.item.status }}</span>
+    {% endif %}
+    
+    {% if include.item.platform %}
+      <span class="platform-badge">{{ include.item.platform }}</span>
+    {% endif %}
+  </div>
+  
+  <div class="card-content">
+    <h3 class="card-title">{{ include.item.title }}</h3>
+    <p class="card-desc">{{ include.item.description | default: include.item.category }}</p>
+    {% if include.item.date %}
+      <p class="card-date">{{ include.item.date | date: "%Y-%m-%d" }}</p>
+    {% endif %}
+  </div>
+</article>

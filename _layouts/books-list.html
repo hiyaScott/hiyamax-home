@@ -19,8 +19,9 @@ layout: default
   <!-- Book Cards -->
   <div class="cards-wrapper">
     <div class="books-grid" id="booksGrid">
-      {% for book in site.books %}
-        {% include book-card-full.html book=book %}
+      {% assign books_sorted = site.books | sort: 'date' | reverse %}
+      {% for book in books_sorted %}
+        {% include card-unified.html item=book %}
       {% endfor %}
     </div>
     
@@ -119,8 +120,8 @@ body {
   align-items: stretch;
 }
 
-/* Book Card - Two-tone structure */
-.book-card {
+/* Book Card - Unified */
+.work-card {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   overflow: hidden;
@@ -131,7 +132,7 @@ body {
   flex-direction: column;
 }
 
-.book-card:hover {
+.work-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -487,7 +488,7 @@ const totalPages = 1;
 const cardsPerPage = 9;
 
 function updatePagination() {
-  const cards = document.querySelectorAll('.book-card');
+  const cards = document.querySelectorAll('.work-card');
   cards.forEach((card, index) => {
     const cardPage = Math.floor(index / cardsPerPage) + 1;
     card.style.display = cardPage === currentPage ? 'block' : 'none';

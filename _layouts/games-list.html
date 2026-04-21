@@ -21,7 +21,7 @@ layout: default
     <div class="games-grid" id="gamesGrid">
       {% assign games_sorted = site.games | sort: 'date' | reverse %}
       {% for game in games_sorted %}
-        {% include game-card-full.html game=game %}
+        {% include card-unified.html item=game %}
       {% endfor %}
     </div>
     
@@ -120,8 +120,8 @@ body {
   align-items: stretch;
 }
 
-/* Game Card - Two-tone structure */
-.game-card {
+/* Game Card - Unified with other modules */
+.work-card {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   overflow: hidden;
@@ -132,7 +132,7 @@ body {
   flex-direction: column;
 }
 
-.game-card:hover {
+.work-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -521,7 +521,7 @@ const totalPages = 1;
 const cardsPerPage = 9;
 
 function updatePagination() {
-  const cards = document.querySelectorAll('.game-card');
+  const cards = document.querySelectorAll('.work-card');
   cards.forEach((card, index) => {
     const cardPage = Math.floor(index / cardsPerPage) + 1;
     card.style.display = cardPage === currentPage ? 'block' : 'none';
