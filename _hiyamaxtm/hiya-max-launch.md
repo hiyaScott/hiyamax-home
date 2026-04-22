@@ -7,7 +7,7 @@ color: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%)
 year: 2025
 date: 2025-02-17
 emoji: 👋
-image: /assets/images/hiyamaxtm/hiya-max-launch-e2db40a8.webp
+image: /assets/images/hiyamaxtm/hiya-max-launch-907c90cb.webp
 layout: hiyamaxtm-product
 ---
 
