@@ -1,0 +1,13 @@
+---
+title: Halloween Night
+description: A spooky Halloween scene featuring a pumpkin house with ghostly birds and bats, created with bold black outlines and orange accents.
+category: Mixed Media
+color: linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)
+emoji: 🎃
+image: /assets/artworks/artwork-60980e08.webp
+year: 2025
+medium: Acrylic and Marker on Paper
+size: 30 x 40 cm
+---
+
+A playful Halloween composition with a central pumpkin house, surrounded by whimsical birds and flying bats. The bold black outlines and handwritten "HALLOWEEN MAX" text showcase a child's uninhibited creativity.
