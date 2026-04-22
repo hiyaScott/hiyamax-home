@@ -4,7 +4,7 @@ description: 记录小朋友一天喊多少次"妈妈"的亲子互动计数器
 category: Utility
 color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)
 emoji: 👶
-image: /assets/images/games/mama-counter-hero.png
+image: /assets/images/games/mama-counter-2d9904e3.webp
 type: Utility
 platform: Mobile
 year: 2024
@@ -199,8 +199,8 @@ date: 2026-04-07
 <div class="mc-intro-container">
   <div class="mc-hero-wrapper">
     <picture>
-      <source srcset="{{ '/assets/images/games/mama-counter-hero.webp' | relative_url }}" type="image/webp">
-      <img src="{{ '/assets/images/games/mama-counter-hero.png' | relative_url }}" alt="妈妈计数器" loading="lazy">
+      <source srcset="{{ '/assets/images/games/mama-counter-2d9904e3.webp' | relative_url }}" type="image/webp">
+      <img src="{{ '/assets/images/games/mama-counter-2d9904e3.webp' | relative_url }}" alt="妈妈计数器" loading="lazy">
     </picture>
     <div class="mc-hero-overlay">
       <a href="{{ '/games/mama-counter/play/' | relative_url }}" target="_blank" rel="noopener" class="mc-intro-start-btn">
