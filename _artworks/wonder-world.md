@@ -6,8 +6,10 @@ color: linear-gradient(135deg, #dda0dd 0%, #98fb98 100%)
 emoji: 🌟
 image: /assets/artworks/artwork-53461e7e.webp
 year: 2025
+date: 2025-04-19
 medium: Mixed Media on Canvas
 size: 40 x 30 cm
+layout: artwork
 ---
 
 Soft colors and gentle textures create a welcoming world of imagination. This piece captures the sense of wonder and possibility that defines childhood creativity.

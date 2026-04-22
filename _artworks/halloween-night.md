@@ -6,8 +6,10 @@ color: linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)
 emoji: 🎃
 image: /assets/artworks/artwork-60980e08.webp
 year: 2025
+date: 2025-04-01
 medium: Acrylic and Marker on Paper
 size: 30 x 40 cm
+layout: artwork
 ---
 
 A playful Halloween composition with a central pumpkin house, surrounded by whimsical birds and flying bats. The bold black outlines and handwritten "HALLOWEEN MAX" text showcase a child's uninhibited creativity.

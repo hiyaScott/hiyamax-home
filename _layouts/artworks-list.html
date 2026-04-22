@@ -511,11 +511,11 @@ window.addEventListener('resize', () => {
 
 // Pagination - 9 cards per page
 let currentPage = 1;
-const totalPages = 1;
 const cardsPerPage = 9;
 
 function updatePagination() {
   const cards = document.querySelectorAll('.work-card');
+  const totalPages = Math.ceil(cards.length / cardsPerPage);
   cards.forEach((card, index) => {
     const cardPage = Math.floor(index / cardsPerPage) + 1;
     card.style.display = cardPage === currentPage ? 'block' : 'none';
@@ -539,6 +539,8 @@ function updatePagination() {
 }
 
 function changePage(delta) {
+  const cards = document.querySelectorAll('.work-card');
+  const totalPages = Math.ceil(cards.length / cardsPerPage);
   currentPage += delta;
   if (currentPage < 1) currentPage = 1;
   if (currentPage > totalPages) currentPage = totalPages;

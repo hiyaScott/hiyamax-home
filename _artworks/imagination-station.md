@@ -6,8 +6,10 @@ color: linear-gradient(135deg, #ff69b4 0%, #87ceeb 100%)
 emoji: 🚀
 image: /assets/artworks/artwork-e2e84dd0.webp
 year: 2025
+date: 2025-04-17
 medium: Mixed Media on Paper
 size: 40 x 30 cm
+layout: artwork
 ---
 
 A playful gathering of shapes, colors, and textures that capture the essence of imaginative play. This piece reminds us of the unlimited creative potential within every child.
