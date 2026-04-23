@@ -1,19 +1,21 @@
 ---
-layout: book
+layout: default
 ---
 
 <!-- Book Breadcrumb -->
 <nav class="breadcrumb">
   <div class="breadcrumb-inner">
     <a href="{{ '/books/' | relative_url }}">Books</a>
-    <span class="breadcrumb-separator">/</span>
+    <span class="breadcrumb-separator">&gt;</span>
     <span class="breadcrumb-current">{{ page.title }}</span>
   </div>
 </nav>
 
-<!-- Book Detail Page -->
+<!-- Book Container -->
 <div class="book-page">
   <div class="book-wrapper">
+    
+    <!-- Book Detail: Cover + Info -->
     <div class="book-detail">
       <!-- Cover -->
       <div class="book-cover">
@@ -43,10 +45,12 @@ layout: book
           </div>
         </div>
         
+        <!-- Description from content -->
         <div class="book-info-desc">
-          {{ page.description }}
+          {{ content }}
         </div>
         
+        <!-- Highlights -->
         {% if page.highlights %}
         <div class="book-highlights">
           <p><strong>主要亮点：</strong></p>
@@ -58,6 +62,7 @@ layout: book
         </div>
         {% endif %}
         
+        <!-- Actions -->
         <div class="book-actions">
           {% if page.pdf %}
           <a href="{{ page.pdf | relative_url }}" target="_blank" class="btn btn-primary">
@@ -72,19 +77,6 @@ layout: book
         </div>
       </div>
     </div>
-    
-    <!-- PDF Preview -->
-    {% if page.pdf %}
-    <div class="pdf-preview">
-      <div class="pdf-preview-header">
-        <h3 class="pdf-preview-title">📄 文档预览</h3>
-        <span style="font-size: 12px; color: #999;">如无法显示，请使用上方按钮打开或下载</span>
-      </div>
-      <div class="pdf-preview-frame">
-        <iframe src="{{ page.pdf | relative_url }}" width="100%" height="100%" style="border:none; border-radius:8px;"></iframe>
-      </div>
-    </div>
-    {% endif %}
     
     <!-- TOC -->
     {% if page.toc %}
@@ -117,11 +109,12 @@ layout: book
         返回书籍列表
       </a>
     </div>
+    
   </div>
 </div>
 
 <style>
-  /* Book Detail Page */
+  /* Book Detail Page - Light Theme */
   html, body {
     background: #f8fafc;
     min-height: 100vh;
@@ -339,46 +332,7 @@ layout: book
   
   .btn svg { width: 18px; height: 18px; }
   
-  /* PDF Preview */
-  .pdf-preview {
-    background: #fff;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
-  }
-  
-  .pdf-preview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .pdf-preview-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #000;
-  }
-  
-  .pdf-preview-frame {
-    width: 100%;
-    height: 600px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background: #fafafa;
-    overflow: hidden;
-  }
-  
-  .pdf-preview-frame iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-  
-  /* Content Card */
+  /* Content Cards */
   .content-card {
     background: #fff;
     border-radius: 16px;
@@ -478,14 +432,12 @@ layout: book
     .book-info-title { font-size: 24px; }
     .book-actions { justify-content: center; }
     .btn { flex: 1; justify-content: center; min-width: 140px; }
-    .pdf-preview-frame { height: 400px; }
+    .content-card { padding: 20px; }
   }
   
   @media (max-width: 480px) {
     .book-info-title { font-size: 20px; }
-    .pdf-preview-frame { height: 300px; }
     .btn { width: 100%; }
-    .pdf-preview { padding: 20px; }
     .content-card { padding: 20px; }
   }
 </style>
