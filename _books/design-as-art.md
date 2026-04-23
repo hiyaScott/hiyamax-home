@@ -5,7 +5,7 @@ category: Reading Notes
 year: 2025
 date: 2025-05-25
 emoji: 🎨
-image: /assets/images/books/design-as-art-cover.png
+image: /assets/images/books/design-as-art-cover.webp
 pdf: /assets/files/design-as-art.pdf
 author: Bruno Munari
 highlights:

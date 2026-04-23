@@ -5,7 +5,7 @@ category: Original Story
 year: 2025
 date: 2025-04-20
 emoji: ⚔️
-image: /assets/images/books/dirk-rascal-cover.png
+image: /assets/images/books/dirk-rascal-cover.webp
 pdf: /assets/files/dirk-rascal.pdf
 author: Max Qian
 highlights:

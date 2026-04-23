@@ -5,7 +5,7 @@ category: Reading Notes
 year: 2024
 date: 2024-12-18
 emoji: 🌊
-image: /assets/images/books/extreme-ocean-cover.png
+image: /assets/images/books/extreme-ocean-cover.webp
 pdf: /assets/files/extreme-ocean.pdf
 highlights:
   - Explore the extreme environments and amazing creatures of the ocean

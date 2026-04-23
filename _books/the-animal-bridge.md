@@ -5,7 +5,7 @@ category: Reading Notes
 year: 2022
 date: 2022-12-06
 emoji: 🌉
-image: /assets/images/books/the-animal-bridge-cover.png
+image: /assets/images/books/the-animal-bridge-cover.webp
 pdf: /assets/files/the-animal-bridge.pdf
 highlights:
   - Explore the relationship between animals and nature
