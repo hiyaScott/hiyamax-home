@@ -1,0 +1,491 @@
+---
+layout: book
+---
+
+<!-- Book Breadcrumb -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{{ '/books/' | relative_url }}">Books</a>
+    <span class="breadcrumb-separator">/</span>
+    <span class="breadcrumb-current">{{ page.title }}</span>
+  </div>
+</nav>
+
+<!-- Book Detail Page -->
+<div class="book-page">
+  <div class="book-wrapper">
+    <div class="book-detail">
+      <!-- Cover -->
+      <div class="book-cover">
+        {% if page.image %}
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }} 封面">
+        {% else %}
+          <div class="book-cover-placeholder">
+            <span class="icon">{{ page.emoji | default: '📖' }}</span>
+            <span class="label">{{ page.type | default: 'Book' }}</span>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Info -->
+      <div class="book-info">
+        <div class="book-info-header">
+          <h1 class="book-info-title">{{ page.title }}</h1>
+          <div class="book-info-meta">
+            {% if page.year %}<span>📅 {{ page.year }}年</span>{% endif %}
+            {% if page.author %}<span>👤 {{ page.author }}</span>{% endif %}
+            {% if page.pages or page.fileSize %}
+              <span>📄 {{ page.pages | default: '' }}{% if page.pages and page.fileSize %} · {% endif %}{{ page.fileSize | default: '' }}</span>
+            {% endif %}
+            {% if page.category %}
+              <span class="tag">{{ page.category }}</span>
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="book-info-desc">
+          {{ page.description }}
+        </div>
+        
+        {% if page.highlights %}
+        <div class="book-highlights">
+          <p><strong>主要亮点：</strong></p>
+          <ul>
+            {% for item in page.highlights %}
+            <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        
+        <div class="book-actions">
+          {% if page.pdf %}
+          <a href="{{ page.pdf | relative_url }}" target="_blank" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            在线阅读
+          </a>
+          <a href="{{ page.pdf | relative_url }}" download class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下载 PDF
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- PDF Preview -->
+    {% if page.pdf %}
+    <div class="pdf-preview">
+      <div class="pdf-preview-header">
+        <h3 class="pdf-preview-title">📄 文档预览</h3>
+        <span style="font-size: 12px; color: #999;">如无法显示，请使用上方按钮打开或下载</span>
+      </div>
+      <div class="pdf-preview-frame">
+        <iframe src="{{ page.pdf | relative_url }}" width="100%" height="100%" style="border:none; border-radius:8px;"></iframe>
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- TOC -->
+    {% if page.toc %}
+    <div class="content-card">
+      <h3>📑 目录</h3>
+      <ul class="toc-list">
+        {% for item in page.toc %}
+        <li>
+          <span class="chapter-num">{{ item.num | default: forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <span class="chapter-title">{{ item.title }}</span>
+          <span class="chapter-page">{{ item.page }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    
+    <!-- Extra Content -->
+    {% if page.extra %}
+    <div class="content-card">
+      <h3>ℹ️ {{ page.extra.title | default: '关于本书' }}</h3>
+      {{ page.extra.content | markdownify }}
+    </div>
+    {% endif %}
+    
+    <!-- Return Button -->
+    <div class="return-section">
+      <a href="{{ '/books/' | relative_url }}" class="return-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        返回书籍列表
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Book Detail Page */
+  html, body {
+    background: #f8fafc;
+    min-height: 100vh;
+  }
+  
+  /* Breadcrumb */
+  .breadcrumb {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding-top: var(--header-height);
+  }
+  
+  .breadcrumb-inner {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 12px 40px;
+    font-size: 14px;
+  }
+  
+  .breadcrumb-inner a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .breadcrumb-inner a:hover { color: #000; }
+  
+  .breadcrumb-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+  
+  .breadcrumb-current {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  /* Book Page */
+  .book-page {
+    padding: 20px 0 60px;
+  }
+  
+  .book-wrapper {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  
+  /* Book Detail Grid */
+  .book-detail {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  
+  /* Cover */
+  .book-cover {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+  
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .book-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.9);
+    background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+  }
+  
+  .book-cover-placeholder .icon { font-size: 64px; }
+  .book-cover-placeholder .label {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  /* Book Info */
+  .book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .book-info-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+  
+  .book-info-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  
+  .book-info-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: #666;
+    align-items: center;
+  }
+  
+  .book-info-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .book-info-meta .tag {
+    background: #f0f0f0;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .book-info-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+  }
+  
+  .book-info-desc p { margin-bottom: 12px; }
+  
+  .book-highlights ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #444;
+  }
+  
+  .book-highlights ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  
+  .book-highlights ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #999;
+  }
+  
+  /* Buttons */
+  .book-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn-primary {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .btn-secondary {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .btn-secondary:hover {
+    border-color: #999;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .btn svg { width: 18px; height: 18px; }
+  
+  /* PDF Preview */
+  .pdf-preview {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+  }
+  
+  .pdf-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .pdf-preview-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+  
+  .pdf-preview-frame {
+    width: 100%;
+    height: 600px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #fafafa;
+    overflow: hidden;
+  }
+  
+  .pdf-preview-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  /* Content Card */
+  .content-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+  }
+  
+  .content-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 16px;
+  }
+  
+  .content-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  
+  /* TOC */
+  .toc-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .toc-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .toc-list li:last-child { border-bottom: none; }
+  
+  .toc-list .chapter-num {
+    color: #999;
+    font-size: 12px;
+    min-width: 30px;
+  }
+  
+  .toc-list .chapter-title {
+    flex: 1;
+    color: #333;
+  }
+  
+  .toc-list .chapter-page {
+    color: #999;
+    font-size: 12px;
+  }
+  
+  /* Return Button */
+  .return-section {
+    margin: 40px 0;
+    text-align: center;
+  }
+  
+  .return-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  
+  .return-btn:hover {
+    border-color: #999;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .breadcrumb-inner { padding: 12px 20px; }
+    .book-wrapper { padding: 0 20px; }
+    .book-detail {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 20px;
+    }
+    .book-cover {
+      max-width: 240px;
+      margin: 0 auto;
+    }
+    .book-info-title { font-size: 24px; }
+    .book-actions { justify-content: center; }
+    .btn { flex: 1; justify-content: center; min-width: 140px; }
+    .pdf-preview-frame { height: 400px; }
+  }
+  
+  @media (max-width: 480px) {
+    .book-info-title { font-size: 20px; }
+    .pdf-preview-frame { height: 300px; }
+    .btn { width: 100%; }
+    .pdf-preview { padding: 20px; }
+    .content-card { padding: 20px; }
+  }
+</style>

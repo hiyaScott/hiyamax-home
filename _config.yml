@@ -53,3 +53,8 @@ defaults:
       type: "games"
     values:
       layout: "game"
+  - scope:
+      path: ""
+      type: "books"
+    values:
+      layout: "book"
