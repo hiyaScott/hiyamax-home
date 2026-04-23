@@ -5,6 +5,7 @@ category: Watercolor
 color: linear-gradient(135deg, #b8d4e3 0%, #87ceeb 100%)
 emoji: 🤝
 image: /assets/artworks/artwork-af814a6b.webp
+thumbnail: /assets/images/artworks/thumbs/artwork-af814a6b.webp
 year: 2025
 date: 2025-04-06
 medium: Watercolor and Collage on Paper

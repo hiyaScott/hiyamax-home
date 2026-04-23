@@ -1,6 +1,8 @@
 <article class="work-card" data-page="1" onclick="window.location.href='{{ include.item.url | relative_url }}'">
-  <div class="card-image" style="{% unless include.item.image %}background: {{ include.item.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endunless %}">
-    {% if include.item.image %}
+  <div class="card-image" style="{% unless include.item.thumbnail or include.item.image %}background: {{ include.item.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endunless %}">
+    {% if include.item.thumbnail %}
+      <img src="{{ include.item.thumbnail | relative_url }}" alt="{{ include.item.title }}" loading="lazy" class="card-img">
+    {% elsif include.item.image %}
       {% assign img_base = include.item.image | remove: '.webp' | remove: '.jpg' | remove: '.png' %}
       <picture>
         <source srcset="{{ img_base }}.webp | relative_url" type="image/webp">

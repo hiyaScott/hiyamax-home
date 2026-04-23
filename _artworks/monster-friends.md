@@ -5,6 +5,7 @@ category: Mixed Media
 color: linear-gradient(135deg, #ff7f50 0%, #ff6347 100%)
 emoji: 👾
 image: /assets/artworks/artwork-ea214504.webp
+thumbnail: /assets/images/artworks/thumbs/artwork-ea214504.webp
 year: 2025
 date: 2025-04-05
 medium: Mixed Media Collage on Canvas
