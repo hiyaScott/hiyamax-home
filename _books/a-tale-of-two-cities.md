@@ -1,19 +1,19 @@
 ---
 title: "A Tale of Two Cities"
-description: "关于勇敢的人们在法国大革命期间于法国和伦敦的冒险故事，狄更斯最具历史厚重感的作品。"
-category: 读书笔记
-year: 2025
-date: 2025-04-23
+description: "A story of brave people and their adventures in France and London during the French Revolution, Dickens' most historically profound work."
+category: Reading Notes
+year: 2024
+date: 2024-03-04
 emoji: 🏛️
 image: /assets/images/books/a-tale-of-two-cities-cover.png
 pdf: /assets/files/a-tale-of-two-cities.pdf
 author: Charles Dickens
 highlights:
-  - 狄更斯最具历史厚重感的代表作
-  - 以法国大革命为背景，展现勇敢与人性的光辉
-  - 马内特医生被囚禁巴士底狱18年后与女儿露西团聚
-  - 伦敦与巴黎双城交织的宏大叙事
-  - 关于牺牲、爱与救赎的永恒主题
+  - Dickens' most historically profound masterpiece
+  - Set against the French Revolution, showing courage and the light of humanity
+  - Dr. Manette reunited with his daughter Lucie after 18 years in the Bastille
+  - Grand narrative intertwining London and Paris
+  - Eternal themes of sacrifice, love, and redemption
 ---
 
-Charles Dickens 的经典历史小说，讲述法国大革命期间勇敢的人们在巴黎和伦敦的冒险。马内特医生被囚禁巴士底狱18年后与女儿团聚，展现了牺牲、爱与救赎的永恒主题。
+Charles Dickens' classic historical novel tells of brave people's adventures in Paris and London during the French Revolution. Dr. Manette, imprisoned in the Bastille for 18 years, reunites with his daughter, illustrating eternal themes of sacrifice, love, and redemption.

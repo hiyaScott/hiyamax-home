@@ -1,19 +1,19 @@
 ---
 title: "Dirk Rascal's Magical Journey"
-description: "Max 原创奇幻冒险故事，讲述勇敢男孩 Dirk Rascal 拯救父母、击败 Lizard Man 的魔法旅程。"
-category: 原创故事
+description: "An original fantasy adventure by Max, telling the magical journey of brave boy Dirk Rascal to save his parents and defeat the Lizard Man."
+category: Original Story
 year: 2025
-date: 2025-04-23
+date: 2025-04-20
 emoji: ⚔️
 image: /assets/images/books/dirk-rascal-cover.png
 pdf: /assets/files/dirk-rascal.pdf
 author: Max Qian
 highlights:
-  - Max 原创奇幻冒险故事，Midjourney 配图
-  - 勇敢男孩 Dirk Rascal 为拯救父母踏上魔法旅程
-  - 与被困的 singing animals 联手，打破邪恶咒语
-  - 经典奇幻元素：魔法生物、宝剑、城堡、英雄之旅
-  - 四章结构：Captured! → Popcat → Captured again! → The Castle
+  - Original fantasy adventure by Max, illustrated by Midjourney
+  - Brave boy Dirk Rascal embarks on a magical journey to save his parents
+  - Teams up with trapped singing animals to break the evil spell
+  - Classic fantasy elements: magical creatures, swords, castles, hero's journey
+  - Four chapters: Captured! → Popcat → Captured again! → The Castle
 ---
 
-Max 原创奇幻冒险故事，讲述勇敢男孩 Dirk Rascal 的魔法旅程。父母被 Lizard Man 的 pixies 抓走后，Dirk 抓起竹杖出发营救。途中遇到被困的 singing animals，联手打破邪恶咒语，最终抵达 Lizard Man 的草莓味城堡。Midjourney 配图。
+An original fantasy adventure by Max about brave boy Dirk Rascal's magical journey. After his parents are captured by the Lizard Man's pixies, Dirk grabs a bamboo staff and sets out to rescue them. Along the way he teams up with trapped singing animals to break the evil spell, eventually reaching the Lizard Man's strawberry-scented castle. Illustrated by Midjourney.

@@ -1,16 +1,16 @@
 ---
 title: "The Animal Bridge"
-description: "关于动物与自然的故事，探索人与自然和谐共处的主题。"
-category: 读书笔记
-year: 2025
-date: 2025-04-23
+description: "A story about animals and nature, exploring the theme of harmony between humans and the natural world."
+category: Reading Notes
+year: 2022
+date: 2022-12-06
 emoji: 🌉
 image: /assets/images/books/the-animal-bridge-cover.png
 pdf: /assets/files/the-animal-bridge.pdf
 highlights:
-  - 探索动物与自然的关系
-  - 关于人与自然和谐共处的思考
-  - Max 的读书笔记分享
+  - Explore the relationship between animals and nature
+  - Reflections on harmony between humans and the natural world
+  - Max's reading notes sharing
 ---
 
-Max 的读书笔记，关于动物与自然的故事，探索人与自然和谐共处的主题。
+Max's reading notes about a story of animals and nature, exploring the theme of harmony between humans and the natural world.

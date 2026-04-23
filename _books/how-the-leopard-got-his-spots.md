@@ -1,19 +1,19 @@
 ---
 title: "How the Leopard Got His Spots"
-description: "关于非洲动物的趣味故事，讲述豹子如何获得身上的斑点，以及长颈鹿和斑马的花纹由来。"
-category: 读书笔记
-year: 2025
-date: 2025-04-23
+description: "A fun story about African animals, explaining how the leopard got its spots and the origins of the giraffe's and zebra's patterns."
+category: Reading Notes
+year: 2021
+date: 2021-11-10
 emoji: 🐆
 image: /assets/images/books/how-the-leopard-got-his-spots-cover.png
 pdf: /assets/files/how-the-leopard-got-his-spots.pdf
 author: Rudyard Kipling
 highlights:
-  - Kipling经典《原来如此的故事》系列之一
-  - 讲述非洲豹子如何获得身上斑点
-  - 涉及长颈鹿、斑马、狒狒等多种非洲动物
-  - Max的读书分享演讲稿，充满童趣与想象力
-  - 森林狩猎场景的趣味描写令人发笑
+  - One of Kipling's classic "Just So Stories"
+  - Tells how the African leopard got its spots
+  - Features giraffe, zebra, baboon, and other African animals
+  - Max's reading sharing presentation, full of childlike wonder and imagination
+  - The humorous forest hunting scene is laugh-out-loud funny
 ---
 
-Rudyard Kipling 经典作品《原来如此的故事》系列之一，讲述非洲豹子如何获得身上斑点。Max的读书分享演讲，充满童趣与想象力，描述了森林狩猎的趣味场景。
+Rudyard Kipling's classic "Just So Stories" tale about how the African leopard got its spots. Max's reading sharing presentation is full of childlike wonder and imagination, describing the humorous forest hunting scene.
