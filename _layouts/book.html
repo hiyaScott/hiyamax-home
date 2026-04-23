@@ -94,14 +94,6 @@ layout: default
     </div>
     {% endif %}
     
-    <!-- Extra Content -->
-    {% if page.extra %}
-    <div class="content-card">
-      <h3>ℹ️ {{ page.extra.title | default: '关于本书' }}</h3>
-      {{ page.extra.content | markdownify }}
-    </div>
-    {% endif %}
-    
     <!-- Return Button -->
     <div class="return-section">
       <a href="{{ '/books/' | relative_url }}" class="return-btn">
