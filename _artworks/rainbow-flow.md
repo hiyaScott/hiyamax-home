@@ -5,6 +5,7 @@ category: Acrylic Painting
 color: linear-gradient(135deg, #dda0dd 0%, #98fb98 100%)
 emoji: 🌈
 image: /assets/artworks/artwork-98b353c5.webp
+thumbnail: /assets/artworks/thumbs/artwork-98b353c5.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-98b353c5.webp
 year: 2025
 date: 2025-04-08

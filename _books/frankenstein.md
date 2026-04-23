@@ -6,6 +6,7 @@ year: 2023
 date: 2023-09-24
 emoji: ⚗️
 image: /assets/images/books/frankenstein-cover.webp
+thumbnail: /assets/images/books/thumbs/frankenstein-cover.webp
 pdf: /assets/files/frankenstein.pdf
 author: Mary Shelley
 highlights:

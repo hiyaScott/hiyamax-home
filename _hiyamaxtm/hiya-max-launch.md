@@ -8,6 +8,7 @@ year: 2025
 date: 2025-02-17
 emoji: 👋
 image: /assets/images/hiyamaxtm/hiya-max-launch-10f697a6.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/hiya-max-launch-10f697a6.webp
 layout: hiyamaxtm-product
 ---
 

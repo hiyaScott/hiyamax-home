@@ -6,6 +6,7 @@ year: 2023
 date: 2023-11-15
 emoji: 🐦
 image: /assets/images/books/storm-boy-cover.webp
+thumbnail: /assets/images/books/thumbs/storm-boy-cover.webp
 pdf: /assets/files/storm-boy.pdf
 author: Colin Thiele
 highlights:

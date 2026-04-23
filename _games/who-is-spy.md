@@ -5,6 +5,7 @@ category: Party
 color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)
 emoji: 🕵️
 image: /assets/images/games/undercover-hero.png
+thumbnail: /assets/images/games/thumbs/undercover-hero.webp
 type: Party
 platform: Web
 year: 2024

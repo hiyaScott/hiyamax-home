@@ -6,6 +6,7 @@ year: 2021
 date: 2021-11-10
 emoji: 🐆
 image: /assets/images/books/how-the-leopard-got-his-spots-cover.webp
+thumbnail: /assets/images/books/thumbs/how-the-leopard-got-his-spots-cover.webp
 pdf: /assets/files/how-the-leopard-got-his-spots.pdf
 author: Rudyard Kipling
 highlights:

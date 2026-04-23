@@ -8,6 +8,7 @@ year: 2025
 date: 2025-03-17
 emoji: 🙌
 image: /assets/images/hiyamaxtm/high-five-doll-1.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/high-five-doll-1.webp
 layout: hiyamaxtm-product
 ---
 

@@ -6,6 +6,7 @@ year: 2024
 date: 2024-03-04
 emoji: 🏛️
 image: /assets/images/books/a-tale-of-two-cities-cover.webp
+thumbnail: /assets/images/books/thumbs/a-tale-of-two-cities-cover.webp
 pdf: /assets/files/a-tale-of-two-cities.pdf
 author: Charles Dickens
 highlights:

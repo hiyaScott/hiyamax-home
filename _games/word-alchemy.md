@@ -5,6 +5,7 @@ category: Puzzle
 color: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 emoji: 🔮
 image: /assets/images/games/word-alchemy-hero.webp
+thumbnail: /assets/images/games/thumbs/word-alchemy-hero.webp
 type: Puzzle
 platform: Web
 year: 2024

@@ -6,6 +6,7 @@ year: 2024
 date: 2024-10-07
 emoji: 📖
 image: /assets/images/books/oliver-twist-cover.webp
+thumbnail: /assets/images/books/thumbs/oliver-twist-cover.webp
 pdf: /assets/files/oliver-twist.pdf
 author: Charles Dickens
 highlights:

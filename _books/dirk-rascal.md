@@ -6,6 +6,7 @@ year: 2025
 date: 2025-04-20
 emoji: ⚔️
 image: /assets/images/books/dirk-rascal-cover.webp
+thumbnail: /assets/images/books/thumbs/dirk-rascal-cover.webp
 pdf: /assets/files/dirk-rascal.pdf
 author: Max Qian
 highlights:

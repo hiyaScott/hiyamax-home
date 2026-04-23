@@ -6,6 +6,7 @@ year: 2026
 date: 2026-01-08
 emoji: 🔭
 image: /assets/images/books/a-brief-history-of-time-cover.webp
+thumbnail: /assets/images/books/thumbs/a-brief-history-of-time-cover.webp
 pdf: /assets/files/a-brief-history-of-time.pdf
 author: Stephen Hawking
 highlights:

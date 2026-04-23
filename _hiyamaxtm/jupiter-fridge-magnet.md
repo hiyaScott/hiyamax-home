@@ -8,6 +8,7 @@ year: 2025
 date: 2025-12-25
 emoji: 🪐
 image: /assets/images/hiyamaxtm/jupiter-fridge-magnet-2a1724b8.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/jupiter-fridge-magnet-2a1724b8.webp
 layout: hiyamaxtm-product
 ---
 

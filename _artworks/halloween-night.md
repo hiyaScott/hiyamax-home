@@ -5,6 +5,7 @@ category: Mixed Media
 color: linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)
 emoji: 🎃
 image: /assets/artworks/artwork-60980e08.webp
+thumbnail: /assets/artworks/thumbs/artwork-60980e08.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-60980e08.webp
 year: 2025
 date: 2025-04-01

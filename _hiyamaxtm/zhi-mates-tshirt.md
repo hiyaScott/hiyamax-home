@@ -8,6 +8,7 @@ year: 2025
 date: 2025-05-19
 emoji: 👕
 image: /assets/images/hiyamaxtm/zhi-mates-tshirt-da39e16c.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/zhi-mates-tshirt-da39e16c.webp
 layout: hiyamaxtm-product
 ---
 

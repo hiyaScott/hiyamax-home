@@ -5,6 +5,7 @@ category: Utility
 color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)
 emoji: 👶
 image: /assets/images/games/mama-counter-2d9904e3.webp
+thumbnail: /assets/images/games/thumbs/mama-counter-2d9904e3.webp
 type: Utility
 platform: Mobile
 year: 2024

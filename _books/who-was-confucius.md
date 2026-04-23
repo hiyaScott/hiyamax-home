@@ -6,6 +6,7 @@ year: 2024
 date: 2024-04-06
 emoji: 🏛️
 image: /assets/images/books/who-was-confucius-cover.webp
+thumbnail: /assets/images/books/thumbs/who-was-confucius-cover.webp
 pdf: /assets/files/who-was-confucius.pdf
 highlights:
   - Part of the classic "Who Was" children's biography series

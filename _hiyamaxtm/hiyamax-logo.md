@@ -8,6 +8,7 @@ year: 2025
 date: 2025-06-01
 emoji: 🎯
 image: /assets/images/hiyamaxtm/hiyamax-logo-f86152fe.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/hiyamax-logo-f86152fe.webp
 layout: hiyamaxtm-product
 ---
 

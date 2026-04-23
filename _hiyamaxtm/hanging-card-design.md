@@ -8,6 +8,7 @@ year: 2026
 date: 2026-04-21
 emoji: 🎨
 image: /assets/images/hiyamaxtm/hanging-card-2.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/hanging-card-2.webp
 layout: hiyamaxtm-product
 ---
 
