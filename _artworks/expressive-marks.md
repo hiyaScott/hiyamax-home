@@ -7,8 +7,8 @@ emoji: 🖌️
 image: /assets/artworks/artwork-0d6c205f.webp
 thumbnail: /assets/artworks/thumbs/artwork-0d6c205f.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-0d6c205f.webp
-year: 2025
-date: 2025-04-24
+year: 2019
+date: 2019-07-04
 medium: Mixed Media on Paper
 size: 30 x 40 cm
 layout: artwork

@@ -8,7 +8,7 @@ image: /assets/artworks/artwork-3302b5f6.webp
 thumbnail: /assets/artworks/thumbs/artwork-3302b5f6.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-3302b5f6.webp
 year: 2025
-date: 2025-04-02
+date: 2025-03-17
 medium: Acrylic on Canvas
 size: 40 x 30 cm
 layout: artwork

@@ -7,8 +7,8 @@ emoji: 🎃
 image: /assets/artworks/artwork-60980e08.webp
 thumbnail: /assets/artworks/thumbs/artwork-60980e08.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-60980e08.webp
-year: 2025
-date: 2025-04-01
+year: 2021
+date: 2021-11-01
 medium: Acrylic and Marker on Paper
 size: 30 x 40 cm
 layout: artwork

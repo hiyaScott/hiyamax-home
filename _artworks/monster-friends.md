@@ -7,8 +7,8 @@ emoji: 👾
 image: /assets/artworks/artwork-ea214504.webp
 thumbnail: /assets/artworks/thumbs/artwork-ea214504.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-ea214504.webp
-year: 2025
-date: 2025-04-05
+year: 2020
+date: 2020-03-08
 medium: Mixed Media Collage on Canvas
 size: 40 x 30 cm
 layout: artwork

@@ -7,8 +7,8 @@ emoji: 🤝
 image: /assets/artworks/artwork-af814a6b.webp
 thumbnail: /assets/artworks/thumbs/artwork-af814a6b.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-af814a6b.webp
-year: 2025
-date: 2025-04-06
+year: 2018
+date: 2018-09-19
 medium: Watercolor and Collage on Paper
 size: 30 x 40 cm
 layout: artwork

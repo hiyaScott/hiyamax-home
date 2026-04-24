@@ -2,8 +2,8 @@
 title: "Color Palette"
 description: "Minimalist study of nine color circles"
 category: Acrylic Painting
-year: 2025
-date: 2025-02-10
+year: 2018
+date: 2018-12-03
 image: /assets/artworks/color-palette.webp
 thumbnail: /assets/artworks/thumbs/color-palette.webp
 thumbnail: /assets/images/artworks/thumbs/color-palette.webp

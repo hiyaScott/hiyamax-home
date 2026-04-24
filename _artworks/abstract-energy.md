@@ -2,8 +2,8 @@
 title: "Abstract Energy"
 description: "Vibrant abstract expression with bold brushstrokes"
 category: Acrylic Painting
-year: 2025
-date: 2025-01-20
+year: 2019
+date: 2019-10-29
 image: /assets/artworks/abstract-energy.webp
 thumbnail: /assets/artworks/thumbs/abstract-energy.webp
 thumbnail: /assets/images/artworks/thumbs/abstract-energy.webp

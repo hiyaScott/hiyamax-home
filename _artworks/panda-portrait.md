@@ -2,8 +2,8 @@
 title: "Panda Portrait"
 description: "Playful portrait with graffiti-inspired elements"
 category: Mixed Media
-year: 2025
-date: 2025-04-05
+year: 2020
+date: 2020-12-30
 image: /assets/artworks/panda-portrait.webp
 thumbnail: /assets/artworks/thumbs/panda-portrait.webp
 thumbnail: /assets/images/artworks/thumbs/panda-portrait.webp

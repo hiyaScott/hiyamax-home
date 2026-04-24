@@ -7,8 +7,8 @@ emoji: 💦
 image: /assets/artworks/artwork-90adc393.webp
 thumbnail: /assets/artworks/thumbs/artwork-90adc393.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-90adc393.webp
-year: 2025
-date: 2025-04-20
+year: 2023
+date: 2023-12-20
 medium: Acrylic on Paper
 size: 30 x 40 cm
 layout: artwork

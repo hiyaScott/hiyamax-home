@@ -7,8 +7,8 @@ emoji: 💭
 image: /assets/artworks/artwork-5165e848.webp
 thumbnail: /assets/artworks/thumbs/artwork-5165e848.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-5165e848.webp
-year: 2025
-date: 2025-04-14
+year: 2020
+date: 2020-06-10
 medium: Watercolor on Paper
 size: 30 x 40 cm
 layout: artwork
