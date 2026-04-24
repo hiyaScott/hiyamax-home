@@ -2,9 +2,11 @@
 
 ## 文档版本
 
-- **版本**: v1.1
-- **最后更新**: 2026-04-19
-- **更新内容**: 统一二级/三级页面样式，补充技术实现细节
+- **版本**: v1.2
+- **最后更新**: 2026-04-24
+- **更新内容**: 添加分页组件规范与缩略图规范
+
+---
 
 ---
 
@@ -282,6 +284,93 @@ body {
 
 ---
 
+### 分页组件 (Pagination)
+
+**公共组件**: `_includes/pagination.html`
+
+所有二级分类页（games / books / artworks / hiyaMax™️）共用同一分页组件，通过 `{% include pagination.html %}` 引入。
+
+**核心规范**:
+
+| 属性 | 值 | 说明 |
+|------|-----|------|
+| 每页卡片数 | 9 | 由 `data-per-page="9"` 控制 |
+| 总页数计算 | `Math.ceil(cards.length / cardsPerPage)` | 动态计算，禁止硬编码 |
+| 单页处理 | 自动隐藏 | 只有 1 页时不显示分页控件 |
+| 翻页滚动 | `scrollIntoView({behavior: 'smooth'})` | 自动回到卡片区域顶部 |
+
+**省略号算法** (`siblingCount` + `boundaryCount`):
+
+| 设备 | 断点 | siblingCount | 显示效果示例 |
+|------|------|-------------|-------------|
+| PC | ≥1024px | 1 | `< 1 ... 4 5 6 ... 20 >` |
+| 平板 | 768-1023px | 0 | `< 1 ... 5 ... 20 >` |
+| 手机 | <768px | -1 (极简) | `< Prev  Page 5/20  Next >` |
+
+**响应式尺寸**:
+
+| 设备 | 按钮尺寸 | 触摸目标 |
+|------|---------|---------|
+| PC | 40×40px | - |
+| 平板 | 36×36px | - |
+| 手机 | 44×44px | ≥ 44px |
+
+**样式细节**:
+- 按钮圆角: `8px`
+- 边框: `1px solid rgba(0,0,0,0.2)`
+- 背景: `rgba(255,255,255,0.9)`
+- 当前页高亮: `background: #333; color: #fff`
+- 禁用状态: `opacity: 0.3; cursor: not-allowed`
+- 省略号: 灰色 `#999`，不可点击
+
+---
+
+### 缩略图 (Thumbnail)
+
+**用途**: 二级分类页卡片列表中的图片预览，避免直接加载原图导致性能浪费。
+
+**规范**:
+
+| 属性 | 值 | 说明 |
+|------|-----|------|
+| 宽度 | 384px | 固定宽度，等比缩放 |
+| 格式 | webp | 兼顾兼容性与压缩率 |
+| 质量 | 60-85 | artworks 用 60，其他用 85 |
+| 存放路径 | `assets/images/{category}/thumbs/` | 按分类子目录组织 |
+
+**文件命名示例**:
+```
+assets/images/games/thumbs/mama-counter.webp
+assets/images/books/thumbs/design-as-art-cover.webp
+assets/images/artworks/thumbs/abstract-energy.webp
+assets/images/hiyamaxtm/thumbs/hanging-card.webp
+```
+
+**模板优先级** (`_includes/card-unified.html`):
+1. 优先读取 `item.thumbnail`
+2. 次之用 `item.image`（自动生成 picture/source webp 变体）
+3. 都没有则显示 emoji 占位
+
+**Markdown front matter 写法**:
+```yaml
+---
+title: 项目名称
+image: /assets/images/category/original.jpg
+thumbnail: /assets/images/category/thumbs/preview.webp
+---
+```
+
+**体积控制参考**:
+
+| 分类 | 数量 | 尺寸范围 | 体积范围 | 备注 |
+|------|------|---------|---------|------|
+| games | 3 | 384×555 | 8-11KB | - |
+| books | 11 | 384×555 | 25-49KB | 封面色彩丰富 |
+| artworks | 29 | 384×512 | 10-33KB | quality=60，原图为 3024×4032 |
+| hiyamaxtm | 7 | 384×157~682 | 6-36KB | 横竖构图混合 |
+
+---
+
 ## 六、动效规范
 
 ### 网格背景 (Grid Background)
@@ -416,6 +505,17 @@ hiyamax-home/
 ---
 
 ## 十、版本历史
+
+### v1.2 (2026-04-24)
+- 添加分页组件 (Pagination) 规范
+  - 提取公共组件 `_includes/pagination.html`
+  - siblingCount + boundaryCount 省略号算法
+  - 响应式三端适配 (PC / 平板 / 手机极简模式)
+  - 动态计算 totalPages，修复硬编码 bug
+- 添加缩略图 (Thumbnail) 规范
+  - 统一 384px 宽度等比缩放
+  - webp 格式，按分类子目录存放
+  - 模板优先级: thumbnail → image → emoji
 
 ### v1.1 (2026-04-19)
 - 统一页脚样式 (白色背景、flex 布局延伸到底部)
