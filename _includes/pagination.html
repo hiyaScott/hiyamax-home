@@ -1,0 +1,274 @@
+<!-- Pagination Component -->
+<div class="pagination" id="pagination" data-per-page="9">
+  <button class="pagination-btn prev" onclick="changePage(-1)" aria-label="Previous page">←</button>
+  <div class="pagination-numbers" id="pageNumbers"></div>
+  <span class="pagination-info" id="pageInfo"></span>
+  <button class="pagination-btn next" onclick="changePage(1)" aria-label="Next page">→</button>
+</div>
+
+<style>
+/* Pagination Component */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.pagination-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #fff;
+  border-color: rgba(0,0,0,0.4);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-number {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pagination-number:hover {
+  background: #fff;
+  border-color: rgba(0,0,0,0.4);
+}
+
+.pagination-number.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+.pagination-ellipsis {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 14px;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.pagination-info {
+  display: none;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Tablet: smaller buttons */
+@media (max-width: 1023px) {
+  .pagination-btn,
+  .pagination-number,
+  .pagination-ellipsis {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile: minimal mode (page info instead of numbers) */
+@media (max-width: 767px) {
+  .pagination-numbers {
+    display: none;
+  }
+  .pagination-info {
+    display: inline-flex;
+  }
+  .pagination-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .pagination {
+    gap: 12px;
+  }
+}
+</style>
+
+<script>
+/* Pagination Component JS */
+(function() {
+  let currentPage = 1;
+  const paginationEl = document.getElementById('pagination');
+  const cardsPerPage = parseInt(paginationEl?.dataset.perPage) || 9;
+
+  function getSiblingCount() {
+    const w = window.innerWidth;
+    if (w < 768) return -1;  // Minimal mode
+    if (w < 1024) return 0;  // Tablet
+    return 1;                // Desktop
+  }
+
+  function generatePageNumbers(current, total, siblingCount, boundaryCount) {
+    // Small totals: show all
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const pages = [];
+
+    // Left boundary
+    for (let i = 1; i <= boundaryCount; i++) pages.push(i);
+
+    const leftSibling = Math.max(current - siblingCount, boundaryCount + 1);
+    const rightSibling = Math.min(current + siblingCount, total - boundaryCount);
+
+    // Left ellipsis or fill
+    if (leftSibling > boundaryCount + 1) {
+      pages.push('...');
+    } else {
+      for (let i = boundaryCount + 1; i < leftSibling; i++) pages.push(i);
+    }
+
+    // Middle pages
+    for (let i = leftSibling; i <= rightSibling; i++) pages.push(i);
+
+    // Right ellipsis or fill
+    if (rightSibling < total - boundaryCount) {
+      pages.push('...');
+    } else {
+      for (let i = rightSibling + 1; i <= total - boundaryCount; i++) pages.push(i);
+    }
+
+    // Right boundary
+    for (let i = total - boundaryCount + 1; i <= total; i++) {
+      if (!pages.includes(i)) pages.push(i);
+    }
+
+    return pages;
+  }
+
+  function updatePagination() {
+    const cards = document.querySelectorAll('.work-card');
+    const totalPages = Math.ceil(cards.length / cardsPerPage) || 1;
+
+    // Show/hide cards for current page
+    cards.forEach((card, index) => {
+      const cardPage = Math.floor(index / cardsPerPage) + 1;
+      card.style.display = cardPage === currentPage ? 'block' : 'none';
+    });
+
+    // Update prev/next buttons
+    const prevBtn = document.querySelector('.pagination-btn.prev');
+    const nextBtn = document.querySelector('.pagination-btn.next');
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 1;
+
+    // Hide pagination if only 1 page
+    if (totalPages <= 1) {
+      paginationEl.style.display = 'none';
+      return;
+    }
+    paginationEl.style.display = 'flex';
+
+    const siblingCount = getSiblingCount();
+    const pageNumbers = document.getElementById('pageNumbers');
+    const pageInfo = document.getElementById('pageInfo');
+
+    if (siblingCount === -1) {
+      // Minimal mode: page info text only
+      if (pageNumbers) pageNumbers.innerHTML = '';
+      if (pageInfo) pageInfo.textContent = 'Page ' + currentPage + ' / ' + totalPages;
+    } else {
+      // Full mode: page number buttons
+      if (pageInfo) pageInfo.textContent = '';
+      if (pageNumbers) {
+        pageNumbers.innerHTML = '';
+        const pages = generatePageNumbers(currentPage, totalPages, siblingCount, 1);
+        pages.forEach(function(page) {
+          if (page === '...') {
+            var span = document.createElement('span');
+            span.className = 'pagination-ellipsis';
+            span.textContent = '...';
+            pageNumbers.appendChild(span);
+          } else {
+            var btn = document.createElement('button');
+            btn.className = 'pagination-number' + (page === currentPage ? ' active' : '');
+            btn.textContent = page;
+            btn.onclick = function() {
+              currentPage = page;
+              updatePagination();
+              scrollToTop();
+            };
+            pageNumbers.appendChild(btn);
+          }
+        });
+      }
+    }
+  }
+
+  window.changePage = function(delta) {
+    var cards = document.querySelectorAll('.work-card');
+    var totalPages = Math.ceil(cards.length / cardsPerPage) || 1;
+    currentPage += delta;
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+    updatePagination();
+    scrollToTop();
+  };
+
+  function scrollToTop() {
+    var wrapper = document.querySelector('.cards-wrapper');
+    if (wrapper) {
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Re-calculate on resize
+  var resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updatePagination, 150);
+  });
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updatePagination);
+  } else {
+    updatePagination();
+  }
+})();
+</script>
