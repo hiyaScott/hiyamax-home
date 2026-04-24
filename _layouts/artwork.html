@@ -18,7 +18,7 @@ layout: default
     <div class="artwork-image-section">
       <div class="artwork-image-container">
         {% if page.image %}
-          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="artwork-image">
+          <img src="{{ page.image | replace: '/assets/artworks/', '/assets/images/artworks/medium/' | relative_url }}" alt="{{ page.title }}" class="artwork-image" loading="eager" decoding="async" width="1200">
         {% else %}
           <div class="artwork-image-placeholder" style="background: {{ page.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}">
             <span style="font-size: 120px;">{{ page.emoji | default: '🎨' }}</span>
