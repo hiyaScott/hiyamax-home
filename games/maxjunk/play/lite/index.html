@@ -70,11 +70,18 @@
         scaffolding.height = 360;
         scaffolding.fullscreenMode = 'window-size';
 
-        await scaffolding.loadProject('https://hiyascott.github.io/hiyamax-home/games/maxjunk/play/test/game.sb3');
-
+        // Attach to DOM first
         app.appendChild(scaffolding.root);
-        loading.style.display = 'none';
 
+        // Load project as ArrayBuffer
+        loading.innerHTML = '<div>Downloading game data...</div>';
+        const response = await fetch('https://hiyascott.github.io/hiyamax-home/games/maxjunk/play/test/game.sb3');
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Load the project
+        await scaffolding.vm.loadProject(arrayBuffer);
+
+        loading.style.display = 'none';
         scaffolding.start();
       } catch (err) {
         console.error(err);
