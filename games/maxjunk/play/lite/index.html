@@ -68,10 +68,11 @@
         const scaffolding = new Scaffolding.Scaffolding();
         scaffolding.width = 480;
         scaffolding.height = 360;
-        scaffolding.fullscreenMode = 'window-size';
+        scaffolding.resizeMode = 'preserve-ratio';
 
-        // Attach to DOM first
-        app.appendChild(scaffolding.root);
+        // Initialize and attach to DOM
+        scaffolding.setup();
+        scaffolding.appendTo(app);
 
         // Load project as ArrayBuffer
         loading.innerHTML = '<div>Downloading game data...</div>';
