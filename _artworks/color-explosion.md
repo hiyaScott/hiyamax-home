@@ -6,7 +6,9 @@ year: 2024
 date: 2024-02-20
 image: /assets/artworks/color-explosion.webp
 thumbnail: /assets/artworks/thumbs/color-explosion.webp
+thumbnail_position: 69.3% 68.4%
 thumbnail: /assets/images/artworks/thumbs/color-explosion.webp
+thumbnail_position: 69.3% 68.4%
 medium: Acrylic on Circular Canvas
 size: "Ø 60 cm"
 layout: artwork

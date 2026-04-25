@@ -6,7 +6,9 @@ year: 2019
 date: 2019-10-29
 image: /assets/artworks/abstract-energy.webp
 thumbnail: /assets/artworks/thumbs/abstract-energy.webp
+thumbnail_position: 18.2% 73.8%
 thumbnail: /assets/images/artworks/thumbs/abstract-energy.webp
+thumbnail_position: 18.2% 73.8%
 medium: Acrylic on Canvas
 size: "60 x 80 cm"
 layout: artwork

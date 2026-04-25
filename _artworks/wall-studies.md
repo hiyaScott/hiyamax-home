@@ -6,6 +6,7 @@ color: linear-gradient(135deg, #c4a484 0%, #8b6f47 100%)
 emoji: 🧱
 image: /assets/artworks/wall-studies-1.webp
 thumbnail: /assets/images/artworks/thumbs/wall-studies-1.webp
+thumbnail_position: 25.5% 35.5%
 year: 2019
 date: 2019-12-12
 medium: Acrylic on Canvas

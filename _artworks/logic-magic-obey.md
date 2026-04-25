@@ -6,6 +6,7 @@ color: linear-gradient(135deg, #e8e8e8 0%, #b0b0b0 100%)
 emoji: 🤖
 image: /assets/artworks/logic-magic-obey-1.webp
 thumbnail: /assets/images/artworks/thumbs/logic-magic-obey-1.webp
+thumbnail_position: 46.6% 47.6%
 year: 2025
 date: 2025-05-18
 medium: Ceramic and Acrylic Paint

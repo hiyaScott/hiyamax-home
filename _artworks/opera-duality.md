@@ -6,6 +6,7 @@ color: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #2980b9 100%)
 emoji: 🎭
 image: /assets/artworks/opera-duality.webp
 thumbnail: /assets/images/artworks/thumbs/opera-duality.webp
+thumbnail_position: 11.7% 10.0%
 year: 2023
 date: 2023-12-03
 medium: Colored Pencil on Paper

@@ -6,6 +6,7 @@ color: linear-gradient(135deg, #8b4513 0%, #a0522d 100%)
 emoji: 👤
 image: /assets/artworks/self-portrait-prints-1.webp
 thumbnail: /assets/images/artworks/thumbs/self-portrait-prints-1.webp
+thumbnail_position: 25.5% 62.9%
 year: 2017
 date: 2017-11-18
 medium: Acrylic and Ink on Canvas

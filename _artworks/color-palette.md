@@ -6,7 +6,9 @@ year: 2018
 date: 2018-12-03
 image: /assets/artworks/color-palette.webp
 thumbnail: /assets/artworks/thumbs/color-palette.webp
+thumbnail_position: 25.5% 46.5%
 thumbnail: /assets/images/artworks/thumbs/color-palette.webp
+thumbnail_position: 25.5% 46.5%
 medium: Acrylic on Canvas
 size: "50 x 50 cm"
 layout: artwork
