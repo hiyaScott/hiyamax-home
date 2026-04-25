@@ -1,11 +1,11 @@
 ---
 layout: game
-title: MaxJunk
-description: 只存在于你的想象 - 一个由 Scratch 制作的创意互动游戏
+title: "Taking care of SPACE JUNK"
+description: "太空垃圾终结者 — 使用鼠标控制飞船，收集太空垃圾，小心躲避陨石"
 category: Game
-color: linear-gradient(135deg, #6366f1 0%, #a855f7 100%)
-emoji: 🎮
-image: /assets/images/games/maxjunk-cover.jpg
+color: linear-gradient(135deg, #1e3a5f 0%, #0d2137 100%)
+emoji: 🚀
+image: /assets/images/games/space-junk-intro.jpg
 thumbnail: /assets/images/games/maxjunk-cover.jpg
 type: Game
 platform: Scratch
@@ -268,7 +268,7 @@ date: 2024-05-02
 
 <div class="mj-intro-container">
   <div class="mj-hero-wrapper">
-    <img src="{{ '/assets/images/games/maxjunk-cover.jpg' | relative_url }}" alt="MaxJunk - 只存在于你的想象">
+    <img src="{{ '/assets/images/games/space-junk-intro.jpg' | relative_url }}" alt="Taking care of SPACE JUNK - 太空垃圾终结者">
     <div class="mj-hero-overlay">
       <a href="{{ '/games/maxjunk/play/' | relative_url }}" class="mj-intro-start-btn">
         <span>▶</span>
@@ -278,19 +278,47 @@ date: 2024-05-02
   </div>
 
   <div class="mj-intro-content">
-    <h1 class="mj-intro-title">MaxJunk</h1>
-    <p class="mj-intro-subtitle">只存在于你的想象 — 由 Scratch 制作的创意互动体验</p>
+    <h1 class="mj-intro-title">Taking care of SPACE JUNK</h1>
+    <p class="mj-intro-subtitle">太空垃圾终结者 — 保护宇宙，从清理太空垃圾开始</p>
 
     <div class="mj-intro-tags">
+      <span class="mj-intro-tag">🚀 太空</span>
       <span class="mj-intro-tag">🎮 游戏</span>
-      <span class="mj-intro-tag">🧩 互动</span>
+      <span class="mj-intro-tag">♻️ 环保</span>
       <span class="mj-scratch-badge">🐱 Scratch</span>
     </div>
 
     <div class="mj-intro-section">
       <div class="mj-intro-section-title">📖 关于游戏</div>
       <div class="mj-intro-desc">
-        <p>《MaxJunk》是一款使用 Scratch 平台创作的互动游戏。项目名称"只存在于你的想象"暗示了游戏的核心体验 —— 探索想象力的边界，发现那些只存在于你脑海中的奇妙世界。</p>
+        <p>《Taking care of SPACE JUNK》是一款以太空垃圾清理为主题的 Scratch 创意游戏。玩家使用鼠标控制飞船，在浩瀚的宇宙中收集太空垃圾，同时小心躲避陨石的袭击。</p>
+        <p style="margin-top: 12px;">游戏融合了<strong>环保教育</strong>与<strong>太空探索</strong>的双重主题，通过趣味互动的方式，让玩家了解太空垃圾问题的严重性，以及保护宇宙环境的重要意义。</p>
+      </div>
+    </div>
+
+    <div class="mj-intro-section">
+      <div class="mj-intro-section-title">🎯 核心玩法</div>
+      <div class="mj-intro-desc">
+        <ul>
+          <li>🖱️ <strong>鼠标控制</strong>：移动鼠标控制飞船方向</li>
+          <li>♻️ <strong>收集垃圾</strong>：靠近太空碎片自动收集</li>
+          <li>☄️ <strong>躲避陨石</strong>：小心横冲直撞的陨石</li>
+          <li>🏆 <strong>挑战高分</strong>：清理越多，得分越高</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mj-intro-section">
+      <div class="mj-intro-section-title">📨 来自太空的一封信</div>
+      <div class="mj-intro-desc" style="font-style: italic; background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #6366f1;">
+        <p>每当你站在地球上仰望星空，是不是充满了无限好奇，想象着自己在宇宙中遨游的情景。</p>
+        <p>可如果从太空中观察地球，会发现这颗美丽的蔚蓝色行星的外层，漂浮着无数碎片。这些碎片大多是人类发射到地球大气层之外、已经停止工作或正在运行过程中的航天器意外解体所形成的。</p>
+        <p>它们不受控制地横冲直撞，威胁到卫星，也威胁着航天员的生命安全，让人类对太空的探索造成了阻碍，甚至危及地球的环境。</p>
+        <p>所以它们被称为<strong>"太空垃圾"</strong>。</p>
+        <p>当太空垃圾密度达到一定阈值时，就产生<strong>"凯斯勒现象"</strong>，碎片之间的碰撞不断叠加，直至将所有航天器损毁。</p>
+        <p>随着科技发展的日新月异，人类探索星际的脚步越走越远，太空垃圾的数量却逐年递增。这已经成为人类急需解决的问题。</p>
+        <p>智慧的科学家们肯定能想出更多更好的方法来征服太空垃圾，也为未来的星际移民计划创造更有利的条件。</p>
+        <p>在地球的小朋友们也要好好学习，常常抬头仰望夜空，关注宇宙太空，心怀浩瀚星辰，去探索未来的无限可能。</p>
       </div>
     </div>
 
@@ -298,8 +326,8 @@ date: 2024-05-02
       <div class="mj-intro-section-title">🛠 技术信息</div>
       <div class="mj-intro-desc">
         <ul>
-          <li><strong>引擎</strong>：Scratch 3.0</li>
-          <li><strong>平台</strong>：Web 浏览器直接运行</li>
+          <li><strong>引擎</strong>：Scratch Desktop 3.12.0</li>
+          <li><strong>平台</strong>：Windows 11 / Web 浏览器</li>
           <li><strong>版本</strong>：V1.00</li>
           <li><strong>发布</strong>：2024 年 5 月</li>
         </ul>
