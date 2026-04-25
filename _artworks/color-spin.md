@@ -7,8 +7,8 @@ emoji: 🌀
 image: /assets/artworks/artwork-7b30aaac.webp
 thumbnail: /assets/artworks/thumbs/artwork-7b30aaac.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-7b30aaac.webp
-year: 2023
-date: 2023-04-10
+year: 2024
+date: 2024-02-07
 medium: Acrylic Spin Art on Canvas
 size: 30 x 40 cm
 layout: artwork

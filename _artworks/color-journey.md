@@ -7,8 +7,8 @@ emoji: 🗺️
 image: /assets/artworks/artwork-beaf0d76.webp
 thumbnail: /assets/artworks/thumbs/artwork-beaf0d76.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-beaf0d76.webp
-year: 2024
-date: 2024-02-09
+year: 2022
+date: 2022-12-07
 medium: Acrylic on Canvas
 size: 30 x 40 cm
 layout: artwork
