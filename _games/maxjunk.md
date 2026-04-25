@@ -1,4 +1,5 @@
 ---
+layout: game
 title: MaxJunk
 description: 只存在于你的想象 - 一个由 Scratch 制作的创意互动游戏
 category: Game
@@ -169,6 +170,64 @@ date: 2024-05-02
   font-weight: 600;
 }
 
+/* Game player page */
+.game-player-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.game-player-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%; /* 4:3 aspect ratio for Scratch */
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.game-player-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.game-player-info {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.game-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+
+.game-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .mj-intro-container {
     padding: 24px 16px;
@@ -199,6 +258,10 @@ date: 2024-05-02
   .mj-intro-start-btn {
     padding: 14px 36px;
     font-size: 15px;
+  }
+
+  .game-player-container {
+    padding: 10px;
   }
 }
 </style>
