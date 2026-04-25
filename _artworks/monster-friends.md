@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #ff7f50 0%, #ff6347 100%)
 emoji: 👾
 image: /assets/artworks/artwork-ea214504.webp
 thumbnail: /assets/artworks/thumbs/artwork-ea214504.webp
+thumbnail_position: 25.5% 46.5%
 thumbnail: /assets/images/artworks/thumbs/artwork-ea214504.webp
+thumbnail_position: 25.5% 46.5%
 year: 2020
 date: 2020-03-08
 medium: Mixed Media Collage on Canvas

@@ -7,6 +7,7 @@ emoji: 💦
 image: /assets/artworks/artwork-90adc393.webp
 thumbnail: /assets/artworks/thumbs/artwork-90adc393.webp
 thumbnail: /assets/images/artworks/thumbs/artwork-90adc393.webp
+thumbnail_position: 55% 36%
 year: 2023
 date: 2023-12-20
 medium: Acrylic on Paper

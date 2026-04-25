@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #b8d4e3 0%, #87ceeb 100%)
 emoji: 🤝
 image: /assets/artworks/artwork-af814a6b.webp
 thumbnail: /assets/artworks/thumbs/artwork-af814a6b.webp
+thumbnail_position: 40.1% 52.0%
 thumbnail: /assets/images/artworks/thumbs/artwork-af814a6b.webp
+thumbnail_position: 40.1% 52.0%
 year: 2018
 date: 2018-09-19
 medium: Watercolor and Collage on Paper

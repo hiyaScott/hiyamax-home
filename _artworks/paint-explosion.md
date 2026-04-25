@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #ff1493 0%, #00bfff 100%)
 emoji: 🎆
 image: /assets/artworks/artwork-b36f5d5d.webp
 thumbnail: /assets/artworks/thumbs/artwork-b36f5d5d.webp
+thumbnail_position: 62.0% 68.4%
 thumbnail: /assets/images/artworks/thumbs/artwork-b36f5d5d.webp
+thumbnail_position: 62.0% 68.4%
 year: 2019
 date: 2019-05-01
 medium: Acrylic on Canvas

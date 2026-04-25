@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #e6e6fa 0%, #dda0dd 100%)
 emoji: 💭
 image: /assets/artworks/artwork-5165e848.webp
 thumbnail: /assets/artworks/thumbs/artwork-5165e848.webp
+thumbnail_position: 40.1% 35.5%
 thumbnail: /assets/images/artworks/thumbs/artwork-5165e848.webp
+thumbnail_position: 40.1% 35.5%
 year: 2020
 date: 2020-06-10
 medium: Watercolor on Paper

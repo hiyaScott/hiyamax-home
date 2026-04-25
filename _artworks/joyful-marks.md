@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #ffb6c1 0%, #87cefa 100%)
 emoji: 🎨
 image: /assets/artworks/artwork-f06b4c7e.webp
 thumbnail: /assets/artworks/thumbs/artwork-f06b4c7e.webp
+thumbnail_position: 40.1% 62.9%
 thumbnail: /assets/images/artworks/thumbs/artwork-f06b4c7e.webp
+thumbnail_position: 40.1% 62.9%
 year: 2018
 date: 2018-02-06
 medium: Acrylic on Paper

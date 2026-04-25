@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)
 emoji: 🎃
 image: /assets/artworks/artwork-60980e08.webp
 thumbnail: /assets/artworks/thumbs/artwork-60980e08.webp
+thumbnail_position: 54.7% 41.0%
 thumbnail: /assets/images/artworks/thumbs/artwork-60980e08.webp
+thumbnail_position: 54.7% 41.0%
 year: 2021
 date: 2021-11-01
 medium: Acrylic and Marker on Paper

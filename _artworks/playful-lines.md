@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #ffdab9 0%, #b0e0e6 100%)
 emoji: ✏️
 image: /assets/artworks/artwork-7e90fe29.webp
 thumbnail: /assets/artworks/thumbs/artwork-7e90fe29.webp
+thumbnail_position: 47.4% 68.4%
 thumbnail: /assets/images/artworks/thumbs/artwork-7e90fe29.webp
+thumbnail_position: 47.4% 68.4%
 year: 2020
 date: 2020-04-13
 medium: Mixed Media on Paper

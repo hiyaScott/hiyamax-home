@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #9370db 0%, #ff1493 100%)
 emoji: ✨
 image: /assets/artworks/artwork-5fadb705.webp
 thumbnail: /assets/artworks/thumbs/artwork-5fadb705.webp
+thumbnail_position: 69.3% 57.4%
 thumbnail: /assets/images/artworks/thumbs/artwork-5fadb705.webp
+thumbnail_position: 69.3% 57.4%
 year: 2023
 date: 2023-05-20
 medium: Acrylic on Canvas

@@ -6,7 +6,9 @@ color: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%)
 emoji: 🌀
 image: /assets/artworks/artwork-7b30aaac.webp
 thumbnail: /assets/artworks/thumbs/artwork-7b30aaac.webp
+thumbnail_position: 40.1% 24.6%
 thumbnail: /assets/images/artworks/thumbs/artwork-7b30aaac.webp
+thumbnail_position: 40.1% 24.6%
 year: 2024
 date: 2024-02-07
 medium: Acrylic Spin Art on Canvas

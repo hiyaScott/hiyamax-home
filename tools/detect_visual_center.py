@@ -83,33 +83,53 @@ def update_artwork_position(artwork_path, position):
         f.write(content)
 
 
+def find_thumbnail_for_artwork(artworks_dir, thumb_name):
+    """Find the artwork .md file that references this thumbnail/image."""
+    # thumb_name might be like 'artwork-90adc393.webp' or 'wall-studies-1.webp'
+    base = thumb_name.replace('.webp', '').replace('.jpg', '').replace('.png', '')
+    
+    # Strategy 1: direct slug match (descriptive names)
+    slug = base
+    if '-' in base and base.split('-')[-1].isdigit():
+        slug = '-'.join(base.split('-')[:-1])
+    
+    artwork_path = os.path.join(artworks_dir, f"{slug}.md")
+    if os.path.exists(artwork_path):
+        return artwork_path
+    
+    # Strategy 2: search all .md files for reference to this image/thumb
+    for f in os.listdir(artworks_dir):
+        if not f.endswith('.md'):
+            continue
+        filepath = os.path.join(artworks_dir, f)
+        with open(filepath, 'r') as fh:
+            content = fh.read()
+        # Check if this artwork references the thumbnail filename
+        if thumb_name in content or base in content:
+            return filepath
+    
+    return None
+
+
 def main():
     # Find all thumbnails and matching artwork files
-    thumbs = sorted([f for f in os.listdir(THUMB_DIR) if f.endswith('.webp')])
+    thumbs = sorted([f for f in os.listdir(THUMB_DIR) if f.endswith(('.webp', '.jpg', '.png'))])
     
     updated = 0
+    skipped = 0
+    not_found = []
     for thumb in thumbs:
-        # Derive artwork slug from thumbnail filename
-        # e.g., wall-studies-1.webp -> wall-studies
-        base = thumb.replace('.webp', '')
+        artwork_path = find_thumbnail_for_artwork(ARTWORKS_DIR, thumb)
         
-        # Try to find matching artwork file
-        # Handle both base-name.webp and base-name-1.webp patterns
-        slug = base
-        if '-' in base and base.split('-')[-1].isdigit():
-            slug = '-'.join(base.split('-')[:-1])
+        if not artwork_path:
+            not_found.append(thumb)
+            continue
         
-        artwork_path = os.path.join(ARTWORKS_DIR, f"{slug}.md")
-        
-        if not os.path.exists(artwork_path):
-            # Try other patterns
-            for f in os.listdir(ARTWORKS_DIR):
-                if f.endswith('.md') and base.replace('-', '') in f.replace('-', '').replace('.md', ''):
-                    artwork_path = os.path.join(ARTWORKS_DIR, f)
-                    break
-        
-        if not os.path.exists(artwork_path):
-            print(f"⚠️  No artwork found for {thumb} (tried {slug})")
+        # Skip if already has thumbnail_position (manual override)
+        with open(artwork_path, 'r') as f:
+            content = f.read()
+        if 'thumbnail_position:' in content:
+            skipped += 1
             continue
         
         # Detect visual center
@@ -122,7 +142,9 @@ def main():
         print(f"✅ {thumb} -> {position} ({os.path.basename(artwork_path)})")
         updated += 1
     
-    print(f"\nUpdated {updated} artworks with visual center positions.")
+    print(f"\nUpdated: {updated} | Skipped (manual): {skipped} | Not found: {len(not_found)}")
+    if not_found:
+        print("Not matched:", ', '.join(not_found[:5]), "..." if len(not_found) > 5 else "")
 
 
 if __name__ == '__main__':
