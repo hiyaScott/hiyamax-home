@@ -14,10 +14,17 @@ layout: default
   <!-- Main Content -->
   <div class="artwork-content">
     
-    <!-- Left: Large Image -->
+    <!-- Left: Large Image / Gallery -->
     <div class="artwork-image-section">
       <div class="artwork-image-container">
-        {% if page.image %}
+        {% if page.gallery %}
+          <!-- Multi-image gallery -->
+          <div class="artwork-gallery">
+            {% for img in page.gallery %}
+              <img src="{{ img | replace: '/assets/artworks/', '/assets/images/artworks/medium/' | relative_url }}" alt="{{ page.title }} - {{ forloop.index }}" class="artwork-image" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async" width="1200">
+            {% endfor %}
+          </div>
+        {% elsif page.image %}
           <img src="{{ page.image | replace: '/assets/artworks/', '/assets/images/artworks/medium/' | relative_url }}" alt="{{ page.title }}" class="artwork-image" loading="eager" decoding="async" width="1200">
         {% else %}
           <div class="artwork-image-placeholder" style="background: {{ page.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}">
@@ -127,6 +134,13 @@ layout: default
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Gallery */
+.artwork-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Right: Info Section */
