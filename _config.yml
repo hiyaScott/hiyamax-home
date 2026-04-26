@@ -3,8 +3,8 @@
 
 title: "HiyaMax"
 description: "Player & Creator - A curious explorer of games, stories and virtual worlds."
-baseurl: "/hiyamax-home"
-url: "https://hiyascott.github.io"
+baseurl: ""
+url: "https://www.hiyamax.com"
 
 # Build settings
 markdown: kramdown
