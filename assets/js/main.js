@@ -137,6 +137,28 @@
   };
   
   /**
+   * WeChat QR Modal
+   */
+  window.showWeChatQR = function() {
+    const modal = document.getElementById('wechatModal');
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+  
+  window.closeWeChatModal = function(event) {
+    if (event && event.target && !event.target.classList.contains('wechat-modal') && !event.target.classList.contains('wechat-modal-close')) {
+      return;
+    }
+    const modal = document.getElementById('wechatModal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+  
+  /**
    * Initialize
    */
   function init() {

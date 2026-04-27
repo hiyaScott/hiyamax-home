@@ -8,7 +8,7 @@
     </nav>
     <div class="footer-social">
       {% for social in site.data.navigation.social %}
-        <a href="{{ social.url }}" class="footer-social-link" aria-label="{{ social.name }}" {% if social.external %}target="_blank" rel="noopener"{% endif %}>
+        <a href="{{ social.url }}" class="footer-social-link" aria-label="{{ social.name }}" {% if social.external %}target="_blank" rel="noopener"{% endif %} {% if social.onclick %}onclick="{{ social.onclick }}; return false;"{% endif %}>
           {{ site.data.navigation.icons[social.icon] }}
         </a>
       {% endfor %}

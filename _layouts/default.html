@@ -10,6 +10,19 @@
   
   {% include footer.html %}
   
+  <!-- WeChat QR Modal -->
+  <div class="wechat-modal" id="wechatModal" onclick="closeWeChatModal(event)">
+    <button class="wechat-modal-close" onclick="closeWeChatModal()">&times;</button>
+    <div class="wechat-modal-content" onclick="event.stopPropagation()">
+      <div class="wechat-modal-qr" id="wechatQR">
+        <span>二维码占位</span>
+      </div>
+      <div class="wechat-modal-title">添加微信</div>
+      <div class="wechat-modal-id">微信号：MaxQYQ</div>
+      <div class="wechat-modal-hint">扫描二维码或搜索微信号添加好友</div>
+    </div>
+  </div>
+  
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>

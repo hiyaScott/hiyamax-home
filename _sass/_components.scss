@@ -185,3 +185,103 @@ pre {
 .status-badge.development {
   background: #6366f1;
 }
+
+/* WeChat QR Modal */
+.wechat-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wechat-modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.wechat-modal-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.wechat-modal.active .wechat-modal-content {
+  transform: scale(1);
+}
+
+.wechat-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.wechat-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.wechat-modal-qr {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 14px;
+}
+
+.wechat-modal-qr img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.wechat-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.wechat-modal-id {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.wechat-modal-hint {
+  font-size: 12px;
+  color: #999;
+  margin-top: 12px;
+}
