@@ -202,9 +202,9 @@
 
     var percent;
     if (isLandscape) {
-      percent = Math.max(-1, Math.min(1, tiltX / 15));
+      percent = Math.max(-1, Math.min(1, tiltX / 8));
     } else {
-      percent = Math.max(-1, Math.min(1, tiltY / 20));
+      percent = Math.max(-1, Math.min(1, tiltY / 8));
     }
 
     debugData.percent = percent;
