@@ -164,7 +164,9 @@
 
   /**
    * Device motion handler (accelerometer fallback)
-   * Many Android devices only expose motion, not orientation
+   * Many Android devices only expose motion, not orientation.
+   * Uses raw accelerationIncludingGravity directly — no atan2 conversion
+   * which fails on some Android coordinate systems.
    */
   function handleMotion(e) {
     if (!e) return;
@@ -172,42 +174,49 @@
     debugData.motionEvents++;
 
     var acc = e.accelerationIncludingGravity;
-    var rot = e.rotationRate;
+    if (!acc) return;
 
-    if (!acc && !rot) return;
+    var ax = acc.x || 0;
+    var ay = acc.y || 0;
+    var az = acc.z || 0;
 
-    // Use accelerationIncludingGravity for tilt estimation
-    var tiltX = 0, tiltY = 0;
+    // Detect if device returns normalized values (0-1) instead of m/s²
+    var gMag = Math.sqrt(ax * ax + ay * ay + az * az);
+    var isNormalized = gMag > 0 && gMag < 2.0;
 
-    if (acc) {
-      // Normalize to approximate gamma/beta
-      tiltX = Math.atan2(acc.x, Math.sqrt(acc.y * acc.y + acc.z * acc.z)) * (180 / Math.PI);
-      tiltY = Math.atan2(acc.y, acc.z) * (180 / Math.PI);
-    } else if (rot) {
-      tiltX = rot.beta || 0;
-      tiltY = rot.gamma || 0;
+    // Scale to m/s² if needed
+    var scale = isNormalized ? 9.8 : 1.0;
+    ax *= scale;
+    ay *= scale;
+    az *= scale;
+
+    var isLandscape = window.innerWidth > window.innerHeight;
+    debugData.orientation = isLandscape ? 'landscape' : 'portrait';
+
+    var rawPercent, usedAxis;
+    if (isLandscape) {
+      // Landscape: ay is left/right tilt
+      rawPercent = ay / 4;
+      usedAxis = 'ay=' + ay.toFixed(2);
+      debugData.gamma = ay;
+    } else {
+      // Portrait: ax is left/right tilt
+      rawPercent = ax / 4;
+      usedAxis = 'ax=' + ax.toFixed(2);
+      debugData.gamma = ax;
     }
 
-    if (Math.abs(tiltX) > 0.5 || Math.abs(tiltY) > 0.5) {
+    var percent = Math.max(-1, Math.min(1, rawPercent));
+    debugData.beta = az;
+    debugData.percent = percent;
+
+    // Activate when any meaningful tilt detected
+    if (Math.abs(percent) > 0.05) {
       gyroActive = true;
       lastGyroTime = Date.now();
       debugData.hasGyro = true;
     }
 
-    debugData.gamma = tiltY;
-    debugData.beta = tiltX;
-
-    var isLandscape = window.innerWidth > window.innerHeight;
-    debugData.orientation = isLandscape ? 'landscape' : 'portrait';
-
-    var percent;
-    if (isLandscape) {
-      percent = Math.max(-1, Math.min(1, tiltX / 8));
-    } else {
-      percent = Math.max(-1, Math.min(1, tiltY / 8));
-    }
-
-    debugData.percent = percent;
     targetPercent = percent;
     updateDebugPanel();
   }
