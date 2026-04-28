@@ -21,6 +21,8 @@
   let currentPercent = 0;
   let targetPercent = 0;
   let isAnimating = true;
+  let orientationEnabled = false;
+  let lastGyroTime = 0;
   
   /**
    * Update avatar layout based on percentage (-1 to 1)
@@ -80,8 +82,15 @@
    * Device orientation handler (gyroscope)
    */
   function handleOrientation(e) {
-    const gamma = e.gamma || 0;  // Portrait left/right tilt
-    const beta = e.beta || 0;    // Landscape left/right tilt
+    if (!e) return;
+    
+    const gamma = e.gamma || 0;  // Portrait left/right tilt (-90 to 90)
+    const beta = e.beta || 0;    // Front/back tilt (-180 to 180)
+    const alpha = e.alpha || 0;   // Compass direction (0 to 360)
+    
+    // Detect if we have real gyro data (not just 0,0,0 or null)
+    if (alpha === 0 && beta === 0 && gamma === 0) return;
+    lastGyroTime = Date.now();
     
     // Detect screen orientation
     let isLandscape = false;
@@ -95,11 +104,29 @@
     
     let percent;
     if (isLandscape) {
+      // In landscape, beta maps to left/right tilt
       percent = Math.max(-1, Math.min(1, beta / 8));
     } else {
+      // In portrait, gamma maps to left/right tilt
       percent = Math.max(-1, Math.min(1, gamma / 12));
     }
     
+    targetPercent = percent;
+  }
+  
+  /**
+   * Device motion handler (accelerometer fallback)
+   */
+  function handleMotion(e) {
+    if (!e || !e.rotationRate) return;
+    
+    const rr = e.rotationRate;
+    // rotationRate.beta approximates left/right tilt in many devices
+    const tilt = rr.beta || 0;
+    if (tilt === 0) return;
+    
+    lastGyroTime = Date.now();
+    const percent = Math.max(-1, Math.min(1, tilt / 20));
     targetPercent = percent;
   }
   
@@ -114,6 +141,64 @@
     updateLayout(currentPercent);
     
     requestAnimationFrame(animate);
+  }
+  
+  /**
+   * Check if gyroscope data is being received
+   */
+  function checkGyroActive() {
+    const now = Date.now();
+    const elapsed = now - lastGyroTime;
+    
+    // If no gyro data for 2 seconds, fall back to auto-demo mode on mobile
+    if (orientationEnabled && elapsed > 2000 && window.innerWidth <= 640) {
+      // Gentle auto-sway when no gyro available
+      const sway = Math.sin(now / 1500) * 0.15;
+      targetPercent = sway;
+    }
+  }
+  
+  /**
+   * Enable device orientation with permission handling
+   */
+  function enableOrientation() {
+    if (orientationEnabled) return;
+    orientationEnabled = true;
+    
+    // Try deviceorientation first
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+    
+    // Fallback to devicemotion for devices without gyro
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', handleMotion);
+    }
+    
+    // Start gyro check interval
+    setInterval(checkGyroActive, 1000);
+  }
+  
+  /**
+   * Request iOS device orientation permission
+   */
+  function requestOrientationPermission() {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(function(permissionState) {
+          if (permissionState === 'granted') {
+            enableOrientation();
+          }
+          console.log('Device orientation permission:', permissionState);
+        })
+        .catch(function(error) {
+          console.log('Device orientation permission denied:', error);
+          // Still try to enable - some iOS versions work without explicit permission
+          enableOrientation();
+        });
+    } else {
+      enableOrientation();
+    }
   }
   
   /**
@@ -162,28 +247,22 @@
    * Initialize
    */
   function init() {
-    // Mouse events
+    // Mouse events (desktop)
     document.addEventListener('mousemove', handleMouseMove);
     
-    // Device orientation (gyroscope)
-    if (window.DeviceOrientationEvent) {
-      // iOS 13+ requires permission
-      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        document.body.addEventListener('click', function requestIOSPermission() {
-          DeviceOrientationEvent.requestPermission()
-            .then(function(permissionState) {
-              if (permissionState === 'granted') {
-                window.addEventListener('deviceorientation', handleOrientation);
-              }
-            })
-            .catch(function(error) {
-              console.log('Device orientation permission denied:', error);
-            });
-          document.body.removeEventListener('click', requestIOSPermission);
-        }, { once: true });
-      } else {
-        window.addEventListener('deviceorientation', handleOrientation);
+    // Device orientation setup - requires user interaction on most mobile browsers
+    if (window.DeviceOrientationEvent || window.DeviceMotionEvent) {
+      // Use both click and touchstart to catch all interactions
+      var permissionRequested = false;
+      
+      function onFirstInteraction(e) {
+        if (permissionRequested) return;
+        permissionRequested = true;
+        requestOrientationPermission();
       }
+      
+      document.body.addEventListener('click', onFirstInteraction, { once: true });
+      document.body.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
     }
     
     // Start animation loop
