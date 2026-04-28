@@ -170,7 +170,7 @@
     if (window.DeviceOrientationEvent) {
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
         // iOS 13+: request permission on first click anywhere
-        document.body.addEventListener('click', function requestIOSPermission() {
+        function requestIOSPermission() {
           DeviceOrientationEvent.requestPermission()
             .then(function(permissionState) {
               if (permissionState === 'granted') {
@@ -181,8 +181,8 @@
             .catch(function(error) {
               console.log('Device orientation permission denied:', error);
             });
-          document.body.removeEventListener('click', requestIOSPermission);
-        }, { once: true });
+        }
+        document.body.addEventListener('click', requestIOSPermission, { once: true });
       } else {
         // Android / older iOS: direct access
         window.addEventListener('deviceorientation', handleOrientation);
