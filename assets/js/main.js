@@ -166,23 +166,22 @@
     // Mouse events — always listen, but handler checks gyroActive
     document.addEventListener('mousemove', handleMouseMove);
 
-    // Device orientation — iOS requires user gesture (click) to request permission
+    // Device orientation (gyroscope)
     if (window.DeviceOrientationEvent) {
+      // iOS 13+ requires permission request on user gesture
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // iOS 13+: request permission on first click anywhere
-        function requestIOSPermission() {
+        document.body.addEventListener('click', function requestIOSPermission() {
           DeviceOrientationEvent.requestPermission()
             .then(function(permissionState) {
               if (permissionState === 'granted') {
                 window.addEventListener('deviceorientation', handleOrientation);
               }
-              console.log('Device orientation permission:', permissionState);
             })
             .catch(function(error) {
               console.log('Device orientation permission denied:', error);
             });
-        }
-        document.body.addEventListener('click', requestIOSPermission, { once: true });
+          document.body.removeEventListener('click', requestIOSPermission);
+        }, { once: true });
       } else {
         // Android / older iOS: direct access
         window.addEventListener('deviceorientation', handleOrientation);
