@@ -22,6 +22,56 @@
   let gyroActive = false;
   let lastGyroTime = 0;
 
+  // Debug data
+  let debugData = {
+    gamma: 0,
+    beta: 0,
+    alpha: 0,
+    percent: 0,
+    orientation: 'portrait',
+    eventCount: 0,
+    hasGyro: false,
+    ua: navigator.userAgent.substring(0, 50)
+  };
+
+  /**
+   * Create debug panel
+   */
+  function createDebugPanel() {
+    var panel = document.createElement('div');
+    panel.id = 'gyro-debug';
+    panel.style.cssText = 'position:fixed;bottom:10px;left:10px;z-index:9999;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;font-size:12px;padding:12px;border-radius:8px;max-width:320px;line-height:1.6;pointer-events:none;user-select:none;';
+    panel.innerHTML = '<div style="color:#fff;font-weight:bold;margin-bottom:6px;">🧭 Gyroscope Debug</div>' +
+      '<div id="debug-gamma">gamma: --</div>' +
+      '<div id="debug-beta">beta: --</div>' +
+      '<div id="debug-alpha">alpha: --</div>' +
+      '<div id="debug-percent">percent: --</div>' +
+      '<div id="debug-orient">orientation: --</div>' +
+      '<div id="debug-count">events: 0</div>' +
+      '<div id="debug-hasgyro">hasGyro: false</div>' +
+      '<div id="debug-ua" style="color:#888;font-size:10px;margin-top:4px;">--</div>';
+    document.body.appendChild(panel);
+  }
+
+  function updateDebugPanel() {
+    var g = document.getElementById('debug-gamma');
+    var b = document.getElementById('debug-beta');
+    var a = document.getElementById('debug-alpha');
+    var p = document.getElementById('debug-percent');
+    var o = document.getElementById('debug-orient');
+    var c = document.getElementById('debug-count');
+    var h = document.getElementById('debug-hasgyro');
+    var u = document.getElementById('debug-ua');
+    if (g) g.textContent = 'gamma: ' + debugData.gamma.toFixed(2);
+    if (b) b.textContent = 'beta: ' + debugData.beta.toFixed(2);
+    if (a) a.textContent = 'alpha: ' + debugData.alpha.toFixed(2);
+    if (p) p.textContent = 'percent: ' + debugData.percent.toFixed(3);
+    if (o) o.textContent = 'orientation: ' + debugData.orientation;
+    if (c) c.textContent = 'events: ' + debugData.eventCount;
+    if (h) h.textContent = 'hasGyro: ' + debugData.hasGyro;
+    if (u) u.textContent = debugData.ua;
+  }
+
   /**
    * Update avatar layout based on percentage (-1 to 1)
    */
@@ -72,13 +122,21 @@
   function handleOrientation(e) {
     if (!e) return;
 
+    debugData.eventCount++;
+
     const gamma = e.gamma || 0;
     const beta = e.beta || 0;
+    const alpha = e.alpha || 0;
+
+    debugData.gamma = gamma;
+    debugData.beta = beta;
+    debugData.alpha = alpha;
 
     // Mark gyro as active when we get real non-zero data
     if (Math.abs(gamma) > 0.1 || Math.abs(beta) > 0.1) {
       gyroActive = true;
       lastGyroTime = Date.now();
+      debugData.hasGyro = true;
     }
 
     let isLandscape = false;
@@ -90,6 +148,8 @@
       isLandscape = window.innerWidth > window.innerHeight;
     }
 
+    debugData.orientation = isLandscape ? 'landscape' : 'portrait';
+
     let percent;
     if (isLandscape) {
       percent = Math.max(-1, Math.min(1, beta / 8));
@@ -97,7 +157,9 @@
       percent = Math.max(-1, Math.min(1, gamma / 12));
     }
 
+    debugData.percent = percent;
     targetPercent = percent;
+    updateDebugPanel();
   }
 
   /**
@@ -116,6 +178,7 @@
     // If gyro goes silent for 3s, mark inactive (allows mouse to take over)
     if (gyroActive && Date.now() - lastGyroTime > 3000) {
       gyroActive = false;
+      debugData.hasGyro = false;
     }
 
     currentPercent += (targetPercent - currentPercent) * 0.1;
@@ -163,6 +226,10 @@
    * Initialize
    */
   function init() {
+    // Create debug panel
+    createDebugPanel();
+    updateDebugPanel();
+
     // Mouse events — always listen, but handler checks gyroActive
     document.addEventListener('mousemove', handleMouseMove);
 
