@@ -21,6 +21,8 @@
   let isAnimating = true;
   let gyroActive = false;
   let lastGyroTime = 0;
+  let orientationListenerAdded = false;
+  let motionListenerAdded = false;
 
   // Debug data
   let debugData = {
@@ -29,7 +31,8 @@
     alpha: 0,
     percent: 0,
     orientation: 'portrait',
-    eventCount: 0,
+    orientationEvents: 0,
+    motionEvents: 0,
     hasGyro: false,
     ua: navigator.userAgent.substring(0, 50)
   };
@@ -40,34 +43,34 @@
   function createDebugPanel() {
     var panel = document.createElement('div');
     panel.id = 'gyro-debug';
-    panel.style.cssText = 'position:fixed;bottom:10px;left:10px;z-index:9999;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;font-size:12px;padding:12px;border-radius:8px;max-width:320px;line-height:1.6;pointer-events:none;user-select:none;';
-    panel.innerHTML = '<div style="color:#fff;font-weight:bold;margin-bottom:6px;">🧭 Gyroscope Debug</div>' +
+    panel.style.cssText = 'position:fixed;bottom:10px;left:10px;z-index:9999;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;font-size:11px;padding:10px;border-radius:6px;max-width:280px;line-height:1.5;pointer-events:none;user-select:none;';
+    panel.innerHTML = '<div style="color:#fff;font-weight:bold;margin-bottom:4px;font-size:12px;">🧭 Gyro Debug</div>' +
       '<div id="debug-gamma">gamma: --</div>' +
       '<div id="debug-beta">beta: --</div>' +
-      '<div id="debug-alpha">alpha: --</div>' +
       '<div id="debug-percent">percent: --</div>' +
-      '<div id="debug-orient">orientation: --</div>' +
-      '<div id="debug-count">events: 0</div>' +
+      '<div id="debug-orient">orient: --</div>' +
+      '<div id="debug-ori-count">oriEvents: 0</div>' +
+      '<div id="debug-mot-count">motionEvents: 0</div>' +
       '<div id="debug-hasgyro">hasGyro: false</div>' +
-      '<div id="debug-ua" style="color:#888;font-size:10px;margin-top:4px;">--</div>';
+      '<div id="debug-ua" style="color:#888;font-size:9px;margin-top:4px;">--</div>';
     document.body.appendChild(panel);
   }
 
   function updateDebugPanel() {
     var g = document.getElementById('debug-gamma');
     var b = document.getElementById('debug-beta');
-    var a = document.getElementById('debug-alpha');
     var p = document.getElementById('debug-percent');
     var o = document.getElementById('debug-orient');
-    var c = document.getElementById('debug-count');
+    var oc = document.getElementById('debug-ori-count');
+    var mc = document.getElementById('debug-mot-count');
     var h = document.getElementById('debug-hasgyro');
     var u = document.getElementById('debug-ua');
     if (g) g.textContent = 'gamma: ' + debugData.gamma.toFixed(2);
     if (b) b.textContent = 'beta: ' + debugData.beta.toFixed(2);
-    if (a) a.textContent = 'alpha: ' + debugData.alpha.toFixed(2);
     if (p) p.textContent = 'percent: ' + debugData.percent.toFixed(3);
-    if (o) o.textContent = 'orientation: ' + debugData.orientation;
-    if (c) c.textContent = 'events: ' + debugData.eventCount;
+    if (o) o.textContent = 'orient: ' + debugData.orientation;
+    if (oc) oc.textContent = 'oriEvents: ' + debugData.orientationEvents;
+    if (mc) mc.textContent = 'motionEvents: ' + debugData.motionEvents;
     if (h) h.textContent = 'hasGyro: ' + debugData.hasGyro;
     if (u) u.textContent = debugData.ua;
   }
@@ -106,9 +109,7 @@
    * Mouse move handler — desktop only, disabled when gyro is active
    */
   function handleMouseMove(e) {
-    // Skip if gyroscope is providing data
     if (gyroActive) return;
-    // Skip on small screens (phones in portrait)
     if (window.innerWidth <= 640) return;
 
     const centerX = window.innerWidth / 2;
@@ -122,7 +123,7 @@
   function handleOrientation(e) {
     if (!e) return;
 
-    debugData.eventCount++;
+    debugData.orientationEvents++;
 
     const gamma = e.gamma || 0;
     const beta = e.beta || 0;
@@ -132,7 +133,6 @@
     debugData.beta = beta;
     debugData.alpha = alpha;
 
-    // Mark gyro as active when we get real non-zero data
     if (Math.abs(gamma) > 0.1 || Math.abs(beta) > 0.1) {
       gyroActive = true;
       lastGyroTime = Date.now();
@@ -163,6 +163,56 @@
   }
 
   /**
+   * Device motion handler (accelerometer fallback)
+   * Many Android devices only expose motion, not orientation
+   */
+  function handleMotion(e) {
+    if (!e) return;
+
+    debugData.motionEvents++;
+
+    var acc = e.accelerationIncludingGravity;
+    var rot = e.rotationRate;
+
+    if (!acc && !rot) return;
+
+    // Use accelerationIncludingGravity for tilt estimation
+    var tiltX = 0, tiltY = 0;
+
+    if (acc) {
+      // Normalize to approximate gamma/beta
+      tiltX = Math.atan2(acc.x, Math.sqrt(acc.y * acc.y + acc.z * acc.z)) * (180 / Math.PI);
+      tiltY = Math.atan2(acc.y, acc.z) * (180 / Math.PI);
+    } else if (rot) {
+      tiltX = rot.beta || 0;
+      tiltY = rot.gamma || 0;
+    }
+
+    if (Math.abs(tiltX) > 0.5 || Math.abs(tiltY) > 0.5) {
+      gyroActive = true;
+      lastGyroTime = Date.now();
+      debugData.hasGyro = true;
+    }
+
+    debugData.gamma = tiltY;
+    debugData.beta = tiltX;
+
+    var isLandscape = window.innerWidth > window.innerHeight;
+    debugData.orientation = isLandscape ? 'landscape' : 'portrait';
+
+    var percent;
+    if (isLandscape) {
+      percent = Math.max(-1, Math.min(1, tiltX / 15));
+    } else {
+      percent = Math.max(-1, Math.min(1, tiltY / 20));
+    }
+
+    debugData.percent = percent;
+    targetPercent = percent;
+    updateDebugPanel();
+  }
+
+  /**
    * Animation loop
    */
   function animate() {
@@ -175,7 +225,7 @@
       targetPercent = sway;
     }
 
-    // If gyro goes silent for 3s, mark inactive (allows mouse to take over)
+    // If gyro goes silent for 3s, mark inactive
     if (gyroActive && Date.now() - lastGyroTime > 3000) {
       gyroActive = false;
       debugData.hasGyro = false;
@@ -226,22 +276,22 @@
    * Initialize
    */
   function init() {
-    // Create debug panel
     createDebugPanel();
     updateDebugPanel();
 
-    // Mouse events — always listen, but handler checks gyroActive
+    // Mouse events (desktop)
     document.addEventListener('mousemove', handleMouseMove);
 
-    // Device orientation (gyroscope)
+    // ===== Device Orientation (gyroscope) =====
     if (window.DeviceOrientationEvent) {
-      // iOS 13+ requires permission request on user gesture
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // iOS 13+: need user gesture to request permission
         document.body.addEventListener('click', function requestIOSPermission() {
           DeviceOrientationEvent.requestPermission()
             .then(function(permissionState) {
-              if (permissionState === 'granted') {
+              if (permissionState === 'granted' && !orientationListenerAdded) {
                 window.addEventListener('deviceorientation', handleOrientation);
+                orientationListenerAdded = true;
               }
             })
             .catch(function(error) {
@@ -252,7 +302,15 @@
       } else {
         // Android / older iOS: direct access
         window.addEventListener('deviceorientation', handleOrientation);
+        orientationListenerAdded = true;
       }
+    }
+
+    // ===== Device Motion (accelerometer fallback) =====
+    // Many Android devices only expose this API
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', handleMotion);
+      motionListenerAdded = true;
     }
 
     animate();
