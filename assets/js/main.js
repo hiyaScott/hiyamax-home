@@ -117,6 +117,55 @@
   }
   
   /**
+   * Progressive image loading
+   * Load full-size images in background after small placeholders are visible
+   */
+  function loadFullSizeImages() {
+    const images = [
+      { el: avatarPlayer, fullSrc: avatarPlayer ? avatarPlayer.dataset.srcFull : null },
+      { el: avatarCreator, fullSrc: avatarCreator ? avatarCreator.dataset.srcFull : null }
+    ];
+    
+    images.forEach(function(item) {
+      if (!item.el || !item.fullSrc) return;
+      
+      // Create a new Image to preload the full-size version
+      const preloadImg = new Image();
+      
+      preloadImg.onload = function() {
+        // Full image loaded, swap it in with a smooth transition
+        item.el.style.transition = 'opacity 0.5s ease';
+        item.el.style.opacity = '0.7';
+        
+        setTimeout(function() {
+          // Update both the img src and any picture source srcset
+          item.el.src = item.fullSrc;
+          
+          var picture = item.el.parentElement;
+          if (picture && picture.tagName === 'PICTURE') {
+            var source = picture.querySelector('source');
+            if (source) {
+              source.srcset = item.fullSrc;
+            }
+          }
+          
+          item.el.style.opacity = '1';
+          console.log('Full-size image loaded:', item.fullSrc);
+        }, 300);
+      };
+      
+      preloadImg.onerror = function() {
+        console.log('Failed to load full-size image:', item.fullSrc);
+      };
+      
+      // Start loading after a short delay to let the small image render first
+      setTimeout(function() {
+        preloadImg.src = item.fullSrc;
+      }, 100);
+    });
+  }
+  
+  /**
    * Mobile menu toggle
    */
   window.toggleMenu = function() {
@@ -188,6 +237,9 @@
     
     // Start animation loop
     animate();
+    
+    // Progressive image loading - load full-size images after small placeholders
+    loadFullSizeImages();
   }
   
   // Initialize when DOM is ready
