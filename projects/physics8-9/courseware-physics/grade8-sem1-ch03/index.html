@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>声波分析中心 — 声现象</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06080f; --panel: #11111f; --panel2: #1a1a2e;
+    --accent: #00f0c8; --accent2: #00bbf9; --danger: #ef476f;
+    --warn: #ffd166; --text: #c0c8d8; --text2: #8b8b9a;
+    --grid: rgba(0,240,200,0.06); --success: #06d6a0;
+    --glass: rgba(17,17,31,0.92);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; user-select:none; -webkit-user-select:none; }
+  body {
+    font-family: 'Share Tech Mono', 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,200,0.03) 2px, rgba(0,240,200,0.03) 4px);
+    pointer-events: none; z-index: 9999;
+  }
+  .corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: fixed; width: 20px; height: 20px;
+    border-color: var(--accent); border-style: solid;
+    pointer-events: none; z-index: 9998; opacity: 0.6;
+  }
+  .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+  .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+  .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+  .screen {
+    position: relative; z-index: 1; display: none;
+    min-height: 100vh; padding: 16px;
+  }
+  .screen.active { display: flex; flex-direction: column; }
+
+  .hud-header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(0,240,200,0.25);
+    padding: 12px 16px; background: var(--glass);
+    backdrop-filter: blur(8px); border-radius: 8px;
+    margin-bottom: 12px; position: relative;
+  }
+  .hud-header::after {
+    content: ''; position: absolute; bottom:-1px; left:0;
+    width: 120px; height: 2px; background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .hud-title { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: var(--accent); letter-spacing: 1px; }
+  .hud-score {
+    font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--warn);
+    background: rgba(255,209,102,0.08); padding: 4px 14px;
+    border-radius: 4px; border: 1px solid rgba(255,209,102,0.2);
+  }
+  .stage-badge {
+    font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
+    color: var(--accent); border: 1px solid rgba(0,240,200,0.3);
+    padding: 2px 10px; border-radius: 3px; margin-right: 8px;
+  }
+  .stage-nav {
+    cursor: pointer; font-size: 1.2rem; color: var(--accent);
+    padding: 4px 8px; border-radius: 4px; transition: background 0.2s;
+  }
+  .stage-nav:hover { background: rgba(0,240,200,0.1); }
+  .stage-nav-panel {
+    display: none; position: fixed; top: 70px; right: 20px;
+    background: var(--glass); border: 1px solid rgba(0,240,200,0.3);
+    border-radius: 8px; padding: 8px 0; z-index: 100;
+    min-width: 220px; backdrop-filter: blur(12px);
+  }
+  .stage-nav-panel.active { display: block; }
+  .stage-nav-panel div {
+    padding: 10px 16px; font-size: 0.85rem; cursor: pointer;
+    border-left: 3px solid transparent; transition: all 0.2s; color: var(--text);
+  }
+  .stage-nav-panel div:hover { background: rgba(0,240,200,0.1); color: var(--accent); border-left-color: var(--accent); }
+  .stage-nav-panel div.current { color: var(--accent); font-weight: bold; }
+
+  .main-content {
+    flex: 1; display: flex; flex-direction: column;
+    gap: 12px; max-width: 700px; margin: 0 auto; width: 100%;
+  }
+
+  .card {
+    background: var(--panel); border: 1px solid rgba(0,240,200,0.12);
+    border-radius: 10px; padding: 18px; position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, var(--accent), transparent); opacity: 0.5;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, rgba(0,240,200,0.15), rgba(0,187,249,0.1));
+    border: 1px solid rgba(0,240,200,0.4); color: var(--accent);
+    padding: 12px 28px; border-radius: 6px; font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .btn:hover { background: rgba(0,240,200,0.25); box-shadow: 0 0 20px rgba(0,240,200,0.2); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .sound-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,240,200,0.08); border: 1px solid rgba(0,240,200,0.3);
+    color: var(--accent); padding: 8px 18px; border-radius: 6px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .sound-btn:hover { background: rgba(0,240,200,0.2); box-shadow: 0 0 12px rgba(0,240,200,0.15); }
+  .sound-btn.playing { background: rgba(0,240,200,0.3); border-color: var(--accent); }
+
+  .intro-box {
+    text-align: center; padding: 40px 20px;
+  }
+  .intro-box h1 {
+    font-family: 'Orbitron', sans-serif; font-size: 2.2rem;
+    color: var(--accent); margin-bottom: 16px;
+    text-shadow: 0 0 30px rgba(0,240,200,0.3);
+  }
+  .dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,240,200,0.2); transition: all 0.3s; }
+  .dot.active { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .dot.done { background: var(--success); }
+
+  .formula {
+    background: rgba(0,240,200,0.05); border-left: 3px solid var(--accent);
+    padding: 10px 14px; margin: 10px 0; font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem; color: var(--accent); border-radius: 0 6px 6px 0;
+  }
+
+  .feedback-box {
+    padding: 12px 16px; border-radius: 6px; margin-top: 12px;
+    font-size: 0.9rem; line-height: 1.5; display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.ok { background: rgba(6,214,160,0.1); border: 1px solid var(--success); color: var(--success); }
+  .feedback-box.wrong { background: rgba(239,71,111,0.1); border: 1px solid var(--danger); color: var(--danger); }
+
+  /* ====== STAGE 1: 振动实验室 ====== */
+  .oscilloscope {
+    width: 100%; height: 160px; background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(0,240,200,0.2); border-radius: 8px;
+    position: relative; overflow: hidden; margin: 12px 0;
+  }
+  .oscilloscope canvas { width: 100%; height: 100%; }
+  .oscilloscope-label {
+    position: absolute; top: 8px; left: 12px;
+    font-size: 0.7rem; color: var(--text2); font-family: 'Orbitron', sans-serif;
+  }
+  .slider-control {
+    margin: 12px 0;
+  }
+  .slider-control label {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; color: var(--text2); margin-bottom: 6px;
+  }
+  .slider-control input[type="range"] {
+    width: 100%; -webkit-appearance: none; height: 6px;
+    background: rgba(0,240,200,0.1); border-radius: 3px; outline: none;
+  }
+  .slider-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    background: var(--accent); border-radius: 50%; cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,240,200,0.4);
+  }
+  .wave-params {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-top: 12px;
+  }
+  .wave-param {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(0,240,200,0.1);
+    border-radius: 6px; padding: 10px; text-align: center;
+  }
+  .wave-param .val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--accent); }
+  .wave-param .label { font-size: 0.7rem; color: var(--text2); margin-top: 4px; }
+
+  /* ====== STAGE 2: 介质传声台 ====== */
+  .medium-lab {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    margin: 12px 0;
+  }
+  .medium-card {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(0,240,200,0.15);
+    border-radius: 8px; padding: 16px; text-align: center;
+    cursor: pointer; transition: all 0.3s; position: relative;
+    overflow: hidden;
+  }
+  .medium-card:hover { border-color: rgba(0,240,200,0.4); background: rgba(0,240,200,0.05); }
+  .medium-card.active { border-color: var(--accent); background: rgba(0,240,200,0.1); }
+  .medium-card .icon { font-size: 2rem; margin-bottom: 8px; }
+  .medium-card .name { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--accent); }
+  .medium-card .speed { font-size: 0.75rem; color: var(--text2); margin-top: 4px; }
+  .medium-viz-bar {
+    width: 100%; height: 8px; background: rgba(0,0,0,0.3);
+    border-radius: 4px; margin-top: 10px; overflow: hidden;
+  }
+  .medium-viz-fill {
+    height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1s ease-out; width: 0%;
+  }
+
+  /* ====== STAGE 3: 声波调音台 ====== */
+  .mixer-panel {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(0,240,200,0.15);
+    border-radius: 10px; padding: 20px; margin: 12px 0;
+  }
+  .mixer-knobs {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-bottom: 16px;
+  }
+  .knob-wrap { text-align: center; }
+  .knob-wrap label { font-size: 0.75rem; color: var(--text2); display: block; margin-bottom: 8px; }
+  .knob {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: conic-gradient(var(--accent) 0deg, var(--accent) var(--knob-angle, 0deg), rgba(0,240,200,0.1) var(--knob-angle, 0deg));
+    margin: 0 auto; position: relative; cursor: pointer;
+    border: 2px solid rgba(0,240,200,0.3);
+  }
+  .knob::after {
+    content: ''; position: absolute; top: 4px; left: 50%;
+    width: 3px; height: 12px; background: var(--accent);
+    transform: translateX(-50%); border-radius: 2px;
+  }
+  .knob-val { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--accent); margin-top: 6px; }
+
+  .piano-keys {
+    display: flex; gap: 3px; justify-content: center; margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .piano-key {
+    width: 36px; height: 100px; background: var(--panel2);
+    border: 1px solid rgba(0,240,200,0.2); border-radius: 0 0 4px 4px;
+    cursor: pointer; display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 8px; font-size: 0.65rem; color: var(--text2);
+    transition: all 0.1s; position: relative;
+  }
+  .piano-key:hover { background: rgba(0,240,200,0.1); }
+  .piano-key:active, .piano-key.active {
+    background: var(--accent); color: #000;
+    box-shadow: 0 0 15px rgba(0,240,200,0.4);
+  }
+  .piano-key.black {
+    width: 24px; height: 60px; background: #0a0a15;
+    border-color: rgba(0,240,200,0.3); z-index: 2; margin: 0 -12px;
+  }
+  .piano-key.black:active, .piano-key.black.active { background: var(--accent2); }
+
+  /* ====== STAGE 4: 声呐任务 ====== */
+  .sonar-display {
+    width: 100%; max-width: 400px; aspect-ratio: 1;
+    margin: 12px auto; position: relative;
+    background: radial-gradient(circle, rgba(0,240,200,0.05) 0%, transparent 70%);
+    border: 2px solid rgba(0,240,200,0.2); border-radius: 50%;
+  }
+  .sonar-display canvas { width: 100%; height: 100%; border-radius: 50%; }
+  .depth-readout {
+    font-family: 'Orbitron', sans-serif; font-size: 1.4rem;
+    color: var(--accent); text-align: center; margin: 12px 0;
+  }
+
+  .shake { animation: shake 0.4s; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .flash-ok { animation: flashOk 0.4s; }
+  @keyframes flashOk { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 20px var(--success)} }
+</style>
+</head>
+<body>
+<div class="corner-tl"></div><div class="corner-tr"></div>
+<div class="corner-bl"></div><div class="corner-br"></div>
+
+<!-- ====== STAGE NAV ====== -->
+<div class="stage-nav-panel" id="stage-nav">
+  <div onclick="navigateToStage(1)" data-stage="1">STAGE 1 — 振动实验室</div>
+  <div onclick="navigateToStage(2)" data-stage="2">STAGE 2 — 介质传声台</div>
+  <div onclick="navigateToStage(3)" data-stage="3">STAGE 3 — 声波调音台</div>
+  <div onclick="navigateToStage(4)" data-stage="4">STAGE 4 — 声呐测距任务</div>
+</div>
+
+<!-- ====== INTRO ====== -->
+<div class="screen active" id="intro-screen">
+  <div class="intro-box">
+    <h1>🔊 声波分析中心</h1>
+    <p>特工，欢迎进入声波分析中心。<br>声波是特工通讯的关键，你需要掌握声音的产生、传播与特征。</p>
+    <p style="font-size:0.8rem;color:var(--text2);">任务列表：<br>① 振动实验室 ② 介质传声台 ③ 声波调音台 ④ 声呐测距任务</p>
+    <div style="margin-top:24px;">
+      <button class="btn" onclick="goStage(1)">开始任务 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== STAGE 1: 振动实验室 ====== -->
+<div class="screen" id="stage1">
+  <div class="hud-header">
+    <div><span class="stage-badge">STAGE 1</span> <span class="hud-title">振动实验室</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="hud-score" id="score1">0</span>
+      <div class="stage-nav" onclick="toggleStageNav()">☰</div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="dots" id="s1-dots"></div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🔬 声音是如何产生的？</div>
+      <p style="font-size:0.9rem;line-height:1.6;margin-bottom:12px;">
+        声音是由<strong>物体振动</strong>产生的。振动越快，音调越高；振动幅度越大，响度越大。
+      </p>
+      <div class="formula">频率(Hz) = 每秒振动次数 | 振幅 = 振动幅度大小</div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:8px;">📊 实时示波器</div>
+      <div class="oscilloscope">
+        <canvas id="s1-scope"></canvas>
+        <div class="oscilloscope-label">OSCILLOSCOPE // LIVE</div>
+      </div>
+      <div class="wave-params">
+        <div class="wave-param"><div class="val" id="s1-freq-val">440</div><div class="label">频率 Hz</div></div>
+        <div class="wave-param"><div class="val" id="s1-amp-val">50</div><div class="label">振幅 %</div></div>
+        <div class="wave-param"><div class="val" id="s1-note">A4</div><div class="label">音名</div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+        <button class="sound-btn" onclick="s1PlayTone()" id="s1-play-btn">🔊 播放声波</button>
+        <button class="sound-btn" onclick="s1ToggleWave()" id="s1-wave-btn">📈 正弦波</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎚️ 参数调节</div>
+      <div class="slider-control">
+        <label><span>频率 (音调)</span><span id="s1-freq-label">440 Hz</span></label>
+        <input type="range" id="s1-freq" min="100" max="2000" value="440" oninput="s1UpdateParams()">
+      </div>
+      <div class="slider-control">
+        <label><span>振幅 (响度)</span><span id="s1-amp-label">50 %</span></label>
+        <input type="range" id="s1-amp" min="0" max="100" value="50" oninput="s1UpdateParams()">
+      </div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-top:8px;">
+        💡 拖动滑块，观察波形变化。频率决定音调高低，振幅决定响度大小。
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎯 测试：调整出指定声音</div>
+      <div id="s1-task" style="font-size:0.9rem;margin-bottom:12px;">任务：发出<strong style="color:var(--warn);">880 Hz</strong>的高音（比标准A音高八度）</div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn" onclick="s1CheckTask()">提交测试</button>
+        <button class="sound-btn" onclick="s1Hint()">💡 提示</button>
+      </div>
+      <div class="feedback-box" id="s1-feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== STAGE 2: 介质传声台 ====== -->
+<div class="screen" id="stage2">
+  <div class="hud-header">
+    <div><span class="stage-badge">STAGE 2</span> <span class="hud-title">介质传声台</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="hud-score" id="score2">0</span>
+      <div class="stage-nav" onclick="toggleStageNav()">☰</div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="dots" id="s2-dots"></div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🌍 声音在不同介质中的传播</div>
+      <p style="font-size:0.9rem;line-height:1.6;margin-bottom:12px;">
+        声音需要<strong>介质</strong>才能传播。在不同介质中，声速不同：<strong>固体 > 液体 > 气体</strong>。
+      </p>
+      <div class="formula">v(固体) > v(液体) > v(气体) | 真空不能传声</div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🔬 点击介质进行传声实验</div>
+      <div class="medium-lab">
+        <div class="medium-card" onclick="s2TestMedium('air', this)">
+          <div class="icon">🌫️</div>
+          <div class="name">空气</div>
+          <div class="speed">~340 m/s</div>
+          <div class="medium-viz-bar"><div class="medium-viz-fill" id="air-bar"></div></div>
+        </div>
+        <div class="medium-card" onclick="s2TestMedium('water', this)">
+          <div class="icon">💧</div>
+          <div class="name">水</div>
+          <div class="speed">~1500 m/s</div>
+          <div class="medium-viz-bar"><div class="medium-viz-fill" id="water-bar"></div></div>
+        </div>
+        <div class="medium-card" onclick="s2TestMedium('steel', this)">
+          <div class="icon">🔩</div>
+          <div class="name">钢铁</div>
+          <div class="speed">~5200 m/s</div>
+          <div class="medium-viz-bar"><div class="medium-viz-fill" id="steel-bar"></div></div>
+        </div>
+        <div class="medium-card" onclick="s2TestMedium('vacuum', this)">
+          <div class="icon">🌌</div>
+          <div class="name">真空</div>
+          <div class="speed">0 m/s</div>
+          <div class="medium-viz-bar"><div class="medium-viz-fill" id="vacuum-bar"></div></div>
+        </div>
+      </div>
+      <div id="s2-medium-desc" style="font-size:0.85rem;color:var(--text2);margin-top:12px;text-align:center;">
+        👆 点击上方卡片，分别体验声音在四种介质中的传播效果
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎯 测试：哪条路线传声最快？</div>
+      <div id="s2-task" style="font-size:0.9rem;margin-bottom:12px;">
+        场景：你需要将紧急情报从A点传到B点。有三条路线可选：<br>
+        <strong style="color:var(--accent2);">路线1</strong>：通过500m空气传播<br>
+        <strong style="color:var(--accent2);">路线2</strong>：通过500m海水传播<br>
+        <strong style="color:var(--accent2);">路线3</strong>：通过500m钢铁管道传播<br><br>
+        哪条路线能让情报最快到达？
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="s2CheckTask('air')">路线1 (空气)</button>
+        <button class="btn" onclick="s2CheckTask('water')">路线2 (海水)</button>
+        <button class="btn" onclick="s2CheckTask('steel')">路线3 (钢铁)</button>
+      </div>
+      <div class="feedback-box" id="s2-feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== STAGE 3: 声波调音台 ====== -->
+<div class="screen" id="stage3">
+  <div class="hud-header">
+    <div><span class="stage-badge">STAGE 3</span> <span class="hud-title">声波调音台</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="hud-score" id="score3">0</span>
+      <div class="stage-nav" onclick="toggleStageNav()">☰</div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="dots" id="s3-dots"></div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎛️ 声音的三要素</div>
+      <p style="font-size:0.9rem;line-height:1.6;margin-bottom:12px;">
+        <strong>音调</strong>（频率高低）· <strong>响度</strong>（振幅大小）· <strong>音色</strong>（波形形状）
+      </p>
+      <div class="formula">不同乐器演奏同一音，音调相同但音色不同</div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎹 钢琴键盘</div>
+      <div class="piano-keys" id="s3-piano">
+        <div class="piano-key" data-note="261.63" onclick="s3PlayKey(this)">C</div>
+        <div class="piano-key black" data-note="277.18" onclick="s3PlayKey(this)">C#</div>
+        <div class="piano-key" data-note="293.66" onclick="s3PlayKey(this)">D</div>
+        <div class="piano-key black" data-note="311.13" onclick="s3PlayKey(this)">D#</div>
+        <div class="piano-key" data-note="329.63" onclick="s3PlayKey(this)">E</div>
+        <div class="piano-key" data-note="349.23" onclick="s3PlayKey(this)">F</div>
+        <div class="piano-key black" data-note="369.99" onclick="s3PlayKey(this)">F#</div>
+        <div class="piano-key" data-note="392.00" onclick="s3PlayKey(this)">G</div>
+        <div class="piano-key black" data-note="415.30" onclick="s3PlayKey(this)">G#</div>
+        <div class="piano-key" data-note="440.00" onclick="s3PlayKey(this)">A</div>
+        <div class="piano-key black" data-note="466.16" onclick="s3PlayKey(this)">A#</div>
+        <div class="piano-key" data-note="493.88" onclick="s3PlayKey(this)">B</div>
+        <div class="piano-key" data-note="523.25" onclick="s3PlayKey(this)">C</div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text2);text-align:center;">
+        💡 点击琴键发声，感受不同音调。黑键是半音。
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎛️ 调音台</div>
+      <div class="mixer-panel">
+        <div class="mixer-knobs">
+          <div class="knob-wrap">
+            <label>音调 (频率)</label>
+            <div class="knob" id="s3-knob-freq" style="--knob-angle: 144deg;" onclick="s3RotateKnob('freq')"></div>
+            <div class="knob-val" id="s3-knob-freq-val">440 Hz</div>
+          </div>
+          <div class="knob-wrap">
+            <label>响度 (振幅)</label>
+            <div class="knob" id="s3-knob-amp" style="--knob-angle: 90deg;" onclick="s3RotateKnob('amp')"></div>
+            <div class="knob-val" id="s3-knob-amp-val">50%</div>
+          </div>
+          <div class="knob-wrap">
+            <label>音色 (波形)</label>
+            <div class="knob" id="s3-knob-wave" style="--knob-angle: 0deg;" onclick="s3RotateKnob('wave')"></div>
+            <div class="knob-val" id="s3-knob-wave-val">正弦</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;">
+          <button class="sound-btn" onclick="s3PlaySynth()" id="s3-synth-btn">🔊 播放合成音</button>
+          <button class="sound-btn" onclick="s3StopSynth()">⏹ 停止</button>
+        </div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-top:8px;">
+        💡 点击旋钮切换参数档位，然后播放合成音。
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎯 测试：调出指定音色</div>
+      <div id="s3-task" style="font-size:0.9rem;margin-bottom:12px;">
+        任务：调出<strong style="color:var(--warn);">低沉响亮</strong>的声音（低频率 + 大振幅）
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn" onclick="s3CheckTask()">提交测试</button>
+        <button class="sound-btn" onclick="s3Hint()">💡 提示</button>
+      </div>
+      <div class="feedback-box" id="s3-feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== STAGE 4: 声呐测距任务 ====== -->
+<div class="screen" id="stage4">
+  <div class="hud-header">
+    <div><span class="stage-badge">STAGE 4</span> <span class="hud-title">声呐测距任务</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="hud-score" id="score4">0</span>
+      <div class="stage-nav" onclick="toggleStageNav()">☰</div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="dots" id="s4-dots"></div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🌊 回声定位原理</div>
+      <p style="font-size:0.9rem;line-height:1.6;margin-bottom:12px;">
+        声呐发出超声波，遇到障碍物后<strong>反射</strong>回来。测量往返时间，即可计算距离。
+      </p>
+      <div class="formula">距离 = 声速 × 时间 ÷ 2 （往返要除以2！）</div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">📡 声呐扫描界面</div>
+      <div class="sonar-display">
+        <canvas id="s4-sonar"></canvas>
+      </div>
+      <div class="depth-readout" id="s4-depth">深度：--- m</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+        <button class="sound-btn" onclick="s4Ping()" id="s4-ping-btn">📡 发射声波</button>
+        <button class="sound-btn" onclick="s4AutoPing()" id="s4-auto-btn">🔄 自动扫描</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:12px;">🎯 实战任务</div>
+      <div id="s4-task" style="font-size:0.9rem;margin-bottom:12px;">
+        任务：测出海底深度<br>
+        已知：水中声速 <strong>1500 m/s</strong><br>
+        测得：回声往返时间 <strong id="s4-t1">3.0</strong> 秒<br><br>
+        海底深度是多少？
+      </div>
+      <div class="s3-input-wrap" style="display:flex;gap:10px;align-items:center;">
+        <input type="text" id="s4-input" placeholder="输入深度（米）" onkeydown="if(event.key==='Enter')s4Check()"
+          style="flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(0,240,200,0.3);color:var(--accent);padding:10px 14px;border-radius:6px;font-family:'Share Tech Mono',monospace;font-size:1rem;">
+        <button class="btn" onclick="s4Check()">提交</button>
+      </div>
+      <div class="feedback-box" id="s4-feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== END SCREEN ====== -->
+<div class="screen" id="end-screen">
+  <div class="intro-box">
+    <h1>🎉 任务完成</h1>
+    <p>声波分析中心所有测试已通过！</p>
+    <div style="font-family:'Orbitron',sans-serif;font-size:3rem;color:var(--warn);margin:20px 0;" id="final-score">0</div>
+    <div style="font-family:'Orbitron',sans-serif;font-size:1.2rem;color:var(--accent);margin-bottom:12px;" id="final-rank">-</div>
+    <p style="font-size:0.9rem;color:var(--text2);max-width:400px;margin:0 auto;" id="final-msg">-</p>
+    <div style="margin-top:24px;">
+      <button class="btn" onclick="location.reload()">🔄 再玩一次</button>
+      <button class="btn" onclick="goStage(1)" style="margin-left:10px;">📖 查看教案</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== AUDIO ENGINE ===================== */
+let audioCtx = null;
+function ensureAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playTone(freq, duration, type, amplitude) {
+  ensureAudio();
+  const t = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.type = type || 'sine';
+  osc.frequency.setValueAtTime(freq, t);
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(amplitude || 0.15, t + 0.02);
+  gain.gain.setValueAtTime(amplitude || 0.15, t + duration - 0.05);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+  osc.start(t); osc.stop(t + duration);
+  return { osc, gain };
+}
+function playSweep(startFreq, endFreq, duration, type) {
+  ensureAudio();
+  const t = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.type = type || 'sine';
+  osc.frequency.setValueAtTime(startFreq, t);
+  osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration);
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(0.15, t + 0.05);
+  gain.gain.setValueAtTime(0.15, t + duration - 0.05);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+  osc.start(t); osc.stop(t + duration);
+}
+function playChord(freq1, freq2, duration) {
+  playTone(freq1, duration, 'sine', 0.1);
+  playTone(freq2, duration, 'sine', 0.1);
+}
+function sndOk() { ensureAudio(); playTone(880, 0.15, 'sine', 0.15); setTimeout(()=>playTone(1100, 0.2, 'sine', 0.1), 120); }
+function sndErr() { ensureAudio(); playTone(150, 0.3, 'sawtooth', 0.1); }
+function sndWin() {
+  ensureAudio();
+  [523, 659, 784, 1047].forEach((f, i) => setTimeout(()=>playTone(f, 0.3, 'sine', 0.12), i*150));
+}
+
+/* ===================== NAVIGATION ===================== */
+let score = 0, currentStage = 0;
+function goStage(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if (n === 5) { document.getElementById('end-screen').classList.add('active'); showEnd(); sndWin(); }
+  else {
+    const el = document.getElementById('stage'+n);
+    if (el) el.classList.add('active');
+    currentStage = n;
+    if (n === 1) { initS1(); }
+    if (n === 2) { initS2(); }
+    if (n === 3) { initS3(); }
+    if (n === 4) { initS4(); }
+  }
+  document.getElementById('stage-nav').classList.remove('active');
+}
+function toggleStageNav() { document.getElementById('stage-nav').classList.toggle('active'); }
+function navigateToStage(n) { goStage(n); }
+function updateDots(id, idx, total) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === idx ? ' active' : i < idx ? ' done' : '');
+    el.appendChild(d);
+  }
+}
+function showFeedback(msg, type) {
+  const fb = document.querySelector('.screen.active .feedback-box.show') || document.querySelector('.screen.active .feedback-box');
+  if (fb) { fb.textContent = msg; fb.className = 'feedback-box show ' + type; }
+}
+function addScore(p) {
+  score += p;
+  const el = document.getElementById('score'+currentStage);
+  if (el) el.textContent = score;
+}
+
+/* ===================== STAGE 1: 振动实验室 ===================== */
+let s1Osc = null, s1Gain = null, s1WaveType = 'sine', s1TaskTarget = 880;
+const s1Notes = { 261.63:'C4', 293.66:'D4', 329.63:'E4', 349.23:'F4', 392:'G4', 440:'A4', 493.88:'B4', 523.25:'C5' };
+
+function initS1() { s1UpdateParams(); s1DrawScope(); }
+function s1UpdateParams() {
+  const freq = parseInt(document.getElementById('s1-freq').value);
+  const amp = parseInt(document.getElementById('s1-amp').value);
+  document.getElementById('s1-freq-val').textContent = freq;
+  document.getElementById('s1-amp-val').textContent = amp;
+  document.getElementById('s1-freq-label').textContent = freq + ' Hz';
+  document.getElementById('s1-amp-label').textContent = amp + ' %';
+  // Find closest note
+  let closest = 'A4', minDiff = 9999;
+  for (const [f, n] of Object.entries(s1Notes)) {
+    const diff = Math.abs(freq - parseFloat(f));
+    if (diff < minDiff) { minDiff = diff; closest = n; }
+  }
+  document.getElementById('s1-note').textContent = closest;
+}
+function s1PlayTone() {
+  ensureAudio();
+  if (s1Osc) { s1Osc.stop(); s1Osc = null; }
+  const freq = parseInt(document.getElementById('s1-freq').value);
+  const amp = parseInt(document.getElementById('s1-amp').value) / 100 * 0.3;
+  s1Osc = playTone(freq, 2, s1WaveType, amp).osc;
+  const btn = document.getElementById('s1-play-btn');
+  btn.classList.add('playing'); btn.textContent = '🔊 播放中...';
+  setTimeout(() => { btn.classList.remove('playing'); btn.textContent = '🔊 播放声波'; }, 2000);
+}
+function s1ToggleWave() {
+  const types = ['sine', 'square', 'sawtooth', 'triangle'];
+  const labels = ['📈 正弦波', '⬜ 方波', '🔺 锯齿波', '🔻 三角波'];
+  const idx = types.indexOf(s1WaveType);
+  s1WaveType = types[(idx + 1) % types.length];
+  document.getElementById('s1-wave-btn').textContent = labels[(idx + 1) % types.length];
+}
+function s1DrawScope() {
+  const canvas = document.getElementById('s1-scope');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth || 400;
+  canvas.height = canvas.offsetHeight || 160;
+  let frame = 0;
+  function draw() {
+    const freq = parseInt(document.getElementById('s1-freq').value) || 440;
+    const amp = (parseInt(document.getElementById('s1-amp').value) || 50) / 100;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(0, 240, 200, 0.8)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    for (let x = 0; x < canvas.width; x++) {
+      const t = (x / canvas.width) * Math.PI * 4 + frame * 0.1;
+      let y;
+      switch(s1WaveType) {
+        case 'square': y = Math.sin(t * freq / 200) > 0 ? 1 : -1; break;
+        case 'sawtooth': y = ((t * freq / 200) % (Math.PI * 2)) / (Math.PI) - 1; break;
+        case 'triangle': y = Math.abs(((t * freq / 200) % (Math.PI * 4)) / (Math.PI * 2) - 1) * 2 - 1; break;
+        default: y = Math.sin(t * freq / 200);
+      }
+      const py = cy - y * amp * 50;
+      if (x === 0) ctx.moveTo(x, py); else ctx.lineTo(x, py);
+    }
+    ctx.stroke();
+    // Grid line
+    ctx.strokeStyle = 'rgba(0, 240, 200, 0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy); ctx.stroke();
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+function s1CheckTask() {
+  const freq = parseInt(document.getElementById('s1-freq').value);
+  const tolerance = 50;
+  if (Math.abs(freq - s1TaskTarget) <= tolerance) {
+    sndOk();
+    showFeedback(`正确！${freq} Hz 接近目标 ${s1TaskTarget} Hz（高八度A音）`, 'ok');
+    addScore(20);
+    setTimeout(() => goStage(2), 1500);
+  } else {
+    sndErr();
+    const hint = freq < s1TaskTarget ? '频率还不够高，再往上调！' : '频率太高了，往回调一点。';
+    showFeedback(`${hint} 目标：${s1TaskTarget} Hz`, 'wrong');
+  }
+}
+function s1Hint() {
+  showFeedback('提示：标准A音是440Hz。高八度就是频率翻倍 → 880Hz。将频率滑块拉到最右侧附近。', 'ok');
+}
+
+/* ===================== STAGE 2: 介质传声台 ===================== */
+const s2Mediums = {
+  air: { name: '空气', speed: 340, color: '#00f0c8', desc: '空气（气体）：声速约 340 m/s。气体分子间距大，传声最慢。日常对话靠空气。', sound: () => playTone(440, 0.8, 'sine', 0.1) },
+  water: { name: '水', speed: 1500, color: '#00bbf9', desc: '水（液体）：声速约 1500 m/s，是空气的4.4倍！液体分子更密集。潜水时能听到水面声音。', sound: () => { playTone(440, 0.6, 'sine', 0.12); playTone(880, 0.6, 'sine', 0.06); } },
+  steel: { name: '钢铁', speed: 5200, color: '#ffd166', desc: '钢铁（固体）：声速约 5200 m/s，是空气的15倍！固体分子排列紧密有序。把耳朵贴铁轨能听到远处火车。', sound: () => { playTone(440, 0.4, 'square', 0.1); playTone(660, 0.4, 'square', 0.08); } },
+  vacuum: { name: '真空', speed: 0, color: '#ef476f', desc: '真空：声速 0 m/s。没有介质，声音完全无法传播！太空中必须用无线电交流。', sound: () => sndErr() }
+};
+let s2Tested = new Set();
+function initS2() { s2Tested = new Set(); updateDots('s2-dots', 0, 1); }
+function s2TestMedium(medium, card) {
+  ensureAudio();
+  const data = s2Mediums[medium];
+  if (!data) return;
+  
+  // Reset all cards
+  document.querySelectorAll('.medium-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  
+  // Play sound
+  data.sound();
+  
+  // Animate bar
+  const bar = document.getElementById(medium + '-bar');
+  if (bar) {
+    bar.style.width = '0%';
+    setTimeout(() => { bar.style.width = Math.min(data.speed / 5200 * 100, 100) + '%'; }, 50);
+  }
+  
+  // Update description
+  document.getElementById('s2-medium-desc').innerHTML = `<strong style="color:${data.color}">${data.name}</strong>：${data.desc}`;
+  
+  s2Tested.add(medium);
+}
+function s2CheckTask(choice) {
+  if (choice === 'steel') {
+    sndOk();
+    showFeedback('正确！钢铁中声速最快（5200 m/s），情报最先到达！', 'ok');
+    addScore(20);
+    setTimeout(() => goStage(3), 1500);
+  } else {
+    sndErr();
+    const hints = { air: '空气最慢（340 m/s），情报会迟到！', water: '水比空气快，但不如钢铁快。' };
+    showFeedback(hints[choice] + ' 再想想：固体 > 液体 > 气体', 'wrong');
+  }
+}
+
+/* ===================== STAGE 3: 声波调音台 ===================== */
+let s3SynthOsc = null, s3SynthGain = null;
+let s3Freq = 440, s3Amp = 0.15, s3WaveIdx = 0;
+const s3Waves = ['sine', 'square', 'sawtooth', 'triangle'];
+const s3WaveLabels = ['正弦', '方波', '锯齿', '三角'];
+const s3KnobAngles = { freq: 144, amp: 90, wave: 0 };
+
+function initS3() { updateDots('s3-dots', 0, 1); }
+function s3PlayKey(key) {
+  ensureAudio();
+  const freq = parseFloat(key.dataset.note);
+  playTone(freq, 0.4, 'sine', 0.15);
+  key.classList.add('active');
+  setTimeout(() => key.classList.remove('active'), 400);
+}
+function s3RotateKnob(type) {
+  if (type === 'freq') {
+    const freqs = [220, 330, 440, 660, 880];
+    const idx = freqs.indexOf(s3Freq);
+    s3Freq = freqs[(idx + 1) % freqs.length];
+    document.getElementById('s3-knob-freq-val').textContent = s3Freq + ' Hz';
+    s3KnobAngles.freq = (s3Freq / 880) * 270;
+    document.getElementById('s3-knob-freq').style.setProperty('--knob-angle', s3KnobAngles.freq + 'deg');
+  } else if (type === 'amp') {
+    const amps = [0.05, 0.1, 0.2, 0.3];
+    const idx = amps.indexOf(s3Amp);
+    s3Amp = amps[(idx + 1) % amps.length];
+    document.getElementById('s3-knob-amp-val').textContent = Math.round(s3Amp * 100) + '%';
+    s3KnobAngles.amp = (s3Amp / 0.3) * 270;
+    document.getElementById('s3-knob-amp').style.setProperty('--knob-angle', s3KnobAngles.amp + 'deg');
+  } else if (type === 'wave') {
+    s3WaveIdx = (s3WaveIdx + 1) % s3Waves.length;
+    document.getElementById('s3-knob-wave-val').textContent = s3WaveLabels[s3WaveIdx];
+    s3KnobAngles.wave = (s3WaveIdx / 3) * 270;
+    document.getElementById('s3-knob-wave').style.setProperty('--knob-angle', s3KnobAngles.wave + 'deg');
+  }
+}
+function s3PlaySynth() {
+  ensureAudio();
+  if (s3SynthOsc) { s3SynthOsc.stop(); s3SynthOsc = null; }
+  const r = playTone(s3Freq, 1.5, s3Waves[s3WaveIdx], s3Amp);
+  s3SynthOsc = r.osc; s3SynthGain = r.gain;
+  const btn = document.getElementById('s3-synth-btn');
+  btn.classList.add('playing'); btn.textContent = '🔊 播放中...';
+  setTimeout(() => { btn.classList.remove('playing'); btn.textContent = '🔊 播放合成音'; }, 1500);
+}
+function s3StopSynth() {
+  if (s3SynthOsc) { s3SynthOsc.stop(); s3SynthOsc = null; }
+}
+function s3CheckTask() {
+  // Task: low freq + high amp
+  if (s3Freq <= 330 && s3Amp >= 0.2) {
+    sndOk();
+    showFeedback('正确！低沉（低频）+ 响亮（大振幅）的声音已调出！', 'ok');
+    addScore(20);
+    setTimeout(() => goStage(4), 1500);
+  } else {
+    sndErr();
+    let hint = '';
+    if (s3Freq > 330) hint += '音调还不够低，频率需要调低。 ';
+    if (s3Amp < 0.2) hint += '响度还不够大，振幅需要调高。';
+    showFeedback(hint + '提示：点击"音调"旋钮选220/330Hz，点击"响度"旋钮选20%/30%', 'wrong');
+  }
+}
+function s3Hint() {
+  showFeedback('提示：低沉 = 低频率（220或330Hz），响亮 = 大振幅（20%或30%）。点击旋钮切换档位。', 'ok');
+}
+
+/* ===================== STAGE 4: 声呐测距任务 ===================== */
+let s4PingTime = 3.0, s4AutoInterval = null, s4Angle = 0;
+
+function initS4() {
+  s4PingTime = 3.0;
+  document.getElementById('s4-t1').textContent = s4PingTime.toFixed(1);
+  document.getElementById('s4-depth').textContent = '深度：--- m';
+  document.getElementById('s4-input').value = '';
+  s4DrawSonar();
+}
+function s4DrawSonar() {
+  const canvas = document.getElementById('s4-sonar');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth || 300;
+  canvas.height = canvas.offsetHeight || 300;
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = Math.min(cx, cy) - 10;
+  
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Background circles
+    ctx.strokeStyle = 'rgba(0, 240, 200, 0.15)';
+    ctx.lineWidth = 1;
+    [0.3, 0.6, 0.9].forEach(ratio => {
+      ctx.beginPath(); ctx.arc(cx, cy, r * ratio, 0, Math.PI * 2); ctx.stroke();
+    });
+    // Center point
+    ctx.fillStyle = 'var(--accent)';
+    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+    // Scan line
+    s4Angle += 0.02;
+    const sx = cx + Math.cos(s4Angle) * r;
+    const sy = cy + Math.sin(s4Angle) * r;
+    ctx.strokeStyle = 'rgba(0, 240, 200, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(sx, sy); ctx.stroke();
+    // Echo blip (if pinged)
+    if (s4PingTime > 0) {
+      const depthRatio = Math.min(s4PingTime / 6, 0.9);
+      const bx = cx + Math.cos(s4Angle) * r * depthRatio;
+      const by = cy + Math.sin(s4Angle) * r * depthRatio;
+      ctx.fillStyle = 'var(--warn)';
+      ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowColor = 'var(--warn)'; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+function s4Ping() {
+  ensureAudio();
+  // Ping sound: short high beep
+  playTone(1200, 0.1, 'sine', 0.2);
+  // Echo return after delay proportional to pingTime
+  setTimeout(() => {
+    playTone(1000, 0.08, 'sine', 0.1);
+    const depth = 1500 * s4PingTime / 2;
+    document.getElementById('s4-depth').textContent = `深度：${depth.toFixed(0)} m`;
+  }, s4PingTime * 200); // Simulated delay
+  
+  const btn = document.getElementById('s4-ping-btn');
+  btn.classList.add('playing'); btn.textContent = '📡 发射中...';
+  setTimeout(() => { btn.classList.remove('playing'); btn.textContent = '📡 发射声波'; }, 1000);
+}
+function s4AutoPing() {
+  const btn = document.getElementById('s4-auto-btn');
+  if (s4AutoInterval) {
+    clearInterval(s4AutoInterval); s4AutoInterval = null;
+    btn.textContent = '🔄 自动扫描';
+    return;
+  }
+  s4Ping();
+  s4AutoInterval = setInterval(s4Ping, 2000);
+  btn.textContent = '⏹ 停止扫描';
+}
+function s4Check() {
+  const val = parseFloat(document.getElementById('s4-input').value);
+  const correct = 1500 * s4PingTime / 2;
+  const wrap = document.querySelector('#stage4 .s3-input-wrap');
+  if (isNaN(val)) {
+    sndErr(); wrap.classList.add('shake');
+    showFeedback('请输入数字！', 'wrong');
+    setTimeout(() => wrap.classList.remove('shake'), 400);
+    return;
+  }
+  if (Math.abs(val - correct) <= 20) {
+    sndOk(); wrap.classList.add('flash-ok');
+    showFeedback(`正确！深度 = 1500 × ${s4PingTime} / 2 = ${correct} m`, 'ok');
+    addScore(20);
+    setTimeout(() => {
+      wrap.classList.remove('flash-ok');
+      goStage(5);
+    }, 1500);
+  } else {
+    sndErr(); wrap.classList.add('shake');
+    showFeedback(`接近了！公式：深度 = 声速 × 时间 ÷ 2 = 1500 × ${s4PingTime} / 2`, 'wrong');
+    setTimeout(() => wrap.classList.remove('shake'), 400);
+  }
+}
+
+/* ===================== END SCREEN ===================== */
+function showEnd() {
+  document.getElementById('final-score').textContent = score;
+  let rank, msg;
+  if (score >= 90) { rank = 'S 级 · 声学大师'; msg = '完美！你对声音的产生、传播和特征已经达到了专业水平。'; }
+  else if (score >= 75) { rank = 'A 级 · 声学专家'; msg = '出色！你已经熟练掌握了声波的核心概念。'; }
+  else if (score >= 60) { rank = 'B 级 · 声学学徒'; msg = '不错！基础概念已掌握，建议再挑战一次争取更高分。'; }
+  else if (score >= 40) { rank = 'C 级 · 声学新手'; msg = '还需要加强。建议重新阅读教程后再来挑战。'; }
+  else { rank = '见习特工'; msg = '别灰心，去教程里复习一下再来！'; }
+  document.getElementById('final-rank').textContent = rank;
+  document.getElementById('final-msg').textContent = msg;
+}
+
+// Init
+updateDots('s1-dots', 0, 0);
+</script>
+</body>
+</html>

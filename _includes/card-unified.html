@@ -1,4 +1,4 @@
-<article class="work-card" data-page="1" onclick="window.location.href='{{ include.item.url | relative_url }}'">
+<article class="work-card" data-page="1" onclick="window.location.href='{{ include.item.link | default: include.item.url | relative_url }}'">
   <div class="card-image" style="{% unless include.item.thumbnail or include.item.image %}background: {{ include.item.color | default: 'linear-gradient(135deg, #2a2a3a 0%, #1a1a2e 100%)' }}{% endunless %}">
     {% if include.item.thumbnail %}
       <img src="{{ include.item.thumbnail | relative_url }}" alt="{{ include.item.title }}" loading="lazy" class="card-img" style="object-position: {{ include.item.thumbnail_position | default: 'center center' }}">
@@ -32,7 +32,9 @@
   <div class="card-content">
     <h3 class="card-title">{{ include.item.title }}</h3>
     <p class="card-desc">{{ include.item.description | default: include.item.category }}</p>
-    {% if include.item.date %}
+    {% if include.item.chapters %}
+      <p class="card-date">{{ include.item.chapters }} 章节 · {{ include.item.grades }} · {{ include.item.status | default: '进行中' }}</p>
+    {% elsif include.item.date %}
       <p class="card-date">{{ include.item.date | date: "%Y-%m-%d" }}</p>
     {% endif %}
   </div>

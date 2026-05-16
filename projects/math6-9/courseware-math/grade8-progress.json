@@ -1,0 +1,37 @@
+{
+  "ch19": {
+    "status": "completed",
+    "name": "实数",
+    "completed_at": "2026-05-14"
+  },
+  "ch20": {
+    "status": "completed",
+    "name": "二次根式",
+    "completed_at": "2026-05-14"
+  },
+  "ch21": {
+    "status": "completed",
+    "name": "一元二次方程",
+    "completed_at": "2026-05-14"
+  },
+  "ch22": {
+    "status": "completed",
+    "name": "直角三角形",
+    "completed_at": "2026-05-14"
+  },
+  "ch23": {
+    "status": "completed",
+    "name": "一次函数",
+    "completed_at": "2026-05-14"
+  },
+  "ch24": {
+    "status": "completed",
+    "name": "四边形",
+    "completed_at": "2026-05-14"
+  },
+  "ch25": {
+    "status": "completed",
+    "name": "数据的离散程度",
+    "completed_at": "2026-05-14"
+  }
+}

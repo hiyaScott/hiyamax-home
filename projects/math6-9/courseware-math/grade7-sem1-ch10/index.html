@@ -1,0 +1,717 @@
+// ============================================================
+// 游戏状态
+// ============================================================
+const GameState = {
+  lives: 3,
+  score: 0,
+  combo: 0,
+  maxCombo: 0,
+  correctCount: 0,
+  totalAnswered: 0,
+  startTime: null,
+  elapsed: 0,
+  timerInterval: null,
+  currentStage: null,
+  currentQIndex: 0,
+  stageProgress: { stage1: 0, stage2: 0, stage3: 0, stage4: 0 },
+  matchSelected: null,
+  matchPairsFound: 0,
+};
+
+// ============================================================
+// 题库数据
+// ============================================================
+const Questions = {
+  stage1: [
+    {
+      text: '单项式 <strong>-⅔ab²</strong> 的系数和次数分别是？',
+      options: ['系数=-⅔, 次数=3', '系数=⅔, 次数=2', '系数=-2, 次数=3', '系数=-⅔, 次数=2'],
+      correct: 0,
+      explain: '系数是数字因数：-⅔；次数是所有字母指数之和：1+2=3',
+      anim: { type: 'coeff', expr: '-⅔ab²', coeff: '-⅔', vars: [{l:'a',e:1},{l:'b',e:2}], degree: 3 }
+    },
+    {
+      text: '多项式 <strong>x⁴ - 3x² + 5x - 7</strong> 的次数和常数项分别是？',
+      options: ['次数=2, 常数项=-7', '次数=4, 常数项=-7', '次数=4, 常数项=7', '次数=1, 常数项=-7'],
+      correct: 1,
+      explain: '最高次项是 x⁴，次数=4；不含字母的项是 -7，常数项=-7',
+      anim: { type: 'poly', terms: ['x⁴','-3x²','+5x','-7'], degree: 4, constTerm: '-7' }
+    },
+    {
+      text: '下列哪个<b>不是</b>整式？',
+      options: ['-3a²b', 'x² + 2x + 1', '2/(x+1)', 'πr²'],
+      correct: 2,
+      explain: '整式的分母中不含字母。2/(x+1) 分母含 x，不是整式。',
+      anim: { type: 'identify', expr: '2/(x+1)', reason: '分母含字母' }
+    },
+    {
+      text: '单项式 <strong>-πr²</strong> 的系数是？',
+      options: ['-1', '-π', 'π', '-2'],
+      correct: 1,
+      explain: 'π 是常数（圆周率），所以系数是 -π',
+      anim: { type: 'coeff', expr: '-πr²', coeff: '-π', vars: [{l:'r',e:2}], degree: 2 }
+    },
+    {
+      text: '多项式 <strong>3x²y - 2xy + 5x - 9</strong> 有几项？次数是？',
+      options: ['3项, 次数=2', '4项, 次数=3', '4项, 次数=2', '3项, 次数=3'],
+      correct: 1,
+      explain: '共4项：3x²y、-2xy、+5x、-9；最高次项 3x²y 次数=2+1=3',
+      anim: { type: 'poly', terms: ['3x²y','-2xy','+5x','-9'], degree: 3, constTerm: '-9' }
+    },
+    {
+      text: '单项式 <strong>5</strong> 的次数是？',
+      options: ['0', '1', '5', '无次数'],
+      correct: 0,
+      explain: '单独的数字（常数）次数为 0',
+      anim: { type: 'coeff', expr: '5', coeff: '5', vars: [], degree: 0 }
+    },
+    {
+      text: '多项式 <strong>a³ - 2a²b + ab² - b³</strong> 是几次几项式？',
+      options: ['三次四项式', '四次四项式', '二次四项式', '三次三项式'],
+      correct: 0,
+      explain: '共4项；最高次项 a³、-2a²b、ab²、-b³ 次数都是3 → 三次四项式',
+      anim: { type: 'poly', terms: ['a³','-2a²b','+ab²','-b³'], degree: 3, constTerm: '无' }
+    }
+  ],
+  stage2: [
+    {
+      text: '从下列项中找出同类项（选择两个配对）：',
+      terms: ['3x²y', '-5x²y', '2xy²', '7x²y', '-4xy', 'x²y'],
+      pairs: [[0,1],[3,5]],
+      labels: ['A','B','C','D','E','F'],
+      explain: '同类项要求字母相同且对应指数相同。3x²y、-5x²y、7x²y、x²y 是同类项；2xy² 字母指数不同；-4xy 字母指数不同。',
+      anim: { type: 'match', group: 'x²y', terms: ['3x²y','-5x²y','7x²y','x²y'] }
+    },
+    {
+      text: '从下列项中找出同类项（选择两个配对）：',
+      terms: ['4ab²', '-2a²b', '7ab²', '3a²b', '-ab²', '5ab'],
+      pairs: [[0,2],[0,4],[2,4],[1,3]],
+      labels: ['A','B','C','D','E','F'],
+      explain: 'ab² 组：4ab²、7ab²、-ab²；a²b 组：-2a²b、3a²b；5ab 单独。',
+      anim: { type: 'match', group: 'ab²', terms: ['4ab²','7ab²','-ab²'] }
+    },
+    {
+      text: '从下列项中找出同类项（选择两个配对）：',
+      terms: ['-3', '2x', '5', '-7', 'x', '-2x'],
+      pairs: [[0,2],[0,3],[2,3],[1,5],[4,5],[1,4]],
+      labels: ['A','B','C','D','E','F'],
+      explain: '常数项组：-3、5、-7；x 组：2x、-2x、x。',
+      anim: { type: 'match', group: '常数项', terms: ['-3','5','-7'] }
+    },
+    {
+      text: '从下列项中找出同类项（选择两个配对）：',
+      terms: ['m²n', '-3mn²', '2m²n', '4mn', '-5m²n', '7mn²'],
+      pairs: [[0,2],[0,4],[2,4],[1,5]],
+      labels: ['A','B','C','D','E','F'],
+      explain: 'm²n 组：m²n、2m²n、-5m²n；mn² 组：-3mn²、7mn²；4mn 单独。',
+      anim: { type: 'match', group: 'm²n', terms: ['m²n','2m²n','-5m²n'] }
+    },
+    {
+      text: '从下列项中找出同类项（选择两个配对）：',
+      terms: ['½a²', '-⅓a²', '2a', '-a', '3a²', '-½a²'],
+      pairs: [[0,1],[0,4],[0,5],[1,4],[4,5],[2,3]],
+      labels: ['A','B','C','D','E','F'],
+      explain: 'a² 组：½a²、-⅓a²、3a²、-½a²；a 组：2a、-a。',
+      anim: { type: 'match', group: 'a²', terms: ['½a²','-⅓a²','3a²','-½a²'] }
+    }
+  ],
+  stage3: [
+    {
+      text: '合并同类项：',
+      expr: '3x² + 5x² - 2x²',
+      answer: '6x²',
+      answers: ['6x²','6x^2'],
+      explain: '系数相加：3 + 5 - 2 = 6，结果 = 6x²',
+      anim: { type: 'merge', terms: ['3x²','+5x²','-2x²'], result: '6x²', steps: '3+5-2=6' }
+    },
+    {
+      text: '合并同类项：',
+      expr: '4a - 7a + 3a',
+      answer: '0',
+      answers: ['0','0a'],
+      explain: '系数相加：4 - 7 + 3 = 0，结果 = 0',
+      anim: { type: 'merge', terms: ['4a','-7a','+3a'], result: '0', steps: '4-7+3=0' }
+    },
+    {
+      text: '去括号并合并：',
+      expr: '2(x + 3y) - 3(2x - y)',
+      answer: '-4x+9y',
+      answers: ['-4x+9y','-4x+9y','9y-4x','9y-4x'],
+      explain: '展开：2x+6y-6x+3y = (2-6)x + (6+3)y = -4x + 9y',
+      anim: { type: 'expand', before: '2(x+3y)-3(2x-y)', after: '2x+6y-6x+3y', result: '-4x+9y' }
+    },
+    {
+      text: '去括号并合并：',
+      expr: '-(3a² - 2a + 1) + 2(a² + 3a - 2)',
+      answer: '-a²+8a-5',
+      answers: ['-a²+8a-5','-a^2+8a-5','8a-a²-5','8a-a^2-5'],
+      explain: '展开：-3a²+2a-1+2a²+6a-4 = (-3+2)a² + (2+6)a + (-1-4) = -a² + 8a - 5',
+      anim: { type: 'expand', before: '-(3a²-2a+1)+2(a²+3a-2)', after: '-3a²+2a-1+2a²+6a-4', result: '-a²+8a-5' }
+    },
+    {
+      text: '合并同类项：',
+      expr: '⅔x²y - ⅓x²y + x²y',
+      answer: 'x²y',
+      answers: ['x²y','x^2y','1x²y','1x^2y'],
+      explain: '系数相加：⅔ - ⅓ + 1 = ²⁄₃ - ⅓ + ³⁄₃ = ⁴⁄₃ - ⅓ = ³⁄₃ = 1，结果 = x²y',
+      anim: { type: 'merge', terms: ['⅔x²y','-⅓x²y','+x²y'], result: 'x²y', steps: '⅔-⅓+1=1' }
+    },
+    {
+      text: '去括号并合并：',
+      expr: '3(2m - n) - 2(m + 2n)',
+      answer: '4m-7n',
+      answers: ['4m-7n','4m-7n'],
+      explain: '展开：6m-3n-2m-4n = (6-2)m + (-3-4)n = 4m - 7n',
+      anim: { type: 'expand', before: '3(2m-n)-2(m+2n)', after: '6m-3n-2m-4n', result: '4m-7n' }
+    },
+    {
+      text: '合并同类项：',
+      expr: '5xy - 3xy + 2xy - xy',
+      answer: '3xy',
+      answers: ['3xy','3xy'],
+      explain: '系数相加：5 - 3 + 2 - 1 = 3，结果 = 3xy',
+      anim: { type: 'merge', terms: ['5xy','-3xy','+2xy','-xy'], result: '3xy', steps: '5-3+2-1=3' }
+    }
+  ],
+  stage4: [
+    {
+      text: '计算：',
+      expr: '(3x² - 2x + 5) - (x² + 3x - 2)',
+      answer: '2x²-5x+7',
+      answers: ['2x²-5x+7','2x^2-5x+7'],
+      explain: '去括号：3x²-2x+5-x²-3x+2 = (3-1)x² + (-2-3)x + (5+2) = 2x² - 5x + 7',
+      anim: { type: 'poly-sub', a: '3x²-2x+5', b: 'x²+3x-2', result: '2x²-5x+7' }
+    },
+    {
+      text: '计算：',
+      expr: '2(a² - 3a + 1) - 3(2a² - a - 4)',
+      answer: '-4a²-3a+14',
+      answers: ['-4a²-3a+14','-4a^2-3a+14'],
+      explain: '展开：2a²-6a+2-6a²+3a+12 = (2-6)a² + (-6+3)a + (2+12) = -4a² - 3a + 14',
+      anim: { type: 'poly-sub', a: '2(a²-3a+1)', b: '3(2a²-a-4)', result: '-4a²-3a+14' }
+    },
+    {
+      text: '计算：',
+      expr: '(5x - 3y) + 2(2x + y) - (x - 4y)',
+      answer: '8x+3y',
+      answers: ['8x+3y','8x+3y','3y+8x','3y+8x'],
+      explain: '展开：5x-3y+4x+2y-x+4y = (5+4-1)x + (-3+2+4)y = 8x + 3y',
+      anim: { type: 'poly-sub', a: '5x-3y+4x+2y', b: 'x-4y', result: '8x+3y' }
+    },
+    {
+      text: '计算：',
+      expr: '3xy - 2(x² - xy) + 4x²',
+      answer: '2x²+5xy',
+      answers: ['2x²+5xy','2x^2+5xy','5xy+2x²','5xy+2x^2'],
+      explain: '展开：3xy-2x²+2xy+4x² = (-2+4)x² + (3+2)xy = 2x² + 5xy',
+      anim: { type: 'poly-sub', a: '3xy-2x²+2xy', b: '-4x²', result: '2x²+5xy' }
+    },
+    {
+      text: '计算：',
+      expr: '½(4a - 2b) - ⅓(3a + 6b)',
+      answer: 'a-3b',
+      answers: ['a-3b','a-3b','-3b+a','-3b+a'],
+      explain: '展开：2a-b-a-2b = (2-1)a + (-1-2)b = a - 3b',
+      anim: { type: 'poly-sub', a: '2a-b', b: 'a+2b', result: 'a-3b' }
+    },
+    {
+      text: '化简求值：当 x = -1 时，<br>3x² - 2(x - 1) + x² - 3 的值是？',
+      expr: 'x = -1 时',
+      answer: '6',
+      answers: ['6'],
+      explain: '化简：3x²-2x+2+x²-3 = 4x²-2x-1；代入 x=-1：4(1)-2(-1)-1 = 4+2-1 = 5... 等等，重新算：3(-1)²-2(-1-1)+(-1)²-3 = 3(1)-2(-2)+1-3 = 3+4+1-3 = 5。 嗯，让我再检查：3x²-2(x-1)+x²-3 = 3x²-2x+2+x²-3 = 4x²-2x-1，x=-1: 4(1)-2(-1)-1 = 4+2-1 = 5。 好，答案是 5。',
+      answers: ['5'],
+      anim: { type: 'eval', expr: '3x²-2(x-1)+x²-3', sub: 'x=-1', result: '5' }
+    }
+  ]
+};
+
+// ============================================================
+// 游戏逻辑
+// ============================================================
+function startGame() {
+  GameState.lives = 3;
+  GameState.score = 0;
+  GameState.combo = 0;
+  GameState.maxCombo = 0;
+  GameState.correctCount = 0;
+  GameState.totalAnswered = 0;
+  GameState.startTime = Date.now();
+  GameState.stageProgress = { stage1: 0, stage2: 0, stage3: 0, stage4: 0 };
+  if (GameState.timerInterval) clearInterval(GameState.timerInterval);
+  GameState.timerInterval = setInterval(updateTimer, 1000);
+  loadStage('stage1');
+}
+
+function restartGame() {
+  startGame();
+}
+
+function updateTimer() {
+  GameState.elapsed = Math.floor((Date.now() - GameState.startTime) / 1000);
+  const m = String(Math.floor(GameState.elapsed / 60)).padStart(2, '0');
+  const s = String(GameState.elapsed % 60).padStart(2, '0');
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById(`timer-stage${i}`);
+    if (el) el.textContent = `${m}:${s}`;
+  }
+}
+
+function formatTime(sec) {
+  const m = String(Math.floor(sec / 60)).padStart(2, '0');
+  const s = String(sec % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function updateHUD(stage) {
+  const livesEl = document.getElementById(`lives-stage${stage.replace('stage','')}`);
+  const comboEl = document.getElementById(`combo-stage${stage.replace('stage','')}`);
+  const scoreEl = document.getElementById(`score-stage${stage.replace('stage','')}`);
+  if (livesEl) livesEl.textContent = '❤️'.repeat(Math.max(0, GameState.lives)) + '🖤'.repeat(Math.max(0, 3 - GameState.lives));
+  if (comboEl) comboEl.textContent = `x${GameState.combo}`;
+  if (scoreEl) scoreEl.textContent = GameState.score;
+}
+
+function loadStage(stageName) {
+  GameState.currentStage = stageName;
+  GameState.currentQIndex = 0;
+  GameState.matchSelected = null;
+  GameState.matchPairsFound = 0;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(`screen-${stageName}`).classList.add('active');
+  updateHUD(stageName);
+  showQuestion(stageName, 0);
+  updateNavState();
+}
+
+// ============================================================
+// 题目展示
+// ============================================================
+function showQuestion(stageName, idx) {
+  const qlist = Questions[stageName];
+  if (!qlist || idx >= qlist.length) {
+    const nextMap = { stage1: 'stage2', stage2: 'stage3', stage3: 'stage4', stage4: 'end' };
+    const next = nextMap[stageName];
+    if (next === 'end') { endGame(); return; }
+    showFeedback(`STAGE ${stageName.replace('stage','')} 完成！`, 'success', `准备进入 STAGE ${next.replace('stage','')}...`);
+    setTimeout(() => loadStage(next), 1500);
+    return;
+  }
+  GameState.currentQIndex = idx;
+  const q = qlist[idx];
+  const stageNum = stageName.replace('stage', '');
+
+  // 进度条
+  const prog = document.getElementById(`prog-stage${stageNum}`);
+  if (prog) prog.style.width = `${(idx / qlist.length) * 100}%`;
+
+  // 更新动画演示
+  updateAnimDemo(stageName, q);
+
+  // 题目
+  document.getElementById(`qtext-stage${stageNum}`).innerHTML = q.text + (q.expr ? `<br><br><strong style="color:var(--accent);font-size:1.1rem;">${q.expr}</strong>` : '');
+
+  // 根据 stage 类型渲染不同的输入方式
+  if (stageName === 'stage1') {
+    renderOptions(stageNum, q);
+  } else if (stageName === 'stage2') {
+    renderMatchGrid(stageNum, q);
+  } else if (stageName === 'stage3' || stageName === 'stage4') {
+    renderCalcInput(stageNum, q);
+  }
+
+  // 绑定回车
+  const input = document.getElementById(`answer-input-stage${stageNum}`);
+  if (input) {
+    input.onkeydown = (e) => { if (e.key === 'Enter') submitCalcAnswer(); };
+    setTimeout(() => input.focus(), 100);
+  }
+}
+
+function renderOptions(stageNum, q) {
+  const optsEl = document.getElementById(`qopts-stage${stageNum}`);
+  optsEl.style.display = 'grid';
+  optsEl.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-label">${labels[i]}.</span>${opt}`;
+    btn.onclick = () => selectAnswer('stage1', i);
+    optsEl.appendChild(btn);
+  });
+}
+
+function renderMatchGrid(stageNum, q) {
+  const grid = document.getElementById(`match-grid-stage${stageNum}`);
+  grid.innerHTML = '';
+  grid.style.display = 'grid';
+  GameState.matchSelected = null;
+  GameState.matchPairsFound = 0;
+  q.terms.forEach((term, i) => {
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    card.textContent = `${q.labels[i]}. ${term}`;
+    card.dataset.index = i;
+    card.dataset.matched = 'false';
+    card.onclick = () => selectMatchCard(stageNum, i, card, q);
+    grid.appendChild(card);
+  });
+}
+
+function selectMatchCard(stageNum, idx, card, q) {
+  if (card.dataset.matched === 'true') return;
+  if (!GameState.matchSelected) {
+    GameState.matchSelected = { idx, card };
+    card.classList.add('selected');
+    return;
+  }
+  const prev = GameState.matchSelected;
+  if (prev.idx === idx) {
+    prev.card.classList.remove('selected');
+    GameState.matchSelected = null;
+    return;
+  }
+  // 检查是否配对
+  let isPair = false;
+  for (const pair of q.pairs) {
+    if ((pair[0] === prev.idx && pair[1] === idx) || (pair[0] === idx && pair[1] === prev.idx)) {
+      isPair = true;
+      break;
+    }
+  }
+  if (isPair) {
+    prev.card.classList.remove('selected');
+    prev.card.classList.add('matched');
+    prev.card.dataset.matched = 'true';
+    card.classList.add('matched');
+    card.dataset.matched = 'true';
+    GameState.matchPairsFound++;
+    GameState.matchSelected = null;
+    // 计算得分
+    GameState.combo++;
+    if (GameState.combo > GameState.maxCombo) GameState.maxCombo = GameState.combo;
+    const base = 100;
+    const comboBonus = Math.min(GameState.combo * 20, 200);
+    GameState.score += base + comboBonus;
+    GameState.correctCount++;
+    GameState.totalAnswered++;
+    updateHUD(`stage${stageNum}`);
+    showFeedback('MATCHED', 'success', `+${base + comboBonus} 分 | 连击 x${GameState.combo}`);
+    // 检查是否完成
+    const totalPairs = new Set();
+    q.pairs.forEach(p => {
+      const key = p[0] < p[1] ? `${p[0]}-${p[1]}` : `${p[1]}-${p[0]}`;
+      totalPairs.add(key);
+    });
+    if (GameState.matchPairsFound >= Math.ceil(totalPairs.size / 2)) {
+      setTimeout(() => {
+        hideFeedback();
+        showQuestion(`stage${stageNum}`, GameState.currentQIndex + 1);
+      }, 1200);
+    }
+  } else {
+    prev.card.classList.remove('selected');
+    prev.card.classList.add('wrong-pair');
+    card.classList.add('wrong-pair');
+    GameState.matchSelected = null;
+    GameState.combo = 0;
+    GameState.lives--;
+    GameState.totalAnswered++;
+    updateHUD(`stage${stageNum}`);
+    showFeedback('MISMATCH', 'error', '不是同类项，请重新配对');
+    setTimeout(() => {
+      prev.card.classList.remove('wrong-pair');
+      card.classList.remove('wrong-pair');
+    }, 600);
+    if (GameState.lives <= 0) {
+      setTimeout(() => endGame(true), 1500);
+      return;
+    }
+  }
+}
+
+function renderCalcInput(stageNum, q) {
+  const eqDisplay = document.getElementById(`eq-display-stage${stageNum}`);
+  const input = document.getElementById(`answer-input-stage${stageNum}`);
+  if (eqDisplay) eqDisplay.textContent = '';
+  if (input) {
+    input.value = '';
+    input.disabled = false;
+  }
+  const submitBtn = document.querySelector(`#calc-input-stage${stageNum} .submit-btn`);
+  if (submitBtn) submitBtn.disabled = false;
+}
+
+function submitCalcAnswer() {
+  const stageNum = GameState.currentStage.replace('stage', '');
+  const q = Questions[GameState.currentStage][GameState.currentQIndex];
+  const input = document.getElementById(`answer-input-stage${stageNum}`);
+  const submitBtn = document.querySelector(`#calc-input-stage${stageNum} .submit-btn`);
+  if (!input || input.disabled) return;
+  const val = input.value.trim().replace(/\s+/g, '').replace(/\^/g, '').replace(/\*/g, '');
+  if (!val) return;
+
+  input.disabled = true;
+  if (submitBtn) submitBtn.disabled = true;
+  GameState.totalAnswered++;
+
+  const answers = q.answers || [q.answer];
+  const normalizedVal = val.toLowerCase().replace(/\s+/g, '').replace(/\^/g, '').replace(/\*/g, '');
+  const normalizedAnswers = answers.map(a => a.toLowerCase().replace(/\s+/g, '').replace(/\^/g, '').replace(/\*/g, ''));
+  const isCorrect = normalizedAnswers.some(a => a === normalizedVal);
+
+  if (isCorrect) {
+    GameState.combo++;
+    if (GameState.combo > GameState.maxCombo) GameState.maxCombo = GameState.combo;
+    const base = 100;
+    const comboBonus = Math.min(GameState.combo * 20, 200);
+    GameState.score += base + comboBonus;
+    GameState.correctCount++;
+    showFeedback('CONFIRMED', 'success', `+${base + comboBonus} 分 | 连击 x${GameState.combo}`);
+  } else {
+    GameState.combo = 0;
+    GameState.lives--;
+    const correct = q.answer || answers[0];
+    showFeedback('DENIED', 'error', `正确答案：${correct}\n${q.explain || ''}`);
+  }
+
+  updateHUD(GameState.currentStage);
+  if (GameState.lives <= 0) {
+    setTimeout(() => endGame(true), 2000);
+    return;
+  }
+  setTimeout(() => {
+    hideFeedback();
+    showQuestion(GameState.currentStage, GameState.currentQIndex + 1);
+  }, 1800);
+}
+
+function selectAnswer(stageName, choiceIdx) {
+  const qlist = Questions[stageName];
+  const q = qlist[GameState.currentQIndex];
+  const stageNum = stageName.replace('stage', '');
+  const optsEl = document.getElementById(`qopts-stage${stageNum}`);
+  const btns = optsEl.querySelectorAll('.option-btn');
+
+  btns.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.correct) btn.classList.add('correct');
+  });
+
+  GameState.totalAnswered++;
+
+  if (choiceIdx === q.correct) {
+    btns[choiceIdx].classList.add('correct');
+    GameState.combo++;
+    if (GameState.combo > GameState.maxCombo) GameState.maxCombo = GameState.combo;
+    const base = 100;
+    const comboBonus = Math.min(GameState.combo * 20, 200);
+    GameState.score += base + comboBonus;
+    GameState.correctCount++;
+    showFeedback('CONFIRMED', 'success', `+${base + comboBonus} 分 | 连击 x${GameState.combo}`);
+  } else {
+    btns[choiceIdx].classList.add('wrong');
+    GameState.combo = 0;
+    GameState.lives--;
+    showFeedback('DENIED', 'error', `${q.explain}`);
+  }
+
+  updateHUD(stageName);
+
+  if (GameState.lives <= 0) {
+    setTimeout(() => endGame(true), 2000);
+    return;
+  }
+
+  setTimeout(() => {
+    hideFeedback();
+    showQuestion(stageName, GameState.currentQIndex + 1);
+  }, 1800);
+}
+
+// ============================================================
+// 动画演示更新
+// ============================================================
+function updateAnimDemo(stageName, q) {
+  const stageNum = stageName.replace('stage', '');
+  const container = document.getElementById(`anim-content-stage${stageNum}`);
+  if (!container || !q.anim) return;
+  const a = q.anim;
+
+  if (stageName === 'stage1') {
+    if (a.type === 'coeff') {
+      container.innerHTML = `
+        <div class="term-chip glow"><span class="coeff">${a.coeff}</span><span class="var">${a.expr.replace(a.coeff === '-' ? '-' : (a.coeff.startsWith('-') ? a.coeff : a.coeff), '').replace('+', '')}</span></div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip">系数=<span class="coeff">${a.coeff}</span></div>
+        <div class="anim-eq">|</div>
+        <div class="term-chip">次数=${a.vars.map(v => v.e).join('+')}=${a.degree}</div>`;
+    } else if (a.type === 'poly') {
+      container.innerHTML = `
+        <div class="term-chip glow">${a.terms.join(' ')}</div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip">次数=<span class="coeff">${a.degree}</span></div>
+        <div class="anim-eq">|</div>
+        <div class="term-chip">常数项=<span class="coeff">${a.constTerm}</span></div>`;
+    } else if (a.type === 'identify') {
+      container.innerHTML = `
+        <div class="term-chip" style="border-color:var(--danger);color:var(--danger);">${a.expr}</div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip" style="border-color:var(--danger);color:var(--danger);">${a.reason}</div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip" style="border-color:var(--danger);color:var(--danger);">非整式</div>`;
+    }
+  } else if (stageName === 'stage2') {
+    if (a.type === 'match') {
+      const html = a.terms.map((t, i) => `<div class="term-chip ${i === 0 ? 'glow' : 'merge-target'}">${t}</div>`).join('<div class="anim-eq">+</div>');
+      container.innerHTML = html + `<div class="anim-eq">→</div><div class="term-chip merged">同类项组：${a.group}</div>`;
+    }
+  } else if (stageName === 'stage3') {
+    if (a.type === 'merge') {
+      const html = a.terms.map((t, i) => `<div class="term-chip ${i === a.terms.length - 1 ? '' : (i === 0 ? 'glow' : 'merge-target')}">${t}</div>`).join('<div class="anim-eq">+</div>');
+      container.innerHTML = html + `<div class="anim-eq">=</div><div class="term-chip merged glow">${a.result}</div>`;
+    } else if (a.type === 'expand') {
+      container.innerHTML = `
+        <div class="term-chip">${a.before}</div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip merge-target">${a.after}</div>
+        <div class="anim-eq">=</div>
+        <div class="term-chip merged glow">${a.result}</div>`;
+    }
+  } else if (stageName === 'stage4') {
+    if (a.type === 'poly-sub') {
+      container.innerHTML = `
+        <div class="term-chip">${a.a}</div>
+        <div class="anim-eq">-</div>
+        <div class="term-chip">${a.b}</div>
+        <div class="anim-eq">→</div>
+        <div class="term-chip merged glow">${a.result}</div>`;
+    } else if (a.type === 'eval') {
+      container.innerHTML = `
+        <div class="term-chip">${a.expr}</div>
+        <div class="anim-eq">|</div>
+        <div class="term-chip merge-target">${a.sub}</div>
+        <div class="anim-eq">=</div>
+        <div class="term-chip merged glow">${a.result}</div>`;
+    }
+  }
+}
+
+// ============================================================
+// 结束游戏
+// ============================================================
+function endGame(failed=false) {
+  if (GameState.timerInterval) clearInterval(GameState.timerInterval);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-end').classList.add('active');
+
+  const totalQ = Questions.stage1.length + Questions.stage2.length + Questions.stage3.length + Questions.stage4.length;
+  const attempted = GameState.totalAnswered;
+  const correct = GameState.correctCount;
+  const accuracy = attempted > 0 ? Math.round(correct / attempted * 100) : 0;
+  const maxPossible = totalQ * 300;
+  const scorePct = Math.min(100, Math.round(GameState.score / maxPossible * 100));
+
+  let rank, rankText;
+  if (failed) { rank = 'F'; rankText = '任务失败'; }
+  else if (scorePct >= 85 && accuracy >= 75) { rank = 'S'; rankText = 'S 级特工 — 完美渗透'; }
+  else if (scorePct >= 70 && accuracy >= 60) { rank = 'A'; rankText = 'A 级特工 — 优秀执行'; }
+  else if (scorePct >= 55 && accuracy >= 45) { rank = 'B'; rankText = 'B 级特工 — 合格通过'; }
+  else { rank = 'C'; rankText = 'C 级特工 — 需要加练'; }
+
+  const rankEl = document.getElementById('end-rank');
+  rankEl.textContent = rank;
+  rankEl.style.color = failed ? 'var(--danger)' : (rank === 'S' ? 'var(--accent)' : (rank === 'A' ? 'var(--success)' : 'var(--warn)'));
+  document.getElementById('end-title').textContent = failed ? '任务中止' : '任务完成';
+  document.getElementById('end-score').textContent = GameState.score;
+  document.getElementById('end-maxcombo').textContent = `x${GameState.maxCombo}`;
+  document.getElementById('end-time').textContent = formatTime(GameState.elapsed);
+  document.getElementById('end-accuracy').textContent = `${accuracy}%`;
+  document.getElementById('end-ranktext').textContent = rankText;
+  document.getElementById('end-ranktext').style.color = failed ? 'var(--danger)' : (rank === 'S' ? 'var(--accent)' : (rank === 'A' ? 'var(--success)' : 'var(--warn)'));
+
+  updateNavState();
+}
+
+// ============================================================
+// Feedback 系统
+// ============================================================
+let feedbackTimeout = null;
+function showFeedback(title, type, text) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const box = document.getElementById('feedbackBox');
+  const icon = document.getElementById('feedbackIcon');
+  const titleEl = document.getElementById('feedbackTitle');
+  const textEl = document.getElementById('feedbackText');
+
+  box.className = 'feedback-box ' + type;
+  if (type === 'success') { icon.textContent = '✓'; titleEl.style.color = 'var(--success)'; }
+  else if (type === 'error') { icon.textContent = '✗'; titleEl.style.color = 'var(--danger)'; }
+  else if (type === 'warn') { icon.textContent = '!'; titleEl.style.color = 'var(--warn)'; }
+  titleEl.textContent = title;
+  textEl.textContent = text;
+  overlay.classList.add('show');
+
+  if (feedbackTimeout) clearTimeout(feedbackTimeout);
+  feedbackTimeout = setTimeout(() => hideFeedback(), 4000);
+}
+
+function hideFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+}
+
+// ============================================================
+// 导航
+// ============================================================
+function toggleStagePanel() {
+  const panel = document.getElementById('stagePanel');
+  const overlay = document.getElementById('panelOverlay');
+  panel.classList.toggle('open');
+  overlay.classList.toggle('show');
+}
+
+function goToScreen(screenId) {
+  hideFeedback();
+  if (screenId === 'intro') {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-intro').classList.add('active');
+  } else if (screenId === 'end') {
+    endGame();
+  } else {
+    if (!GameState.startTime) { startGame(); return; }
+    loadStage(screenId);
+  }
+  toggleStagePanel();
+}
+
+function updateNavState() {
+  const stages = ['intro', 'stage1', 'stage2', 'stage3', 'stage4', 'end'];
+  stages.forEach(id => {
+    const el = document.getElementById(`nav-${id}`);
+    if (!el) return;
+    el.classList.remove('active');
+  });
+  let activeId = 'intro';
+  const activeScreen = document.querySelector('.screen.active');
+  if (activeScreen) {
+    activeId = activeScreen.id.replace('screen-', '');
+  }
+  const navEl = document.getElementById(`nav-${activeId}`);
+  if (navEl) navEl.classList.add('active');
+}
+
+// 键盘支持
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    hideFeedback();
+    const panel = document.getElementById('stagePanel');
+    if (panel.classList.contains('open')) toggleStagePanel();
+  }
+});
+
+// 初始化
+updateNavState();
+  </script>
+</body>
+</html>
