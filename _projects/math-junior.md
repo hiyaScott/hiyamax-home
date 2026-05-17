@@ -9,4 +9,5 @@ grades: 6-9
 year: 2026
 date: 2026-05-14
 link: /projects/math6-9/
+thumbnail: /assets/images/projects/math-junior.webp
 ---
