@@ -16,10 +16,18 @@ permalink: /about/
   <!-- Main Content -->
   <div class="about-content">
 
-    <!-- Left: Image -->
+    <!-- Left: Images -->
     <div class="about-image-section">
-      <div class="about-image-container">
-        <img src="/assets/images/max-player.webp" alt="HiyaMax" class="about-image" loading="eager" decoding="async" width="800">
+      <div class="about-image-stack">
+        <div class="about-image-container">
+          <img src="/assets/images/max-player.webp" alt="HiyaMax Player" class="about-image" loading="eager" decoding="async" width="800">
+        </div>
+        <div class="about-image-container">
+          <img src="/assets/images/max-collage.webp" alt="HiyaMax Life" class="about-image" loading="lazy" decoding="async" width="800">
+        </div>
+        <div class="about-image-container">
+          <img src="/assets/images/max-creator.webp" alt="HiyaMax Creator" class="about-image" loading="lazy" decoding="async" width="800">
+        </div>
       </div>
     </div>
 
@@ -38,91 +46,102 @@ permalink: /about/
       <!-- Meta Info -->
       <div class="about-meta">
         <div class="meta-item">
-          <span class="meta-label">Role</span>
-          <span class="meta-value">Student / Game Maker / Artist</span>
+          <span class="meta-label">Age</span>
+          <span class="meta-value">11</span>
         </div>
         <div class="meta-item">
-          <span class="meta-label">Location</span>
-          <span class="meta-value">China</span>
+          <span class="meta-label">Grade</span>
+          <span class="meta-value">5 → 6</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Stack</span>
+          <span class="meta-value">Scratch, Java, Arduino</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Last Update</span>
+          <span class="meta-value">05/2026</span>
         </div>
       </div>
 
-      <!-- Description -->
+      <!-- Description: English First -->
       <div class="about-description">
-        <p>
-          Hi，我是 MAX。2026 年，我 11 岁，即将从五年级升入六年级。
-        </p>
-        <p>
-          hiyaMax 是我的个人品牌，我相信：一个符号只要拥有意义，并且存在得足够久，就会成为一个真正的 IP。
-          你可以在 <a href="/hiyamax/">【hiyaMax™️】</a> 中见证它的成长，最近我的第一批原创玩具已经正式出货啦！
-        </p>
-        <p>
-          假期里我喜欢潜水与冲浪，平时会玩滑板、打网球；我擅长弹钢琴，目前正在学习音乐编曲。
-        </p>
-        <p>
-          我是忠实的动漫爱好者，已经看完 1200 多集《One Piece》、4 季《鬼灭之刃》，以及全部《龙珠》系列，最近正在追《鸣人传》。
-        </p>
-        <p>
-          我也喜欢 Switch，前不久刚和朋友通关《Split Fiction》。《毛线小精灵》难度不低却十分有趣，和朋友一起玩多人游戏特别开心；但独处时，我更喜欢回到海拉鲁大陆，继续我的《王国之泪》冒险。
-        </p>
-        <p>
-          因为热爱游戏，我开始自己制作游戏。你可以在 <a href="/games/">【Games】</a> 页面体验我用 Scratch 和 Java 开发的作品。
-        </p>
-        <p>
-          从编程出发，我自然接触到了机器人，也玩起了 Arduino；我的 ESP-32 已经陪我完成了许多有趣的项目。
-        </p>
-        <p>
-          2026 年春节，我拥有了我的 AI 助手 —— Tars。有它陪伴，我能创造更多有意思的东西。
-        </p>
-        <p>
-          最近我在研究一个全新课题：如何让初中的课程变得更有趣？如果把学习变成电子游戏或互动实验，会不会更轻松、更好玩？
-          在主页的 <a href="/projects/">【projects】</a> 里，你能看到我和 Tars 正在一起完成的两个创新项目。我会继续加油！
-        </p>
-        <p>
-          曾经，我是一个热爱生活的 Player；现在，我更想成为一名真正的 Creator。
-        </p>
-
-        <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
-
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           Hi, I'm MAX.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           In 2026, I'm 11 years old, moving from 5th grade to 6th grade.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           hiyaMax is my personal brand. I believe: a symbol can become a real IP if it has meaning and exists long enough.
           You can watch it grow in <a href="/hiyamax/">【hiyaMax™️】</a>. Recently, my first batch of original toys has officially shipped!
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           During holidays, I love diving and surfing. On usual days, I skateboard and play tennis.
           I'm good at playing the piano and am currently learning music arrangement.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           I'm a big anime fan. I've watched over 1200 episodes of One Piece, all 4 seasons of Demon Slayer, and the entire Dragon Ball series. Recently, I'm watching Naruto.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           I also love my Switch. Not long ago, I finished Split Fiction with friends. Unravel is tough but really fun. Playing multiplayer games with friends on Switch is awesome, but when I'm alone, I still love returning to Hyrule for more The Legend of Zelda: Tears of the Kingdom adventures.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           Because I love games, I started making my own games. You can play my projects made with Scratch and Java in the <a href="/games/">【Games】</a> section.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           Starting from coding, I naturally got into robotics and started working with Arduino. My ESP-32 has helped me build many fun projects.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           During the 2026 Spring Festival, I got my AI assistant —— Tars.
           With Tars by my side, I can create even more amazing things.
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           Recently, I've been working on a new challenge: How to make middle school classes more fun?
           If learning could be like video games or interactive experiments, wouldn't it be easier and more enjoyable?
           You can check out the two creative projects that Tars and I are working on in <a href="/projects/">【projects】</a>.
           I'll keep doing my best!
         </p>
-        <p style="font-size: 14px; color: #666;">
+        <p class="en">
           I used to be a passionate Player;
           Now, I want to be a real Creator.
+        </p>
+
+        <hr style="border: none; border-top: 1px solid #eee; margin: 28px 0;">
+
+        <p class="zh">
+          Hi，我是 MAX。
+        </p>
+        <p class="zh">
+          2026 年，我 11 岁，即将从五年级升入六年级。
+        </p>
+        <p class="zh">
+          hiyaMax 是我的个人品牌，我相信：一个符号只要拥有意义，并且存在得足够久，就会成为一个真正的 IP。
+          你可以在 <a href="/hiyamax/">【hiyaMax™️】</a> 中见证它的成长，最近我的第一批原创玩具已经正式出货啦！
+        </p>
+        <p class="zh">
+          假期里我喜欢潜水与冲浪，平时会玩滑板、打网球；我擅长弹钢琴，目前正在学习音乐编曲。
+        </p>
+        <p class="zh">
+          我是忠实的动漫爱好者，已经看完 1200 多集《One Piece》、4 季《鬼灭之刃》，以及全部《龙珠》系列，最近正在追《鸣人传》。
+        </p>
+        <p class="zh">
+          我也喜欢 Switch，前不久刚和朋友通关《Split Fiction》。《毛线小精灵》难度不低却十分有趣，和朋友一起玩多人游戏特别开心；但独处时，我更喜欢回到海拉鲁大陆，继续我的《王国之泪》冒险。
+        </p>
+        <p class="zh">
+          因为热爱游戏，我开始自己制作游戏。你可以在 <a href="/games/">【Games】</a> 页面体验我用 Scratch 和 Java 开发的作品。
+        </p>
+        <p class="zh">
+          从编程出发，我自然接触到了机器人，也玩起了 Arduino；我的 ESP-32 已经陪我完成了许多有趣的项目。
+        </p>
+        <p class="zh">
+          2026 年春节，我拥有了我的 AI 助手 —— Tars。有它陪伴，我能创造更多有意思的东西。
+        </p>
+        <p class="zh">
+          最近我在研究一个全新课题：如何让初中的课程变得更有趣？如果把学习变成电子游戏或互动实验，会不会更轻松、更好玩？
+          在主页的 <a href="/projects/">【projects】</a> 里，你能看到我和 Tars 正在一起完成的两个创新项目。我会继续加油！
+        </p>
+        <p class="zh">
+          曾经，我是一个热爱生活的 Player；现在，我更想成为一名真正的 Creator。
         </p>
       </div>
 
@@ -169,10 +188,32 @@ permalink: /about/
   align-items: start;
 }
 
-/* Left: Image Section */
+/* Left: Image Stack */
 .about-image-section {
   position: sticky;
   top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.about-image-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.about-image-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.about-image-section::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.about-image-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .about-image-container {
@@ -180,6 +221,7 @@ permalink: /about/
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
 .about-image {
@@ -227,7 +269,8 @@ permalink: /about/
 /* Meta Info */
 .about-meta {
   display: flex;
-  gap: 32px;
+  flex-wrap: wrap;
+  gap: 24px;
   padding: 20px 0;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -255,14 +298,28 @@ permalink: /about/
 }
 
 /* Description */
-.about-description {
+.about-description p.en {
   font-size: 16px;
   line-height: 1.7;
-  color: #444;
+  color: #333;
+  margin-bottom: 16px;
 }
 
-.about-description p {
+.about-description p.zh {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666;
   margin-bottom: 16px;
+}
+
+.about-description a {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-description a:hover {
+  color: #555;
 }
 
 /* Responsive */
@@ -275,6 +332,37 @@ permalink: /about/
   .about-image-section {
     position: relative;
     top: 0;
+    max-height: none;
+    overflow-y: visible;
+    order: -1;
+  }
+
+  .about-image-stack {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+
+  .about-image-stack::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .about-image-stack::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .about-image-stack::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+  }
+
+  .about-image-container {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+    max-width: 500px;
   }
 
   .about-title {
@@ -285,6 +373,10 @@ permalink: /about/
 @media (max-width: 640px) {
   .about-page {
     padding: 80px 20px 40px;
+  }
+
+  .about-image-container {
+    flex: 0 0 85vw;
   }
 
   .about-title {
