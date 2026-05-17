@@ -41,7 +41,7 @@ permalink: /about/
       </div>
 
       <!-- Title -->
-      <h1 class="about-title">HiyaMax</h1>
+      <h1 class="about-title">About Me</h1>
 
       <!-- Meta Info -->
       <div class="about-meta">
