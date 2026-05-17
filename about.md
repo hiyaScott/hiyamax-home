@@ -209,7 +209,7 @@ permalink: /about/
 .about-image-stack {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 280px;
   will-change: transform; /* GPU hint for parallax */
 }
 
