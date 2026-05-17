@@ -375,29 +375,21 @@ permalink: /about/
   function initParallax() {
     var imgH  = stack.offsetHeight;
     var infoH = info.offsetHeight;
-    var ratio = imgH / infoH;        // height ratio
-    var vpH   = window.innerHeight;
+    var diff  = infoH - imgH;       // how much the image needs to travel to catch up
+    if (diff <= 0) return;          // only when text is taller than images
 
     var content = stack.closest('.about-content');
     if (!content) return;
 
-    var contentTop = content.getBoundingClientRect().top + window.scrollY;
-    var contentH   = content.offsetHeight;
-
-    // Parallax intensity: based on how different the heights are, scaled to viewport
-    // ratio > 1 (img taller) → shift upward (negative)  — image scrolls faster
-    // ratio < 1 (text taller) → shift downward (positive) — image scrolls slower (lags behind)
-    var maxShift    = vpH * Math.abs(1 - ratio) * 1.5;
-    var direction   = ratio > 1 ? -1 : 1;
+    var contentTop    = content.getBoundingClientRect().top + window.scrollY;
+    var contentH      = content.offsetHeight;
+    var vpH           = window.innerHeight;
+    var scrollRange   = contentH - vpH;
 
     function update() {
-      // progress: 0 = content top reaches viewport top
-      //           1 = content bottom reaches viewport bottom
-      var scrolled = Math.max(0, window.scrollY - contentTop);
-      var total    = contentH - vpH;
-      var progress = total > 0 ? Math.min(1, scrolled / total) : 1;
-
-      var shift = direction * progress * maxShift;
+      var scrolled  = Math.max(0, window.scrollY - contentTop);
+      var progress  = scrollRange > 0 ? Math.min(1, scrolled / scrollRange) : 1;
+      var shift     = progress * diff; // positive = move image down
       stack.style.transform = 'translateY(' + shift + 'px)';
     }
 
