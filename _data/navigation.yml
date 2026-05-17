@@ -2,7 +2,7 @@
 # Used by _includes/header.html and _includes/footer.html
 
 main:
-  - title: HiyaMaxTM
+  - title: hiyaMax™️
     url: /hiyamax/
     external: false
   - title: games
