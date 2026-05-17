@@ -14,7 +14,7 @@ main:
   - title: artworks
     url: /artworks/
     external: false
-  - title: Projects
+  - title: projects
     url: /projects/
     external: false
 
