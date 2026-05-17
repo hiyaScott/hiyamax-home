@@ -376,29 +376,19 @@ permalink: /about/
   if (!stack || !info) return;
 
   function initParallax() {
-    var imgH   = stack.offsetHeight;
-    var infoH  = info.offsetHeight;
-    var diff   = imgH - infoH;  // positive = img taller, negative = text taller
-
-    var content = stack.closest('.about-content');
-    if (!content) return;
-
-    function absTop(el) {
-      return el.getBoundingClientRect().top + window.scrollY;
-    }
-
-    var contentTop    = absTop(content);
-    var contentHeight = content.offsetHeight;
-    var start         = contentTop;
-    var end           = contentTop + contentHeight;
-    var range         = end - start;
+    var imgH  = stack.offsetHeight;
+    var infoH = info.offsetHeight;
+    var diff  = imgH - infoH; // + = img taller, - = text taller
 
     function update() {
-      var progress = (window.scrollY - start) / range;
+      var infoRect = info.getBoundingClientRect();
+      var vpH      = window.innerHeight;
+
+      // progress: 0 = info top hits viewport bottom
+      //           1 = info bottom hits viewport top
+      var progress = (vpH - infoRect.top) / (vpH + infoRect.height);
       progress = Math.max(0, Math.min(1, progress));
 
-      // diff > 0  (img taller): img moves UP faster  → negative translateY
-      // diff < 0  (text taller): img moves UP slower → positive translateY (appears to lag behind)
       stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
     }
 
@@ -410,10 +400,7 @@ permalink: /about/
   var total  = images.length;
   var loaded = 0;
 
-  if (total === 0) {
-    initParallax();
-    return;
-  }
+  if (total === 0) { initParallax(); return; }
 
   images.forEach(function(img) {
     if (img.complete) {
