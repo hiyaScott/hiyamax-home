@@ -370,31 +370,35 @@ permalink: /about/
 (function() {
   var stack = document.getElementById('aboutImageStack');
   var info  = document.getElementById('aboutInfoSection');
-  if (!stack || !info) {
-    console.error('[Parallax] missing elements');
-    return;
-  }
+  if (!stack || !info) return;
 
   function initParallax() {
     var imgH  = stack.offsetHeight;
     var infoH = info.offsetHeight;
-    var diff  = imgH - infoH;
+    var ratio = imgH / infoH;        // height ratio
+    var vpH   = window.innerHeight;
 
-    // Visual debug: red border when JS is running
-    stack.style.outline = '4px solid red';
+    var content = stack.closest('.about-content');
+    if (!content) return;
 
-    console.log('[Parallax] imgH=' + imgH + ' infoH=' + infoH + ' diff=' + diff);
+    var contentTop = content.getBoundingClientRect().top + window.scrollY;
+    var contentH   = content.offsetHeight;
+
+    // Parallax intensity: based on how different the heights are, scaled to viewport
+    // ratio > 1 (img taller) → shift upward (negative)  — image scrolls faster
+    // ratio < 1 (text taller) → shift downward (positive) — image scrolls slower (lags behind)
+    var maxShift    = vpH * Math.abs(1 - ratio) * 1.5;
+    var direction   = ratio > 1 ? -1 : 1;
 
     function update() {
-      var infoRect = info.getBoundingClientRect();
-      var vpH      = window.innerHeight;
-      var progress = (vpH - infoRect.top) / (vpH + infoRect.height);
-      progress = Math.max(0, Math.min(1, progress));
+      // progress: 0 = content top reaches viewport top
+      //           1 = content bottom reaches viewport bottom
+      var scrolled = Math.max(0, window.scrollY - contentTop);
+      var total    = contentH - vpH;
+      var progress = total > 0 ? Math.min(1, scrolled / total) : 1;
 
-      var ty = -progress * diff;
-      stack.style.transform = 'translateY(' + ty + 'px)';
-
-      console.log('[Parallax] progress=' + progress.toFixed(3) + ' ty=' + ty.toFixed(1));
+      var shift = direction * progress * maxShift;
+      stack.style.transform = 'translateY(' + shift + 'px)';
     }
 
     window.addEventListener('scroll', update, { passive: true });
