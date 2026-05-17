@@ -209,8 +209,8 @@ permalink: /about/
 .about-image-stack {
   display: flex;
   flex-direction: column;
-  gap: 280px;
-  will-change: transform; /* GPU hint for parallax */
+  gap: 20px;
+  will-change: transform;
 }
 
 .about-image-container {
@@ -378,43 +378,34 @@ permalink: /about/
   function initParallax() {
     var imgH   = stack.offsetHeight;
     var infoH  = info.offsetHeight;
-    var diff   = imgH - infoH;
-
-    // If images are NOT taller than text, nothing to parallax
-    if (diff <= 0) {
-      console.log('[About Parallax] skipped: imgH(' + imgH + ') <= infoH(' + infoH + ')');
-      return;
-    }
+    var diff   = imgH - infoH;  // positive = img taller, negative = text taller
 
     var content = stack.closest('.about-content');
     if (!content) return;
 
-    // Absolute document position (works through any offsetParent chain)
     function absTop(el) {
       return el.getBoundingClientRect().top + window.scrollY;
     }
 
     var contentTop    = absTop(content);
     var contentHeight = content.offsetHeight;
-    var start         = contentTop;                     // when content top hits viewport top
-    var end           = contentTop + contentHeight;       // when content bottom leaves viewport top
+    var start         = contentTop;
+    var end           = contentTop + contentHeight;
     var range         = end - start;
-
-    console.log('[About Parallax] diff=' + diff + ' contentTop=' + contentTop + ' range=' + range);
 
     function update() {
       var progress = (window.scrollY - start) / range;
       progress = Math.max(0, Math.min(1, progress));
 
-      // Move images UP so their bottom meets text bottom at progress === 1
+      // diff > 0  (img taller): img moves UP faster  → negative translateY
+      // diff < 0  (text taller): img moves UP slower → positive translateY (appears to lag behind)
       stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
     }
 
     window.addEventListener('scroll', update, { passive: true });
-    update(); // initial
+    update();
   }
 
-  // Wait for all images inside the stack to finish loading so offsetHeight is accurate
   var images = stack.querySelectorAll('img');
   var total  = images.length;
   var loaded = 0;
