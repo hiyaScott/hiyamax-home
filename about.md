@@ -373,32 +373,63 @@ permalink: /about/
 
   var stack = document.getElementById('aboutImageStack');
   var info = document.getElementById('aboutInfoSection');
-  var section = document.querySelector('.about-content');
-  if (!stack || !info || !section) return;
+  if (!stack || !info) return;
 
-  // Give the browser one frame to finish layout so heights are real
-  requestAnimationFrame(function() {
+  function getDocTop(el) {
+    var top = 0;
+    while (el) {
+      top += el.offsetTop;
+      el = el.offsetParent;
+    }
+    return top;
+  }
+
+  function initParallax() {
     var imageHeight = stack.offsetHeight;
     var infoHeight  = info.offsetHeight;
     var diff = imageHeight - infoHeight;
     if (diff <= 0) return; // nothing to parallax
 
-    var sectionTop = section.offsetTop;
+    var section = stack.closest('.about-content');
+    if (!section) return;
+    var sectionTop = getDocTop(section);
     var sectionHeight = section.offsetHeight;
 
     function update() {
-      // How far the viewport has "passed" the section top
       var scrolled = (window.scrollY + window.innerHeight) - sectionTop;
-      // Total distance from "viewport bottom hits section top" to "viewport top hits section bottom"
       var total = window.innerHeight + sectionHeight;
-      // Clamp 0..1
       var progress = Math.max(0, Math.min(1, scrolled / total));
-      // Move images up by (diff * progress) so bottom aligns at progress === 1
       stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
     }
 
     window.addEventListener('scroll', update, { passive: true });
     update(); // initial
+  }
+
+  // Wait for all images inside the stack to finish loading
+  var images = stack.querySelectorAll('img');
+  var total = images.length;
+  var loaded = 0;
+
+  if (total === 0) {
+    initParallax();
+    return;
+  }
+
+  images.forEach(function(img) {
+    if (img.complete) {
+      loaded++;
+      if (loaded === total) initParallax();
+    } else {
+      img.addEventListener('load', function() {
+        loaded++;
+        if (loaded === total) initParallax();
+      });
+      img.addEventListener('error', function() {
+        loaded++;
+        if (loaded === total) initParallax();
+      });
+    }
   });
 })();
 </script>
