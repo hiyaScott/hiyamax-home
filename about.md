@@ -46,6 +46,10 @@ permalink: /about/
       <!-- Meta Info -->
       <div class="about-meta">
         <div class="meta-item">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Student / Game Maker / Artist</span>
+        </div>
+        <div class="meta-item">
           <span class="meta-label">Age</span>
           <span class="meta-value">11</span>
         </div>
