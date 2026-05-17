@@ -372,33 +372,41 @@ permalink: /about/
   if (window.innerWidth <= 1024) return;
 
   var stack = document.getElementById('aboutImageStack');
-  var info = document.getElementById('aboutInfoSection');
+  var info  = document.getElementById('aboutInfoSection');
   if (!stack || !info) return;
 
-  function getDocTop(el) {
-    var top = 0;
-    while (el) {
-      top += el.offsetTop;
-      el = el.offsetParent;
-    }
-    return top;
-  }
-
   function initParallax() {
-    var imageHeight = stack.offsetHeight;
-    var infoHeight  = info.offsetHeight;
-    var diff = imageHeight - infoHeight;
-    if (diff <= 0) return; // nothing to parallax
+    var imgH   = stack.offsetHeight;
+    var infoH  = info.offsetHeight;
+    var diff   = imgH - infoH;
 
-    var section = stack.closest('.about-content');
-    if (!section) return;
-    var sectionTop = getDocTop(section);
-    var sectionHeight = section.offsetHeight;
+    // If images are NOT taller than text, nothing to parallax
+    if (diff <= 0) {
+      console.log('[About Parallax] skipped: imgH(' + imgH + ') <= infoH(' + infoH + ')');
+      return;
+    }
+
+    var content = stack.closest('.about-content');
+    if (!content) return;
+
+    // Absolute document position (works through any offsetParent chain)
+    function absTop(el) {
+      return el.getBoundingClientRect().top + window.scrollY;
+    }
+
+    var contentTop    = absTop(content);
+    var contentHeight = content.offsetHeight;
+    var start         = contentTop;                     // when content top hits viewport top
+    var end           = contentTop + contentHeight;       // when content bottom leaves viewport top
+    var range         = end - start;
+
+    console.log('[About Parallax] diff=' + diff + ' contentTop=' + contentTop + ' range=' + range);
 
     function update() {
-      var scrolled = (window.scrollY + window.innerHeight) - sectionTop;
-      var total = window.innerHeight + sectionHeight;
-      var progress = Math.max(0, Math.min(1, scrolled / total));
+      var progress = (window.scrollY - start) / range;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Move images UP so their bottom meets text bottom at progress === 1
       stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
     }
 
@@ -406,9 +414,9 @@ permalink: /about/
     update(); // initial
   }
 
-  // Wait for all images inside the stack to finish loading
+  // Wait for all images inside the stack to finish loading so offsetHeight is accurate
   var images = stack.querySelectorAll('img');
-  var total = images.length;
+  var total  = images.length;
   var loaded = 0;
 
   if (total === 0) {
@@ -421,14 +429,8 @@ permalink: /about/
       loaded++;
       if (loaded === total) initParallax();
     } else {
-      img.addEventListener('load', function() {
-        loaded++;
-        if (loaded === total) initParallax();
-      });
-      img.addEventListener('error', function() {
-        loaded++;
-        if (loaded === total) initParallax();
-      });
+      img.addEventListener('load',  function() { loaded++; if (loaded === total) initParallax(); });
+      img.addEventListener('error', function() { loaded++; if (loaded === total) initParallax(); });
     }
   });
 })();
