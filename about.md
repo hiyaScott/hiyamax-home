@@ -67,6 +67,9 @@ permalink: /about/
         </div>
       </div>
 
+      <!-- Mobile-only: Avatar before English -->
+      <img src="/assets/images/max-player.webp" alt="HiyaMax Player" class="about-mobile-img" loading="eager" decoding="async" width="800">
+
       <!-- Description: English First -->
       <div class="about-description">
         <p class="en">
@@ -110,6 +113,9 @@ permalink: /about/
           Now, I want to be a real Creator.
         </p>
 
+        <!-- Mobile-only: Collage between English and Chinese -->
+        <img src="/assets/images/max-collage.webp" alt="HiyaMax Life" class="about-mobile-img" loading="lazy" decoding="async" width="800">
+
         <hr style="border: none; border-top: 1px solid #eee; margin: 28px 0;">
 
         <p class="zh">
@@ -147,6 +153,9 @@ permalink: /about/
         <p class="zh">
           曾经，我是一个热爱生活的 Player；现在，我更想成为一名真正的 Creator。
         </p>
+
+        <!-- Mobile-only: Creator after Chinese -->
+        <img src="/assets/images/max-creator.webp" alt="HiyaMax Creator" class="about-mobile-img" loading="lazy" decoding="async" width="800">
       </div>
 
     </div>
@@ -215,6 +224,16 @@ permalink: /about/
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Mobile-only images (hidden on desktop) */
+.about-mobile-img {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  margin: 24px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 /* Right: Info Section */
@@ -316,13 +335,13 @@ permalink: /about/
     gap: 40px;
   }
 
+  /* Hide desktop image stack, show mobile inline images */
   .about-image-section {
-    order: -1;
+    display: none;
   }
 
-  .about-image-stack {
-    /* no scroll-snap, natural column in mobile too */
-    gap: 16px;
+  .about-mobile-img {
+    display: block;
   }
 
   .about-title {
