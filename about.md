@@ -368,28 +368,33 @@ permalink: /about/
 <!-- Parallax Scroll Script — desktop only -->
 <script>
 (function() {
-  // Only on desktop where images and text are side-by-side
-  if (window.innerWidth <= 1024) return;
-
   var stack = document.getElementById('aboutImageStack');
   var info  = document.getElementById('aboutInfoSection');
-  if (!stack || !info) return;
+  if (!stack || !info) {
+    console.error('[Parallax] missing elements');
+    return;
+  }
 
   function initParallax() {
     var imgH  = stack.offsetHeight;
     var infoH = info.offsetHeight;
-    var diff  = imgH - infoH; // + = img taller, - = text taller
+    var diff  = imgH - infoH;
+
+    // Visual debug: red border when JS is running
+    stack.style.outline = '4px solid red';
+
+    console.log('[Parallax] imgH=' + imgH + ' infoH=' + infoH + ' diff=' + diff);
 
     function update() {
       var infoRect = info.getBoundingClientRect();
       var vpH      = window.innerHeight;
-
-      // progress: 0 = info top hits viewport bottom
-      //           1 = info bottom hits viewport top
       var progress = (vpH - infoRect.top) / (vpH + infoRect.height);
       progress = Math.max(0, Math.min(1, progress));
 
-      stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
+      var ty = -progress * diff;
+      stack.style.transform = 'translateY(' + ty + 'px)';
+
+      console.log('[Parallax] progress=' + progress.toFixed(3) + ' ty=' + ty.toFixed(1));
     }
 
     window.addEventListener('scroll', update, { passive: true });
