@@ -2,8 +2,8 @@
 # Used by _includes/header.html and _includes/footer.html
 
 main:
-  - title: about
-    url: /
+  - title: HiyaMaxTM
+    url: /hiyamax/
     external: false
   - title: games
     url: /games/
@@ -14,8 +14,8 @@ main:
   - title: artworks
     url: /artworks/
     external: false
-  - title: hiyaMax™️
-    url: /hiyamax/
+  - title: Projects
+    url: /projects/
     external: false
 
 social:
