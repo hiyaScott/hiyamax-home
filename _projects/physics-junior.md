@@ -9,4 +9,5 @@ grades: 8-9
 year: 2026
 date: 2026-05-14
 link: /projects/physics8-9/
+thumbnail: /assets/images/projects/physics-junior.webp
 ---
