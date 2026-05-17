@@ -18,7 +18,7 @@ permalink: /about/
 
     <!-- Left: Images -->
     <div class="about-image-section">
-      <div class="about-image-stack">
+      <div class="about-image-stack" id="aboutImageStack">
         <div class="about-image-container">
           <img src="/assets/images/max-player.webp" alt="HiyaMax Player" class="about-image" loading="eager" decoding="async" width="800">
         </div>
@@ -32,7 +32,7 @@ permalink: /about/
     </div>
 
     <!-- Right: Info Panel -->
-    <div class="about-info-section">
+    <div class="about-info-section" id="aboutInfoSection">
 
       <!-- Header -->
       <div class="about-header">
@@ -192,32 +192,16 @@ permalink: /about/
   align-items: start;
 }
 
-/* Left: Image Stack */
+/* Left: Image Stack — natural flow, no sticky, no scrollbar */
 .about-image-section {
-  position: sticky;
-  top: 100px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.about-image-section::-webkit-scrollbar {
-  width: 6px;
-}
-
-.about-image-section::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.about-image-section::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 3px;
+  /* no sticky, no max-height, no overflow */
 }
 
 .about-image-stack {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  will-change: transform; /* GPU hint for parallax */
 }
 
 .about-image-container {
@@ -225,7 +209,6 @@ permalink: /about/
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  flex-shrink: 0;
 }
 
 .about-image {
@@ -334,39 +317,12 @@ permalink: /about/
   }
 
   .about-image-section {
-    position: relative;
-    top: 0;
-    max-height: none;
-    overflow-y: visible;
     order: -1;
   }
 
   .about-image-stack {
-    flex-direction: row;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    /* no scroll-snap, natural column in mobile too */
     gap: 16px;
-    padding-bottom: 8px;
-    scrollbar-width: thin;
-  }
-
-  .about-image-stack::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .about-image-stack::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .about-image-stack::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 3px;
-  }
-
-  .about-image-container {
-    flex: 0 0 80vw;
-    scroll-snap-align: start;
-    max-width: 500px;
   }
 
   .about-title {
@@ -379,10 +335,6 @@ permalink: /about/
     padding: 80px 20px 40px;
   }
 
-  .about-image-container {
-    flex: 0 0 85vw;
-  }
-
   .about-title {
     font-size: 28px;
   }
@@ -393,3 +345,41 @@ permalink: /about/
   }
 }
 </style>
+
+<!-- Parallax Scroll Script — desktop only -->
+<script>
+(function() {
+  // Only on desktop where images and text are side-by-side
+  if (window.innerWidth <= 1024) return;
+
+  var stack = document.getElementById('aboutImageStack');
+  var info = document.getElementById('aboutInfoSection');
+  var section = document.querySelector('.about-content');
+  if (!stack || !info || !section) return;
+
+  // Give the browser one frame to finish layout so heights are real
+  requestAnimationFrame(function() {
+    var imageHeight = stack.offsetHeight;
+    var infoHeight  = info.offsetHeight;
+    var diff = imageHeight - infoHeight;
+    if (diff <= 0) return; // nothing to parallax
+
+    var sectionTop = section.offsetTop;
+    var sectionHeight = section.offsetHeight;
+
+    function update() {
+      // How far the viewport has "passed" the section top
+      var scrolled = (window.scrollY + window.innerHeight) - sectionTop;
+      // Total distance from "viewport bottom hits section top" to "viewport top hits section bottom"
+      var total = window.innerHeight + sectionHeight;
+      // Clamp 0..1
+      var progress = Math.max(0, Math.min(1, scrolled / total));
+      // Move images up by (diff * progress) so bottom aligns at progress === 1
+      stack.style.transform = 'translateY(' + (-progress * diff) + 'px)';
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update(); // initial
+  });
+})();
+</script>
