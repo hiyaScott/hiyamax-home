@@ -7,8 +7,8 @@ color: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 year: 2026
 date: 2026-06-16
 emoji: 🎓
-image: /assets/images/hiyamaxtm/we-graduated-cover.jpg
-thumbnail: /assets/images/hiyamaxtm/thumbs/we-graduated-cover.jpg
+image: /assets/images/hiyamaxtm/we-graduated-cover.webp
+thumbnail: /assets/images/hiyamaxtm/thumbs/we-graduated-cover.webp
 layout: hiyamaxtm-product
 ---
 
@@ -163,7 +163,7 @@ layout: hiyamaxtm-product
       <div class="hcd-section-title">🖼️ 照片</div>
       <!-- 图片占位区 -->
       <div class="hcd-image-wrapper">
-        <img src="{{ '/assets/images/hiyamaxtm/we-graduated-cover.jpg' | relative_url }}" alt="我们毕业啦">
+        <img src="{{ '/assets/images/hiyamaxtm/we-graduated-cover.webp' | relative_url }}" alt="我们毕业啦">
       </div>
       <p class="hcd-image-caption">我们毕业啦</p>
     </div>
